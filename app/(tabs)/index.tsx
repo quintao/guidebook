@@ -1,74 +1,196 @@
-import { Image, StyleSheet, Platform } from 'react-native';
+import { Text, View, StyleSheet, TouchableOpacity } from 'react-native';
+import { Image } from 'expo-image';
+import { useRouter, Link} from 'expo-router';
+import Colors from '../constants/colors';
+import { useState } from 'react';
+import ShowSectorInfo from '../components/modal';
+import Sectors from '../sectors';
 
-import { HelloWave } from '@/components/HelloWave';
-import ParallaxScrollView from '@/components/ParallaxScrollView';
-import { ThemedText } from '@/components/ThemedText';
-import { ThemedView } from '@/components/ThemedView';
+const ValleyImage = require('@/assets/images/valley.png');
+const DentsDuMidiImage = require('@/assets/images/mountains.png');
 
-export default function HomeScreen() {
+
+function renderTitle() {
   return (
-    <ParallaxScrollView
-      headerBackgroundColor={{ light: '#A1CEDC', dark: '#1D3D47' }}
-      headerImage={
-        <Image
-          source={require('@/assets/images/partial-react-logo.png')}
-          style={styles.reactLogo}
-        />
-      }>
-      <ThemedView style={styles.titleContainer}>
-        <ThemedText type="title">Welcome!</ThemedText>
-        <HelloWave />
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Step 1: Try it</ThemedText>
-        <ThemedText>
-          Edit <ThemedText type="defaultSemiBold">app/(tabs)/index.tsx</ThemedText> to see changes.
-          Press{' '}
-          <ThemedText type="defaultSemiBold">
-            {Platform.select({
-              ios: 'cmd + d',
-              android: 'cmd + m',
-              web: 'F12'
-            })}
-          </ThemedText>{' '}
-          to open developer tools.
-        </ThemedText>
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Step 2: Explore</ThemedText>
-        <ThemedText>
-          Tap the Explore tab to learn more about what's included in this starter app.
-        </ThemedText>
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Step 3: Get a fresh start</ThemedText>
-        <ThemedText>
-          When you're ready, run{' '}
-          <ThemedText type="defaultSemiBold">npm run reset-project</ThemedText> to get a fresh{' '}
-          <ThemedText type="defaultSemiBold">app</ThemedText> directory. This will move the current{' '}
-          <ThemedText type="defaultSemiBold">app</ThemedText> to{' '}
-          <ThemedText type="defaultSemiBold">app-example</ThemedText>.
-        </ThemedText>
-      </ThemedView>
-    </ParallaxScrollView>
+    <View style={styles.welcomeTitleContainer}>
+      <Image source={DentsDuMidiImage} style={styles.titleImage} />
+      <View
+        style={{
+            position: 'absolute',
+            top: 160,
+            left: 280,
+          }}
+      >
+        <Text style={styles.titleText}>ESCALADE VALLE D'ILLIEZ</Text>
+      </View>
+    </View>
+  )
+}
+
+function renderWelcome() {
+  return (
+    <View style={styles.welcomeContainer}>
+      <Text style={styles.welcomeSubText}>Vous pouvez parcourir ci-dessous les secteurs d'escalade de notre région.</Text>
+    </View>
+  )
+}
+
+export default function Index() {
+  const [showModal, setShowModal] = useState(false)
+  const [targetSector, setTargetSector] = useState(Object)
+  const router = useRouter();
+
+  function renderBubbles(key: string, sector: any) {
+    return(
+      <TouchableOpacity
+        key={key}
+        style={{
+          position: 'absolute',
+          top: sector.top,
+          left: sector.left,
+          width: 40,
+          height: 40,
+          borderRadius: 20,
+          backgroundColor: sector.color,
+          opacity: 0.5,
+          padding: 10,
+        }}
+        onPress={() => {
+          cleanModalState()
+          setShowModal(true);
+          setTargetSector(sector);
+        }}
+    >
+    </TouchableOpacity>
+    ) 
+  }
+
+  function cleanModalState() {
+    setShowModal(false)
+    setTargetSector({})
+  }
+  
+  function renderSectorShortInfo() {
+    const sector = {...targetSector}
+    return(
+      <View style={styles.modalContent}>
+        <View style={styles.modalShortDescription}>
+          <Text>{targetSector?.overview?.short_description}</Text>
+        </View>
+        <Text>Altitude: {targetSector?.overview?.altitude}</Text>
+        <Text>Orientation: {targetSector?.overview?.orientation}</Text>
+        <Text>Rochè: {targetSector?.overview?.rock}</Text>
+        <Text>
+          Types d'escalade et style: {targetSector?.overview?.main_activities} - {targetSector?.overview?.style}
+        </Text>
+
+        <View style={styles.modalLink}>
+          <Link onPress={() => cleanModalState()}    
+          href={{
+            pathname: "/sector",
+            params: { target_sector: JSON.stringify(sector)}
+          }}>
+           Visiter le secteur
+          </Link>
+        </View>
+      </View>
+    )
+  }
+
+  return (
+    <View style={styles.container}>
+      {renderTitle()}
+      {renderWelcome()}
+      <View style={styles.imageContainer}>
+        <Image source={ValleyImage} style={styles.image} />
+        {
+          Object.keys(Sectors).map((key) => (
+            renderBubbles(key, Sectors[key])
+          ))
+        }
+      </View>
+
+      <ShowSectorInfo
+          name={targetSector?.overview?.name}
+          isVisible={showModal}
+          onClose={() => cleanModalState()}>
+        { renderSectorShortInfo() }
+      </ShowSectorInfo>
+    </View> 
   );
 }
 
 const styles = StyleSheet.create({
-  titleContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 8,
+  modalContent: {
+    padding: 10
   },
-  stepContainer: {
-    gap: 8,
-    marginBottom: 8,
+  modalLink: {
+    backgroundColor: 'red',
   },
-  reactLogo: {
-    height: 178,
-    width: 290,
-    bottom: 0,
-    left: 0,
-    position: 'absolute',
+  modalShortDescription: {
+    marginVertical: 10
+  },
+  container: {
+    flex: 1,
+    backgroundColor: Colors.appBackground,
+    alignItems: 'flex-start',
+  },
+  text: {
+    color: Colors.text,
+  },
+  welcomeTitleContainer: {
+   marginHorizontal: 5,
+    // backgroundColor: Colors.mainColorGreen,
+    borderRadius: 15,
+    alignSelf: 'center'
+  },
+  titleImageContainer: {
+    alignSelf:  'center',
+    // flex: 1,
+  },
+  titleImage: {
+    width: 420,
+    height: 180,
+    borderRadius: 10,
+  }, 
+  titleText: {
+    fontSize: 10,
+    fontWeight: 500,
+    color: 'white',
+    textAlign: 'right',
+    fontFamily: 'roboto'
+  },
+  welcomeContainer: {
+    alignSelf: 'center',
+    marginTop: 30,
+  },
+  welcomeSubText: {
+    fontSize: 15,
+    padding: 10,
+    color: Colors.pageTitle,
+    textAlign: 'center',
+  },
+  button: {
+    fontSize: 20,
+    textDecorationLine: 'underline',
+    color: Colors.link,
+  },
+  imageContainer: {
+    alignSelf:  'center',
+    marginTop: 50,
+    padding: 20,
+    backgroundColor: "#F7F5F0",
+    borderRadius: 20,
+  },
+  image: {
+    width: 380,
+    height: 420,
+    borderRadius: 30,
+  },
+  modal: {
+    flex: 1,
+    backgroundColor: Colors.appBackground,
+    opacity: 0.5,
+    alignItems: 'flex-start',
   },
 });
