@@ -1,10 +1,11 @@
-import { Text, View, StyleSheet, TouchableOpacity } from 'react-native';
+import { Text, View, StyleSheet, TouchableOpacity, Platform } from 'react-native';
 import { Image } from 'expo-image';
 import { useRouter, Link} from 'expo-router';
 import Colors from '../constants/colors';
 import { useState } from 'react';
 import ShowSectorInfo from '../components/modal';
 import Sectors from '../sectors';
+import React from 'react';
 
 const ValleyImage = require('@/assets/images/valley.png');
 const DentsDuMidiImage = require('@/assets/images/mountains.png');
@@ -169,6 +170,7 @@ const styles = StyleSheet.create({
     padding: 10,
     color: Colors.pageTitle,
     textAlign: 'center',
+    fontFamily: 'roboto'    
   },
   button: {
     fontSize: 20,
