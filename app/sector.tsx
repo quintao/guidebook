@@ -64,26 +64,7 @@ export default function SectorScreen() {
     return renderSection("Access", sector?.detailed_info?.access, "globe-sharp", showAccess, setShowAccess)
   }
   
-  const renderBox = (color: string, opacity: number, value: string, category: string) => {
-    return(
-      <View style={{...styles.box, backgroundColor: color, opacity: opacity}}>
-        <Text style={styles.detailBoxValue}>{value}</Text>
-        <Text>{category}</Text>
-      </View>
-      )   
-    }
-
-  function renderDetails(sector: any) {
-    return (
-      <View style={styles.detailsContainer}>
-        {renderBox("#0097b2", 0.6, sector?.overview?.altitude , "altitude")}
-        {renderBox("#0097b2", 0.6, sector?.overview?.orientation , "orientation")}
-        {renderBox("#0097b2", 0.6, sector?.overview?.rock , "rocher")}
-      </View>
-    )
-
-  }
-
+  
   function renderParkingIcon(sector: any) {
     return (
       <View style={styles.mapPinContainer}>
@@ -117,7 +98,6 @@ export default function SectorScreen() {
     return(
       <View style={styles.generalInfoContainer}>
           { renderSectorNameAndParking(sector) }
-          { renderDetails(sector) }
           { renderDescription(sector) }
 
           { renderAccess(sector)}
@@ -158,15 +138,16 @@ export default function SectorScreen() {
 const styles = StyleSheet.create({
   screen: {
     flex: 1,
-    alignItems: 'center',
+    alignItems: 'flex-start',
     justifyContent: 'flex-start',
-    backgroundColor: Colors.appBackground,
+    backgroundColor: Colors.appBackground
   },
   container: {
-    margin: 5,
+    flex: 1,
+    width: "100%",
     backgroundColor: Colors.appBackground,
-    alignItems: 'center',
-    justifyContent: 'center',
+    alignItems: 'flex-start',
+    justifyContent: 'flex-start',
   },
   text: {
     color: Colors.text,
@@ -190,24 +171,16 @@ const styles = StyleSheet.create({
     paddingLeft: 10,
   },
   sectorContainer: {
-
+    width: "100%",
+    padding: 10
   },
   generalInfoContainer: {
-
+    flexDirection: 'column',
   },
   mapsLogoContainer: {
       width: 20,
       height: 25,
       borderRadius: 10,
-  },
-  detailsContainer: {
-    padding: 5,
-    marginTop: 10,
-    flexDirection: 'row',
-    backgroundColor: '#f0eeed',
-    borderRadius: 10,
-    alignItems: 'center',
-    justifyContent: 'center'
   },
   box: {
     width: '28%', // Adjust width as needed

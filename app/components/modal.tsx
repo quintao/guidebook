@@ -2,6 +2,7 @@ import { Modal, View, Text, Pressable, StyleSheet } from 'react-native';
 import { PropsWithChildren } from 'react';
 import MaterialIcons from '@expo/vector-icons/MaterialIcons';
 import Colors from '../constants/colors';
+import React from 'react';
 
 type Props = PropsWithChildren<{
   isVisible: boolean;
@@ -9,13 +10,13 @@ type Props = PropsWithChildren<{
   name: string,
 }>;
 
-export default function ShowSectorInfo({ isVisible, children, onClose, name }: Props) {
+export default function ShowSectorInfo({ isVisible, children, onClose, name, color }: Props) {
   return (
     <Modal animationType="slide" transparent={true} visible={isVisible}>
       <View style={styles.modalContent}>
-        <View style={styles.titleContainer}>
+        <View style={{backgroundColor: color, ...styles.titleContainer}}>
           <Text style={styles.title}>{name}</Text>
-          <Pressable onPress={onClose}>
+          <Pressable onPress={onClose} style={{padding: 10}}>
             <MaterialIcons name="close" color="#fff" size={22} />
           </Pressable>
         </View>
@@ -29,16 +30,16 @@ const styles = StyleSheet.create({
   modalContent: {
     height: '40%',
     width: '100%',
-    backgroundColor: '#F7F5F0',
+    backgroundColor: 'white',
     borderTopRightRadius: 18,
     borderTopLeftRadius: 18,
     position: 'absolute',
     bottom: 0,
-    opacity: 0.85
+    opacity: 0.95
   },
   titleContainer: {
     height: '15%',
-    backgroundColor: Colors.mainColorGreen,
+    opacity: 0.8,
     borderTopRightRadius: 10,
     borderTopLeftRadius: 10,
     paddingHorizontal: 20,

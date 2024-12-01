@@ -1,4 +1,4 @@
-import { Text, View, StyleSheet, TouchableOpacity, Platform } from 'react-native';
+import { Text, View, StyleSheet, TouchableOpacity, Dimensions } from 'react-native';
 import { Image } from 'expo-image';
 import { useRouter, Link} from 'expo-router';
 import Colors from '../constants/colors';
@@ -6,35 +6,12 @@ import { useState } from 'react';
 import ShowSectorInfo from '../components/modal';
 import Sectors from '../sectors';
 import React from 'react';
+import Foundation from '@expo/vector-icons/Foundation';
+import Ionicons from '@expo/vector-icons/Ionicons';
+import FontAwesome from '@expo/vector-icons/FontAwesome';
 
-const ValleyImage = require('@/assets/images/valley.png');
+const ValleyImage = require('@/assets/images/handmap.png');
 const DentsDuMidiImage = require('@/assets/images/mountains.png');
-
-
-function renderTitle() {
-  return (
-    <View style={styles.welcomeTitleContainer}>
-      <Image source={DentsDuMidiImage} style={styles.titleImage} />
-      <View
-        style={{
-            position: 'absolute',
-            top: 160,
-            left: 280,
-          }}
-      >
-        <Text style={styles.titleText}>ESCALADE VALLE D'ILLIEZ</Text>
-      </View>
-    </View>
-  )
-}
-
-function renderWelcome() {
-  return (
-    <View style={styles.welcomeContainer}>
-      <Text style={styles.welcomeSubText}>Vous pouvez parcourir ci-dessous les secteurs d'escalade de notre région.</Text>
-    </View>
-  )
-}
 
 export default function Index() {
   const [showModal, setShowModal] = useState(false)
@@ -49,22 +26,46 @@ export default function Index() {
           position: 'absolute',
           top: sector.top,
           left: sector.left,
-          width: 40,
-          height: 40,
-          borderRadius: 20,
-          backgroundColor: sector.color,
           opacity: 0.5,
-          padding: 10,
+          borderBottomColor: sector.color,
+          ...styles.triangle
         }}
         onPress={() => {
           cleanModalState()
           setShowModal(true);
           setTargetSector(sector);
-        }}
+        }}        
     >
+      <View style={{
+          top: -15,
+          left: -30,
+          width: 60, height: 60
+      }}/>
     </TouchableOpacity>
     ) 
   }
+
+  function renderWelcome() {
+    return(
+      <View
+        style={{
+          alignSelf: 'center',
+          alignContent: 'center',
+          justifyContent: 'center',
+          position: 'absolute',
+          top: 650,
+          left: 180,
+          borderRadius: 20,
+          backgroundColor: 'white',
+          opacity: 0.5,
+          padding: 10,
+          flexWrap: 'wrap'
+        }}
+    >
+      <Text style={{maxWidth: 200}}>Bienvenue ! Appuyez sur un secteur pour commencer</Text>
+    </View>
+    ) 
+  }  
 
   function cleanModalState() {
     setShowModal(false)
@@ -78,20 +79,34 @@ export default function Index() {
         <View style={styles.modalShortDescription}>
           <Text>{targetSector?.overview?.short_description}</Text>
         </View>
-        <Text>Altitude: {targetSector?.overview?.altitude}</Text>
-        <Text>Orientation: {targetSector?.overview?.orientation}</Text>
-        <Text>Rochè: {targetSector?.overview?.rock}</Text>
-        <Text>
-          Types d'escalade et style: {targetSector?.overview?.main_activities} - {targetSector?.overview?.style}
-        </Text>
+        <View style={styles.modalIconInfoContainer}>
+          <View style={styles.modalIconInfo}>
+            <Foundation name="mountains" size={24} color="black" style={{textAlign: 'center'}}/>
+            <Text style={{textAlign: 'center'}}>{targetSector?.overview?.altitude}</Text>
+          </View>
+          <View style={styles.modalIconInfo}>
+            <Ionicons name="compass-outline" size={24} color="black" />
+            <Text style={{textAlign: 'center'}}>{targetSector?.overview?.orientation}</Text>
+          </View>
+          <View style={styles.modalIconInfo}>
+            <FontAwesome name="hand-rock-o" size={24} color="black" />
+            <Text style={{textAlign: 'center'}}>{targetSector?.overview?.rock}</Text>
+          </View>
+          <View style={styles.modalIconInfo}>
+            <Ionicons name="scale-outline" size={24} color="black" />
+            <Text style={{textAlign: 'center'}}>{targetSector?.overview?.grades}</Text>
+          </View>          
+        </View>
 
-        <View style={styles.modalLink}>
+        <View style={{backgroundColor: sector?.color, ...styles.modalLink}}>
           <Link onPress={() => cleanModalState()}    
           href={{
             pathname: "/sector",
             params: { target_sector: JSON.stringify(sector)}
           }}>
-           Visiter le secteur
+            <Text style={styles.linkToModalText}>
+              Visiter le secteur
+            </Text>
           </Link>
         </View>
       </View>
@@ -100,8 +115,6 @@ export default function Index() {
 
   return (
     <View style={styles.container}>
-      {renderTitle()}
-      {renderWelcome()}
       <View style={styles.imageContainer}>
         <Image source={ValleyImage} style={styles.image} />
         {
@@ -109,10 +122,12 @@ export default function Index() {
             renderBubbles(key, Sectors[key])
           ))
         }
+        { renderWelcome() }
       </View>
 
       <ShowSectorInfo
           name={targetSector?.overview?.name}
+          color={targetSector?.color}
           isVisible={showModal}
           onClose={() => cleanModalState()}>
         { renderSectorShortInfo() }
@@ -123,13 +138,39 @@ export default function Index() {
 
 const styles = StyleSheet.create({
   modalContent: {
-    padding: 10
+    padding: 10,
+    justifyContent: 'center',
+    alignItems: 'center'
   },
   modalLink: {
-    backgroundColor: 'red',
+    marginTop: 20,
+    padding: 20,
+    borderRadius: 10,
+    opacity: 0.6
+  },
+  linkToModalText: {
+    color: 'white',
+    fontWeight: 500
   },
   modalShortDescription: {
     marginVertical: 10
+  },
+  modalIconInfo: {
+    flexDirection: 'column',
+    borderRadius: 50,
+    width: 80,
+    height: 80,
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderColor: 'black',
+    textAlign: 'center',
+    borderWidth: 2,
+    margin: 10
+  },
+  modalIconInfoContainer: {
+    flexDirection: 'row',
+    alignContent: 'space-between',
+    justifyContent: 'space-evenly'
   },
   container: {
     flex: 1,
@@ -139,60 +180,32 @@ const styles = StyleSheet.create({
   text: {
     color: Colors.text,
   },
-  welcomeTitleContainer: {
-   marginHorizontal: 5,
-    // backgroundColor: Colors.mainColorGreen,
-    borderRadius: 15,
-    alignSelf: 'center'
-  },
-  titleImageContainer: {
-    alignSelf:  'center',
-    // flex: 1,
-  },
-  titleImage: {
-    width: 420,
-    height: 180,
-    borderRadius: 10,
-  }, 
-  titleText: {
-    fontSize: 10,
-    fontWeight: 500,
-    color: 'white',
-    textAlign: 'right',
-    fontFamily: 'roboto'
-  },
-  welcomeContainer: {
-    alignSelf: 'center',
-    marginTop: 30,
-  },
-  welcomeSubText: {
-    fontSize: 15,
-    padding: 10,
-    color: Colors.pageTitle,
-    textAlign: 'center',
-    fontFamily: 'roboto'    
-  },
-  button: {
-    fontSize: 20,
-    textDecorationLine: 'underline',
-    color: Colors.link,
-  },
   imageContainer: {
-    alignSelf:  'center',
-    marginTop: 50,
-    padding: 20,
-    backgroundColor: "#F7F5F0",
-    borderRadius: 20,
+    flex: 1,
+    width: "100%",
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: Colors.appBackground,
   },
   image: {
-    width: 380,
-    height: 420,
-    borderRadius: 30,
+    width: "100%",
+    height: "100%"
   },
   modal: {
     flex: 1,
     backgroundColor: Colors.appBackground,
     opacity: 0.5,
     alignItems: 'flex-start',
+  },
+  triangle: {
+    width: 0,
+    height: 0,
+    backgroundColor: "transparent",
+    borderStyle: "solid",
+    borderLeftWidth: 15,
+    borderRightWidth: 16,
+    borderBottomWidth: 30,
+    borderLeftColor: "transparent",
+    borderRightColor: "transparent",
   },
 });
