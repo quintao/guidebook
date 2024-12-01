@@ -9,63 +9,79 @@ import React from 'react';
 import Foundation from '@expo/vector-icons/Foundation';
 import Ionicons from '@expo/vector-icons/Ionicons';
 import FontAwesome from '@expo/vector-icons/FontAwesome';
+import MapView, { Marker} from 'react-native-maps';
+
 
 const ValleyImage = require('@/assets/images/handmap.png');
 const DentsDuMidiImage = require('@/assets/images/mountains.png');
 
+const initialRegion = {
+  latitude: 46.180007, // Initial latitude
+  longitude: 6.873464, // Initial longitude
+  latitudeDelta: 0.0922,
+  longitudeDelta: 0.0421,
+};
+
+
 export default function Index() {
   const [showModal, setShowModal] = useState(false)
   const [targetSector, setTargetSector] = useState(Object)
-  const router = useRouter();
 
-  function renderBubbles(key: string, sector: any) {
-    return(
-      <TouchableOpacity
-        key={key}
-        style={{
-          position: 'absolute',
-          top: sector.top,
-          left: sector.left,
-          opacity: 0.5,
-          borderBottomColor: sector.color,
-          ...styles.triangle
-        }}
-        onPress={() => {
-          cleanModalState()
-          setShowModal(true);
-          setTargetSector(sector);
-        }}        
-    >
-      <View style={{
-          top: -15,
-          left: -30,
-          width: 60, height: 60
-      }}/>
-    </TouchableOpacity>
-    ) 
+  function getCoordinatesFromSectorData(sectorData: any) {
+    return { 
+      latitude: sectorData.overview?.latitude,
+      longitude: sectorData.overview?.longitude
+    };
+  };
+
+
+  function buildKey(latlong: any) {
+    return latlong.latitude + "@" + latlong.longitude
   }
 
-  function renderWelcome() {
-    return(
-      <View
-        style={{
-          alignSelf: 'center',
-          alignContent: 'center',
-          justifyContent: 'center',
-          position: 'absolute',
-          top: 650,
-          left: 180,
-          borderRadius: 20,
-          backgroundColor: 'white',
-          opacity: 0.5,
-          padding: 10,
-          flexWrap: 'wrap'
-        }}
-    >
-      <Text style={{maxWidth: 200}}>Bienvenue ! Appuyez sur un secteur pour commencer</Text>
-    </View>
-    ) 
-  }  
+  function buildLatLongKeysMap() {
+    let mapping = {}
+    for (const sectorName in Sectors) {
+      if (Sectors.hasOwnProperty(sectorName)) {
+        const sectorData = Sectors[sectorName];
+        const coordinates = getCoordinatesFromSectorData(sectorData)
+        const key = buildKey(coordinates)
+        mapping[key] = sectorData;
+      }
+    }
+    return mapping
+  }
+
+
+  // TOOD(quintao): follow the Google API key setup as described here:
+  // https://docs.expo.dev/versions/latest/sdk/map-view/
+  function renderSectorLocations() {
+    const mapping = buildLatLongKeysMap()
+    return (
+      <MapView style={styles.map} initialRegion={initialRegion}>
+        {Object.keys(Sectors).map((sectorName) => {
+          const sectorData = Sectors[sectorName];
+          const coordinates = getCoordinatesFromSectorData(sectorData); 
+  
+          return (
+            <Marker 
+              key={sectorName} 
+              coordinate={coordinates}
+              title={sectorData.overview?.name}
+              onPress={e => {
+                const key = buildKey(e.nativeEvent.coordinate)
+                cleanModalState()
+                setShowModal(true);
+                setTargetSector(mapping[key]);                
+              }}
+              id={sectorName}
+            />
+          );
+        })}
+      </MapView>
+    );
+
+  }
 
   function cleanModalState() {
     setShowModal(false)
@@ -116,13 +132,14 @@ export default function Index() {
   return (
     <View style={styles.container}>
       <View style={styles.imageContainer}>
-        <Image source={ValleyImage} style={styles.image} />
+        { renderSectorLocations() }
+      {/* <Image source={ValleyImage} style={styles.image} />
         {
           Object.keys(Sectors).map((key) => (
             renderBubbles(key, Sectors[key])
           ))
         }
-        { renderWelcome() }
+        { renderWelcome() } */}
       </View>
 
       <ShowSectorInfo
@@ -207,5 +224,9 @@ const styles = StyleSheet.create({
     borderBottomWidth: 30,
     borderLeftColor: "transparent",
     borderRightColor: "transparent",
+  },
+  map: {
+    width: '100%',
+    height: '100%',
   },
 });

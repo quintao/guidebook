@@ -6,7 +6,9 @@ export default {
         rock: "Calcaire",
         orientation: "SE",
         altitude: "1420m",
-        grades: "5a-7b"
+        grades: "5a-7b",
+        latitude: 46.170945,
+        longitude: 6.854820,
     },
     detailed_info: {
         parking: "https://maps.app.goo.gl/587kgdY9vnGCSK4N9",
