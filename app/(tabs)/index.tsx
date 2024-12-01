@@ -11,10 +11,6 @@ import Ionicons from '@expo/vector-icons/Ionicons';
 import FontAwesome from '@expo/vector-icons/FontAwesome';
 import MapView, { Marker} from 'react-native-maps';
 
-
-const ValleyImage = require('@/assets/images/handmap.png');
-const DentsDuMidiImage = require('@/assets/images/mountains.png');
-
 const initialRegion = {
   latitude: 46.180007, // Initial latitude
   longitude: 6.873464, // Initial longitude
@@ -22,36 +18,35 @@ const initialRegion = {
   longitudeDelta: 0.0421,
 };
 
+function getCoordinatesFromSectorData(sectorData: any) {
+  return { 
+    latitude: sectorData.overview?.latitude,
+    longitude: sectorData.overview?.longitude
+  };
+};
+
+
+function buildKey(latlong: any) {
+  return latlong.latitude + "@" + latlong.longitude
+}
+
+function buildLatLongKeysMap() {
+  let mapping = {}
+  for (const sectorName in Sectors) {
+    if (Sectors.hasOwnProperty(sectorName)) {
+      const sectorData = Sectors[sectorName];
+      const coordinates = getCoordinatesFromSectorData(sectorData)
+      const key = buildKey(coordinates)
+      mapping[key] = sectorData;
+    }
+  }
+  return mapping
+}
+
 
 export default function Index() {
   const [showModal, setShowModal] = useState(false)
   const [targetSector, setTargetSector] = useState(Object)
-
-  function getCoordinatesFromSectorData(sectorData: any) {
-    return { 
-      latitude: sectorData.overview?.latitude,
-      longitude: sectorData.overview?.longitude
-    };
-  };
-
-
-  function buildKey(latlong: any) {
-    return latlong.latitude + "@" + latlong.longitude
-  }
-
-  function buildLatLongKeysMap() {
-    let mapping = {}
-    for (const sectorName in Sectors) {
-      if (Sectors.hasOwnProperty(sectorName)) {
-        const sectorData = Sectors[sectorName];
-        const coordinates = getCoordinatesFromSectorData(sectorData)
-        const key = buildKey(coordinates)
-        mapping[key] = sectorData;
-      }
-    }
-    return mapping
-  }
-
 
   // TOOD(quintao): follow the Google API key setup as described here:
   // https://docs.expo.dev/versions/latest/sdk/map-view/
@@ -68,6 +63,7 @@ export default function Index() {
               key={sectorName} 
               coordinate={coordinates}
               title={sectorData.overview?.name}
+              showsBuilding={false}
               onPress={e => {
                 const key = buildKey(e.nativeEvent.coordinate)
                 cleanModalState()
@@ -88,8 +84,7 @@ export default function Index() {
     setTargetSector({})
   }
   
-  function renderSectorShortInfo() {
-    const sector = {...targetSector}
+  function renderSectorShortInfo(targetSector: any) {
     return(
       <View style={styles.modalContent}>
         <View style={styles.modalShortDescription}>
@@ -114,11 +109,11 @@ export default function Index() {
           </View>          
         </View>
 
-        <View style={{backgroundColor: sector?.color, ...styles.modalLink}}>
+        <View style={{backgroundColor: targetSector?.color, ...styles.modalLink}}>
           <Link onPress={() => cleanModalState()}    
           href={{
             pathname: "/sector",
-            params: { target_sector: JSON.stringify(sector)}
+            params: { target_sector: JSON.stringify(targetSector)}
           }}>
             <Text style={styles.linkToModalText}>
               Visiter le secteur
@@ -131,23 +126,14 @@ export default function Index() {
 
   return (
     <View style={styles.container}>
-      <View style={styles.imageContainer}>
-        { renderSectorLocations() }
-      {/* <Image source={ValleyImage} style={styles.image} />
-        {
-          Object.keys(Sectors).map((key) => (
-            renderBubbles(key, Sectors[key])
-          ))
-        }
-        { renderWelcome() } */}
-      </View>
+      { renderSectorLocations() }
 
       <ShowSectorInfo
           name={targetSector?.overview?.name}
-          color={targetSector?.color}
+          color='green'
           isVisible={showModal}
           onClose={() => cleanModalState()}>
-        { renderSectorShortInfo() }
+        { renderSectorShortInfo({...targetSector}) }
       </ShowSectorInfo>
     </View> 
   );
@@ -197,33 +183,9 @@ const styles = StyleSheet.create({
   text: {
     color: Colors.text,
   },
-  imageContainer: {
-    flex: 1,
-    width: "100%",
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: Colors.appBackground,
-  },
   image: {
     width: "100%",
     height: "100%"
-  },
-  modal: {
-    flex: 1,
-    backgroundColor: Colors.appBackground,
-    opacity: 0.5,
-    alignItems: 'flex-start',
-  },
-  triangle: {
-    width: 0,
-    height: 0,
-    backgroundColor: "transparent",
-    borderStyle: "solid",
-    borderLeftWidth: 15,
-    borderRightWidth: 16,
-    borderBottomWidth: 30,
-    borderLeftColor: "transparent",
-    borderRightColor: "transparent",
   },
   map: {
     width: '100%',
