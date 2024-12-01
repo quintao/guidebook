@@ -1,6 +1,5 @@
 import { Text, View, StyleSheet, TouchableOpacity, Dimensions } from 'react-native';
-import { Image } from 'expo-image';
-import { useRouter, Link} from 'expo-router';
+import { Link} from 'expo-router';
 import Colors from '../constants/colors';
 import { useState } from 'react';
 import ShowSectorInfo from '../components/modal';
