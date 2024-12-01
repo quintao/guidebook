@@ -8,6 +8,8 @@ export default {
         orientation: "N",
         altitude: "1620m",
         style: "varié",
+        latitude: 46.147941,
+        longitude: 6.831801,
     },
     sector_pictures: [],
     routes: []

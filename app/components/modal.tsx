@@ -10,11 +10,11 @@ type Props = PropsWithChildren<{
   name: string,
 }>;
 
-export default function ShowSectorInfo({ isVisible, children, onClose, name, color }: Props) {
+export default function ShowSectorInfo({ isVisible, children, onClose, name }: Props) {
   return (
     <Modal animationType="slide" transparent={true} visible={isVisible}>
       <View style={styles.modalContent}>
-        <View style={{backgroundColor: color, ...styles.titleContainer}}>
+        <View style={styles.titleContainer}>
           <Text style={styles.title}>{name}</Text>
           <Pressable onPress={onClose} style={{padding: 10}}>
             <MaterialIcons name="close" color="#fff" size={22} />
@@ -46,6 +46,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
+    backgroundColor: 'green'
   },
   title: {
     color: '#fff',
