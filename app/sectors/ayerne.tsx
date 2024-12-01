@@ -1,12 +1,12 @@
 export default {
     overview: {
         name: "Pic d'Ayerne",
-        short_description: "Petit secteur tranquille au dessous de Champéry",
+        short_description: "Petit secteur de escalade sportive au dessous de Champéry avec 14 voies.",
         main_activities: "Escalade Sportive",
         rock: "Calcaire",
         orientation: "SE",
         altitude: "1420m",
-        style: "varié",
+        grades: "5a-7b"
     },
     detailed_info: {
         parking: "https://maps.app.goo.gl/587kgdY9vnGCSK4N9",

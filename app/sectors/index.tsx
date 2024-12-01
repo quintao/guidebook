@@ -3,13 +3,13 @@ import Barme from "./barme"
 
 // Top and Left values below are dependent on the map being used in the main screen.
 const Sectors = {
-  "ayerne": {...Ayerne,top: 200, left: 100, color: "green" },
-  "barme": {...Barme, top: 360, left: 50, color: "magenta" },
-  "blocVDI": {top: 30, left: 330, color: "orange"},
-  "dryTooling": {top: 140, left: 280, color: "red"},
-  "portesDuSoleil": {top: 140, left: 30, color: "blue" },
-  "defago": {top: 220, left: 240, color: "grey"},
-  "champDeBarme": {top: 300, left: 150, color: "brown"},
+  "blocVDI": {top: "22%", left: "80%", color: "orange"},
+  "dryTooling": {top: "35%", left: "78%", color: "red"},
+  "portesDuSoleil": {top: "28%", left: "15%", color: "blue" },
+  "ayerne": {...Ayerne,top: "42%", left: "21%", color: "green" },
+  "defago": {top: "55%", left: "58%", color: "grey"},
+  "champDeBarme": {top: "70%", left: "55%", color: "brown"},
+  "barme": {...Barme, top: "88%", left: "15%", color: "magenta" },
 }
 
 export default Sectors
