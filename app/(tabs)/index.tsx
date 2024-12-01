@@ -54,14 +54,11 @@ export default function Index() {
     const mapping = buildLatLongKeysMap()
     return (
       <MapView style={styles.map} initialRegion={initialRegion}>
-        {Object.keys(Sectors).map((sectorName) => {
-          const sectorData = Sectors[sectorName];
-          const coordinates = getCoordinatesFromSectorData(sectorData); 
-  
+        {Sectors.map((sectorData) => {
           return (
             <Marker 
-              key={sectorName} 
-              coordinate={coordinates}
+              key={sectorData.overview.name} 
+              coordinate={getCoordinatesFromSectorData(sectorData)}
               title={sectorData.overview?.name}
               showsBuilding={false}
               onPress={e => {
@@ -70,7 +67,7 @@ export default function Index() {
                 setShowModal(true);
                 setTargetSector(mapping[key]);                
               }}
-              id={sectorName}
+              id={sectorData.overview.name}
             />
           );
         })}
@@ -130,7 +127,6 @@ export default function Index() {
 
       <ShowSectorInfo
           name={targetSector?.overview?.name}
-          color='green'
           isVisible={showModal}
           onClose={() => cleanModalState()}>
         { renderSectorShortInfo({...targetSector}) }
