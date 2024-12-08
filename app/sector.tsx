@@ -1,4 +1,4 @@
-import { Text, View, StyleSheet, TouchableOpacity, Platform } from 'react-native';
+import { Text, View, StyleSheet, TouchableOpacity, Platform , ScrollView} from 'react-native';
 import { Link, useLocalSearchParams } from 'expo-router';
 import { Image } from 'expo-image';
 
@@ -7,7 +7,6 @@ import Ionicons from '@expo/vector-icons/Ionicons';
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 import React, { useState } from 'react';
 import ShowZoomImage from './components/zoom';
-
 
 const mapsLogo = require('@/assets/images/maps.png');
 
@@ -119,7 +118,11 @@ export default function SectorScreen() {
             setShowZoom(true);
           }}
         >
-          <Image source={image_data.path} style={{width: 150, height: 150, borderRadius: 20 }} />
+          <Image
+            source={image_data.path}
+            style={{width: 150, height: 150, borderRadius: 20 }}
+            contentFit='scale-down'
+          />
           <Text style={styles.topoImageDescription}>{image_data.description}</Text>
           <View style={{
             position: 'absolute',
@@ -132,6 +135,7 @@ export default function SectorScreen() {
       </View>
     )
   }
+  
   function renderTopo(sector: any) {
     if (sector?.sector_pictures.length == 0) {
       return (<></>)
@@ -150,21 +154,111 @@ export default function SectorScreen() {
     )
 
   }
+
+  const StarRating = ({ rating }) => {
+    const stars = [];
+    for (let i = 0; i < 3; i++) {
+      stars.push(
+        <MaterialIcons 
+          key={i} 
+          name={i < rating ? 'star' : 'star-outline'} 
+          size={20} 
+          color="gold" 
+          style={styles.star} 
+        />
+      );
+    }
+  
+    return (
+      <View style={styles.starContainer}>
+        {stars}
+      </View>
+    );
+  };
+
+  function renderRouteImageInformation(route: any) {
+    if (route?.pictures == undefined) {
+      return <></>
+    }
+
+    if (route?.pictures?.length == 0) {
+      return <></>
+    }
+    return (
+      <View>
+        <MaterialIcons 
+          name="image-search" 
+          size={20} 
+          color="black" 
+          style={styles.star} 
+        />
+      </View>
+    )
+  }
+
+  function renderRoutePlusInformation(route: any) {
+    const mustShowPlus = route?.pictures?.length ||
+                         route.tips != "" ||
+                         route.requipped != "" ||
+                         route.setter != ""
+
+    if (mustShowPlus == false) {
+      return <></>
+    }
+    return (
+      <View>
+        <MaterialIcons 
+          name="expand-more" 
+          size={20} 
+          color="black" 
+          style={styles.star} 
+        />
+      </View>
+    )
+  }
+
+  function renderOneRoute(route: any) {
+    return(
+      <View style={styles.oneRouteContainer}>
+        <View style={styles.oneRouteName}>
+          <Text>{route.name}</Text>
+        </View>
+        <View style={{flexDirection: 'row'}}>
+          <Text>{route.grade}</Text>
+          <StarRating rating={route.stars} />
+          { renderRouteImageInformation(route)}
+          { renderRoutePlusInformation(route)}
+
+        </View>
+      </View>
+    )
+  }
   
   function renderRoutes(sector: any) {
-    return(
-      <View style={styles.generalInfoContainer}>
+    if (sector?.routes.length == 0) {
+      return (<></>)
+    }
+    return (
+      <View style={styles.routesContainer}>
+        <Text style={styles.routesTitle}>Les routes</Text>
+        <View style={styles.routesPanelContainer}>
+          {sector.routes.map((route: any, index: number) => (
+            <View key={index}>
+              {renderOneRoute(route)}
+            </View>
+           ))}
+        </View>
       </View>
     )
   }
 
   function renderSector(sector: any) {
     return(
-      <View style={styles.sectorContainer}>
+      <ScrollView style={styles.sectorContainer}>
         {renderGeneralInfo(sector)}
         {renderTopo(sector)}
         {renderRoutes(sector)}
-      </View>
+      </ScrollView>
     )
   }
 
@@ -184,7 +278,6 @@ export default function SectorScreen() {
         />
     </View>)
   }
-
 
   return (
     <View style={styles.screen}>
@@ -317,16 +410,20 @@ const styles = StyleSheet.create({
   },
   topoImageContainer: {
     flexDirection: 'column',
+    alignItems: 'center'
   },
   topoImagePanel: {
     padding: 20,
     borderRadius: 20,
+    alignSelf: 'center',
+    justifyContent: 'center',
+    opacity: 0.8
   },
   topoImagesPanel: {
     flexDirection: 'row',
     flexWrap: 'wrap',
     alignItems: 'flex-start',
-    justifyContent: 'flex-start'
+    justifyContent: 'center'
   },
   topoTitle: {
     fontWeight: 600,
@@ -338,8 +435,36 @@ const styles = StyleSheet.create({
     textAlign: 'center'
   },
   zoomContainer: {
-    backgroundColor: 'red',
-    justifyContent: 'center',
-    alignItems: 'center'
-  }
+    backgroundColor: 'white',
+    justifyContent: 'flex-start',
+    alignItems: 'flex-start',
+  },
+  routesContainer: {
+    marginTop: 20,
+  },
+  routesTitle: {
+    fontWeight: 600,
+    fontSize: 20,
+    marginBottom: 10,    
+  },
+  routesPanelContainer: {
+    flexDirection: 'column'
+  },
+  oneRouteContainer: {
+    flexDirection: 'row',
+    padding: 5,
+    justifyContent: 'space-between',
+    flexWrap: 'nowrap',
+  },
+  oneRouteName: {
+    alignSelf: 'flex-start',
+    alignContent: 'flex-start',
+    justifyContent: 'flex-start',
+  },
+  starContainer: {
+    flexDirection: 'row',
+  },
+  star: {
+    marginRight: 2,
+  },
 });

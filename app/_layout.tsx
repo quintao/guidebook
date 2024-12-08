@@ -4,7 +4,7 @@ import React from 'react';
 import * as SplashScreen from 'expo-splash-screen';
 
 SplashScreen.preventAutoHideAsync();
-setTimeout(SplashScreen.hideAsync, 2000);
+setTimeout(SplashScreen.hideAsync, 3000);
 
 export default function RootLayout() {
   return (
