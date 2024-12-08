@@ -9,7 +9,6 @@ const Aititude = require('@/assets/images/aititude.png');
 const RDDM = require('@/assets/images/rddm.png');
 
 
-
 export default function AboutScreen() {
   return (
     <View style={styles.container}>

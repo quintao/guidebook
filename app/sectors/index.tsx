@@ -17,4 +17,5 @@ const Sectors = [
   ValDilliez
 ]
 
+
 export default Sectors

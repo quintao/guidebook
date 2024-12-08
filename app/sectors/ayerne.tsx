@@ -21,8 +21,16 @@ export default {
     },
     sector_pictures: [
         {
-            path: "",
+            path: require("@/assets/images/ayerne/topo.jpg"),
             description: "Apercu general du secteur"
+        },
+        {
+            path: require("@/assets/images/ayerne/topo.jpg"),
+            description: "Secteur gauche"
+        },
+        {
+            path: require("@/assets/images/ayerne/topo.jpg"),
+            description: "Secteur droite"
         }
     ],
     routes: [
