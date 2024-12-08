@@ -1,4 +1,4 @@
-import { Text, View, StyleSheet, TouchableOpacity } from 'react-native';
+import { Text, View, StyleSheet, TouchableOpacity, Platform } from 'react-native';
 import { Link, useLocalSearchParams } from 'expo-router';
 import { Image } from 'expo-image';
 
@@ -66,12 +66,13 @@ export default function SectorScreen() {
   
   
   function renderParkingIcon(sector: any) {
+    var url = sector?.detailed_info?.parking[Platform.OS]
+    if (url == "") { return <></>}
+
     return (
       <View style={styles.mapPinContainer}>
-          <Link href={sector?.detailed_info?.parking}>
-              {/* <FontAwesome name="map-marker" size={30} color="red" /> */}
+          <Link href={url}>
               <Image source={mapsLogo} style={styles.mapsLogoContainer} />
-
           </Link>
       </View>
     );

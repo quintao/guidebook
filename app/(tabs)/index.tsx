@@ -105,7 +105,7 @@ export default function Index() {
           </View>          
         </View>
 
-        <View style={{backgroundColor: targetSector?.color, ...styles.modalLink}}>
+        <View style={styles.modalLink}>
           <Link onPress={() => cleanModalState()}    
           href={{
             pathname: "/sector",
@@ -144,7 +144,8 @@ const styles = StyleSheet.create({
     marginTop: 20,
     padding: 20,
     borderRadius: 10,
-    opacity: 0.6
+    opacity: 0.6,
+    backgroundColor: 'green',
   },
   linkToModalText: {
     color: 'white',
