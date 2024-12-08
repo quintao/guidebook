@@ -28,10 +28,6 @@ export default {
             path: require("@/assets/images/ayerne/topo.jpg"),
             description: "Secteur gauche"
         },
-        {
-            path: require("@/assets/images/ayerne/topo.jpg"),
-            description: "Secteur droite"
-        }
     ],
     routes: [
         {
@@ -48,6 +44,13 @@ export default {
                 }
             ]
         },
-        {},
+        {
+            name: "Petit rando",
+            grade: "5a",
+            stars: 3,
+            tips: "Facile, à faire!",
+            setter: "Frank Berrut",
+            requiped: "",
+        },
     ]
 };
