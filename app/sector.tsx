@@ -1,13 +1,15 @@
-import { Text, View, StyleSheet, TouchableOpacity } from 'react-native';
+import { Text, View, StyleSheet, TouchableOpacity, Platform } from 'react-native';
 import { Link, useLocalSearchParams } from 'expo-router';
 import { Image } from 'expo-image';
 
 import Colors from './constants/colors';
 import Ionicons from '@expo/vector-icons/Ionicons';
+import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 import React, { useState } from 'react';
+import ShowZoomImage from './components/zoom';
+
 
 const mapsLogo = require('@/assets/images/maps.png');
-
 
 function renderReturn() {
   return(
@@ -22,7 +24,6 @@ function renderReturn() {
   )
 }
 
-
 export default function SectorScreen() {
   const params = useLocalSearchParams();
   const {target_sector} = params;
@@ -31,7 +32,8 @@ export default function SectorScreen() {
   const [showDescription, setShowDescription] = useState(false)
   const [showAccess, setShowAccess] = useState(false)
   const [showRestaurants, setShowRestaurants] = useState(false)
-
+  const [zoomImage, setZoomImage] = useState({})
+  const [showZoom, setShowZoom] = useState(false)
 
   function renderSection(title: string, content: string, iconName: string, controlVariable: boolean, setControlVariable: any) {
     if (content == "") {
@@ -66,12 +68,13 @@ export default function SectorScreen() {
   
   
   function renderParkingIcon(sector: any) {
+    var url = sector?.detailed_info?.parking[Platform.OS]
+    if (url == "") { return <></>}
+
     return (
       <View style={styles.mapPinContainer}>
-          <Link href={sector?.detailed_info?.parking}>
-              {/* <FontAwesome name="map-marker" size={30} color="red" /> */}
+          <Link href={url}>
               <Image source={mapsLogo} style={styles.mapsLogoContainer} />
-
           </Link>
       </View>
     );
@@ -106,11 +109,51 @@ export default function SectorScreen() {
       </View>
     )
   }
+
+  function renderOneTopoImage(image_data: any) {
+    return(
+      <View style={styles.topoImageContainer}>
+        <TouchableOpacity style={styles.topoImagePanel}
+          onPress={() => {
+            setZoomImage(image_data);
+            setShowZoom(true);
+          }}
+        >
+          <Image source={image_data.path} style={{width: 150, height: 150, borderRadius: 20 }} />
+          <Text style={styles.topoImageDescription}>{image_data.description}</Text>
+          <View style={{
+            position: 'absolute',
+            top: 20,
+            left: 130,
+          }}>
+              <MaterialIcons name="zoom-in" size={32} color="grey" />
+          </View>
+        </TouchableOpacity>
+      </View>
+    )
+  }
+  function renderTopo(sector: any) {
+    if (sector?.sector_pictures.length == 0) {
+      return (<></>)
+    }
+    return (
+      <View style={styles.topoContainer}>
+        <Text style={styles.topoTitle}>Le topo</Text>
+        <View style={styles.topoImagesPanel}>
+          {sector.sector_pictures.map((picture: any, index: number) => (
+            <View key={index}>
+              {renderOneTopoImage(picture)}
+            </View>
+           ))}
+        </View>
+      </View>
+    )
+
+  }
   
   function renderRoutes(sector: any) {
     return(
       <View style={styles.generalInfoContainer}>
-        <Text>Routes go here</Text>
       </View>
     )
   }
@@ -119,9 +162,27 @@ export default function SectorScreen() {
     return(
       <View style={styles.sectorContainer}>
         {renderGeneralInfo(sector)}
+        {renderTopo(sector)}
         {renderRoutes(sector)}
       </View>
     )
+  }
+
+  function cleanZoomState() {
+    setShowZoom(false)
+    setZoomImage({})
+  }
+
+  function renderZoomImage() {
+    if (zoomImage?.path == null) {
+      return <></>
+    }
+    return (<View style={styles.zoomContainer}>
+      <Image
+        source={zoomImage.path} style={{width: "95%", height: "95%", borderRadius: 20 }}
+        contentFit='contain'
+        />
+    </View>)
   }
 
 
@@ -131,6 +192,13 @@ export default function SectorScreen() {
       <View style={styles.container}>
         { renderSector(sector) }
       </View>
+
+      <ShowZoomImage
+          name={zoomImage?.description}
+          isVisible={showZoom}
+          onClose={() => cleanZoomState()}>
+        { renderZoomImage() }
+        </ShowZoomImage>
     </View>
   );
 }
@@ -140,7 +208,8 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'flex-start',
     justifyContent: 'flex-start',
-    backgroundColor: Colors.appBackground
+    backgroundColor: Colors.appBackground,
+    marginTop: Platform.OS == "android" ? 0 : 30,
   },
   container: {
     flex: 1,
@@ -243,4 +312,34 @@ const styles = StyleSheet.create({
     borderRadius: 20,
     backgroundColor: 'white'
   },
+  topoContainer: {
+    marginTop: 20,
+  },
+  topoImageContainer: {
+    flexDirection: 'column',
+  },
+  topoImagePanel: {
+    padding: 20,
+    borderRadius: 20,
+  },
+  topoImagesPanel: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    alignItems: 'flex-start',
+    justifyContent: 'flex-start'
+  },
+  topoTitle: {
+    fontWeight: 600,
+    fontSize: 20,
+    marginBottom: 10,
+  },
+  topoImageDescription: {
+    fontSize: 12,
+    textAlign: 'center'
+  },
+  zoomContainer: {
+    backgroundColor: 'red',
+    justifyContent: 'center',
+    alignItems: 'center'
+  }
 });
