@@ -52,5 +52,10 @@ export default {
             setter: "Frank Berrut",
             requiped: "",
         },
+        {
+            name: "Le Bresil",
+            grade: "7a",
+            stars: 2,
+        },
     ]
 };
