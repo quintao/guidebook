@@ -5,8 +5,12 @@ import { Image } from 'expo-image';
 import Colors from './constants/colors';
 import Ionicons from '@expo/vector-icons/Ionicons';
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
+import FontAwesome from "@expo/vector-icons/FontAwesome";
+
 import React, { useState } from 'react';
 import ShowZoomImage from './components/zoom';
+import { DataTable } from 'react-native-paper';
+
 
 const mapsLogo = require('@/assets/images/maps.png');
 
@@ -176,41 +180,21 @@ export default function SectorScreen() {
     );
   };
 
-  function renderRouteImageInformation(route: any) {
-    if (route?.pictures == undefined) {
-      return <></>
-    }
-
-    if (route?.pictures?.length == 0) {
-      return <></>
-    }
-    return (
-      <View>
-        <MaterialIcons 
-          name="image-search" 
-          size={20} 
-          color="black" 
-          style={styles.star} 
-        />
-      </View>
-    )
-  }
-
   function renderRoutePlusInformation(route: any) {
-    const mustShowPlus = route?.pictures?.length ||
-                         route.tips != "" ||
-                         route.requipped != "" ||
-                         route.setter != ""
+    const mustShowPlus = route?.pictures?.length > 0 ||
+                         (route?.tips != undefined && route?.tips != "" )||
+                         (route?.requipped != undefined && route?.requipped != "") ||
+                         (route?.setter != undefined && route?.setter != "")
 
     if (mustShowPlus == false) {
-      return <></>
+      return <>-</>
     }
     return (
       <View>
-        <MaterialIcons 
-          name="expand-more" 
+        <FontAwesome 
+          name="plus-circle" 
           size={20} 
-          color="black" 
+          color="green" 
           style={styles.star} 
         />
       </View>
@@ -218,19 +202,13 @@ export default function SectorScreen() {
   }
 
   function renderOneRoute(route: any) {
-    return(
-      <View style={styles.oneRouteContainer}>
-        <View style={styles.oneRouteName}>
-          <Text>{route.name}</Text>
-        </View>
-        <View style={{flexDirection: 'row'}}>
-          <Text>{route.grade}</Text>
-          <StarRating rating={route.stars} />
-          { renderRouteImageInformation(route)}
-          { renderRoutePlusInformation(route)}
-
-        </View>
-      </View>
+    return (
+    <DataTable.Row>
+      <DataTable.Cell>{route?.name}</DataTable.Cell>
+      <DataTable.Cell style={{justifyContent: 'center'}}>{route?.grade}</DataTable.Cell>
+      <DataTable.Cell style={{justifyContent: 'center'}}><StarRating rating={route?.stars}/></DataTable.Cell>
+      <DataTable.Cell style={{justifyContent: 'center'}}>{ renderRoutePlusInformation(route)}</DataTable.Cell>
+    </DataTable.Row>
     )
   }
   
@@ -238,16 +216,25 @@ export default function SectorScreen() {
     if (sector?.routes.length == 0) {
       return (<></>)
     }
+
     return (
       <View style={styles.routesContainer}>
-        <Text style={styles.routesTitle}>Les routes</Text>
-        <View style={styles.routesPanelContainer}>
+        <Text style={styles.routesTitle}>Les voies</Text>
+        <DataTable style={styles.tableContainer}>
+          <DataTable.Header style={styles.tableHeader}>
+            <DataTable.Title style={{justifyContent: 'center'}}>Nom</DataTable.Title>
+            <DataTable.Title style={{justifyContent: 'center'}}>Cotation</DataTable.Title>
+            <DataTable.Title style={{justifyContent: 'center'}}>Interet</DataTable.Title>
+            <DataTable.Title style={{justifyContent: 'center'}}>Plus d'info</DataTable.Title>
+          </DataTable.Header>
+          
           {sector.routes.map((route: any, index: number) => (
             <View key={index}>
               {renderOneRoute(route)}
             </View>
-           ))}
-        </View>
+          ))}
+
+          </DataTable>
       </View>
     )
   }
@@ -302,7 +289,6 @@ const styles = StyleSheet.create({
     alignItems: 'flex-start',
     justifyContent: 'flex-start',
     backgroundColor: Colors.appBackground,
-    marginTop: Platform.OS == "android" ? 0 : 30,
   },
   container: {
     flex: 1,
@@ -320,7 +306,7 @@ const styles = StyleSheet.create({
     color: Colors.link,
   },
   returnContainer: {
-    marginTop: 10,
+    marginTop: Platform.OS == "android" ? 50 : 50,
     marginLeft: 10,
     alignSelf: 'flex-start'
   },
@@ -466,5 +452,11 @@ const styles = StyleSheet.create({
   },
   star: {
     marginRight: 2,
+  },
+  tableContainer: {
+    padding: 15,
+  },
+  tableHeader: {
+    backgroundColor: '#DCDCDC',
   },
 });
