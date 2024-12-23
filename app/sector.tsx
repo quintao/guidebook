@@ -187,7 +187,7 @@ export default function SectorScreen() {
                          (route?.setter != undefined && route?.setter != "")
 
     if (mustShowPlus == false) {
-      return <>-</>
+      return <Text>-</Text>
     }
     return (
       <View>
@@ -204,8 +204,8 @@ export default function SectorScreen() {
   function renderOneRoute(route: any) {
     return (
     <DataTable.Row>
-      <DataTable.Cell>{route?.name}</DataTable.Cell>
-      <DataTable.Cell style={{justifyContent: 'center'}}>{route?.grade}</DataTable.Cell>
+      <DataTable.Cell><Text>{route?.name}</Text></DataTable.Cell>
+      <DataTable.Cell style={{justifyContent: 'center'}}><Text>{route?.grade}</Text></DataTable.Cell>
       <DataTable.Cell style={{justifyContent: 'center'}}><StarRating rating={route?.stars}/></DataTable.Cell>
       <DataTable.Cell style={{justifyContent: 'center'}}>{ renderRoutePlusInformation(route)}</DataTable.Cell>
     </DataTable.Row>
@@ -222,10 +222,10 @@ export default function SectorScreen() {
         <Text style={styles.routesTitle}>Les voies</Text>
         <DataTable style={styles.tableContainer}>
           <DataTable.Header style={styles.tableHeader}>
-            <DataTable.Title style={{justifyContent: 'center'}}>Nom</DataTable.Title>
-            <DataTable.Title style={{justifyContent: 'center'}}>Cotation</DataTable.Title>
-            <DataTable.Title style={{justifyContent: 'center'}}>Interet</DataTable.Title>
-            <DataTable.Title style={{justifyContent: 'center'}}>Plus d'info</DataTable.Title>
+            <DataTable.Title style={{justifyContent: 'center'}}><Text>Nom</Text></DataTable.Title>
+            <DataTable.Title style={{justifyContent: 'center'}}><Text>Cotation</Text></DataTable.Title>
+            <DataTable.Title style={{justifyContent: 'center'}}><Text>Interet</Text></DataTable.Title>
+            <DataTable.Title style={{justifyContent: 'center'}}><Text>Plus d'info</Text></DataTable.Title>
           </DataTable.Header>
           
           {sector.routes.map((route: any, index: number) => (
