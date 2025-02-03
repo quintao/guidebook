@@ -1,4 +1,4 @@
-import { Modal, View, Text, Pressable, StyleSheet, Dimensions } from 'react-native';
+import { Modal, View, Text, Pressable, StyleSheet, Dimensions, TouchableWithoutFeedback } from 'react-native';
 import { PropsWithChildren } from 'react';
 import MaterialIcons from '@expo/vector-icons/MaterialIcons';
 import React from 'react';
@@ -9,14 +9,14 @@ type Props = PropsWithChildren<{
   name: string,
 }>;
 
-export default function ShowZoomImage({ isVisible, children, onClose, name }: Props) {
+export default function ShowMoreInfoRoute({ isVisible, children, onClose, name }: Props) {
   return (
-    <Modal animationType='fade'  transparent={true} visible={isVisible}>
+    <Modal animationType="slide" transparent={true} visible={isVisible}>
       <View style={styles.modalContent}>
         <View style={styles.titleContainer}>
           <Text style={styles.title}>{name}</Text>
           <Pressable onPress={onClose} style={{padding: 10}}>
-            <MaterialIcons name="close" color="#fff" size={22} />
+            <MaterialIcons name="close" color="#fff" size={15} />
           </Pressable>
         </View>
         {children}
@@ -27,18 +27,16 @@ export default function ShowZoomImage({ isVisible, children, onClose, name }: Pr
 
 const styles = StyleSheet.create({
   modalContent: {
-    height: '50%',
+    height: '30%',
     width: '100%',
-    backgroundColor: 'black',
     borderRadius: 18,
     position: 'absolute',
     bottom: (Dimensions.get('window').height / 5),
   },
   titleContainer: {
-    height: 50,
-    opacity: 0.8,
-    borderTopRightRadius: 18,
-    borderTopLeftRadius: 18,
+    height: '15%',
+    borderTopRightRadius: 10,
+    borderTopLeftRadius: 10,
     paddingHorizontal: 20,
     flexDirection: 'row',
     alignItems: 'center',

@@ -57,5 +57,11 @@ export default {
             grade: "7a",
             stars: 2,
         },
+        {
+            name: "La Grand Six",
+            grade: "7a",
+            stars: 2,
+            requiped: "2009",
+        },
     ]
 };
