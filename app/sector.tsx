@@ -182,43 +182,76 @@ export default function SectorScreen() {
   
     return (
       <View style={styles.starContainer}>
-        {stars}
+        <Text>{stars}</Text>
       </View>
     );
   };
 
-  function renderRoutePlusInformation(route: any) {
-    const mustShowPlus = route?.pictures?.length > 0 ||
-                         (route?.tips != undefined && route?.tips != "" ) ||
+  function renderRouteImage(route: any) {
+    const mustShowPlus = route?.pictures?.length > 0
+
+    if (mustShowPlus == false) {
+      return <Text>-</Text>
+    }
+    return (
+      <TouchableOpacity  style={{padding: 10}}
+        onPress={() => {
+          setZoomImage(route?.pictures[0])
+          setShowZoom(true);
+        }}>
+        <Text>
+          <FontAwesome 
+            name="photo" 
+            size={20} 
+            color="#523b50" 
+            style={styles.star} 
+          />
+        </Text>
+      </TouchableOpacity>
+    )
+  }
+
+  function renderRouteExtraInfo(route: any) {
+    const mustShowPlus = (route?.tips != undefined && route?.tips != "" ) ||
                          (route?.requiped != undefined && route?.requiped != "") ||
                          (route?.setter != undefined && route?.setter != "")
 
     if (mustShowPlus == false) {
-      return <>-</>
+      return <Text>-</Text>
     }
     return (
-      <TouchableOpacity
+      <TouchableOpacity style={{padding: 10}}
         onPress={() => {
           setMoreInfoRoute(route);
           setShowMoreInfoRoute(true);
         }}>
-        <FontAwesome 
-          name="plus-circle" 
-          size={20} 
-          color="green" 
-          style={styles.star} 
-        />
+        <Text>
+          <FontAwesome 
+            name="plus-circle" 
+            size={20} 
+            color="green" 
+            style={styles.star} 
+          />
+        </Text>
       </TouchableOpacity>
     )
+  }
+
+  function renderRoutePlusInformation(route: any) {
+    return (
+    <View style={{flexDirection: 'row', alignContent: 'space-around'}}>
+      { renderRouteExtraInfo(route) }
+      { renderRouteImage(route) }
+    </View>)
   }
 
   function renderOneRoute(route: any) {
     return (
     <DataTable.Row>
-      <DataTable.Cell>{route?.name}</DataTable.Cell>
-      <DataTable.Cell style={{justifyContent: 'center'}}>{route?.grade}</DataTable.Cell>
+      <DataTable.Cell><Text>{route?.name}</Text></DataTable.Cell>
+      <DataTable.Cell style={{justifyContent: 'center'}}><Text>{route?.grade}</Text></DataTable.Cell>
       <DataTable.Cell style={{justifyContent: 'center'}}><StarRating rating={route?.stars}/></DataTable.Cell>
-      <DataTable.Cell style={{justifyContent: 'center'}}>{ renderRoutePlusInformation(route)}</DataTable.Cell>
+      § <DataTable.Cell style={{justifyContent: 'center'}}>{ renderRoutePlusInformation(route)}</DataTable.Cell>
     </DataTable.Row>
     )
   }
@@ -233,10 +266,10 @@ export default function SectorScreen() {
         <Text style={styles.routesTitle}>Les voies</Text>
         <DataTable style={styles.tableContainer}>
           <DataTable.Header style={styles.tableHeader}>
-            <DataTable.Title style={{justifyContent: 'center'}}>Nom</DataTable.Title>
-            <DataTable.Title style={{justifyContent: 'center'}}>Cotation</DataTable.Title>
-            <DataTable.Title style={{justifyContent: 'center'}}>Interet</DataTable.Title>
-            <DataTable.Title style={{justifyContent: 'center'}}>Plus d'info</DataTable.Title>
+            <DataTable.Title style={{justifyContent: 'center'}}><Text>Nom</Text></DataTable.Title>
+            <DataTable.Title style={{justifyContent: 'center'}}><Text>Cotation</Text></DataTable.Title>
+            <DataTable.Title style={{justifyContent: 'center'}}><Text>Interet</Text></DataTable.Title>
+            <DataTable.Title style={{justifyContent: 'center'}}><Text>Plus d'info</Text></DataTable.Title>
           </DataTable.Header>
           
           {sector.routes.map((route: any, index: number) => (
@@ -274,21 +307,23 @@ export default function SectorScreen() {
     if (zoomImage?.path == null) {
       return <></>
     }
-    return (<View style={styles.zoomContainer}>
-      <Image
-        source={zoomImage.path} style={{width: "95%", height: "95%", borderRadius: 20 }}
-        contentFit='contain'
-        />
-    </View>)
+    return (
+    <View style={styles.zoomContainer}>
+      <Text style={{marginTop: 20, color:'white'}}>{zoomImage?.description}</Text>
+       <Image
+          source={zoomImage.path} style={{width: "90%", height: "80%", borderRadius: 10 }}
+          contentFit='contain'/>
+        <TouchableOpacity
+          onPress={() => cleanZoomState()}
+          style={{padding: 8, marginBottom: 20, borderColor: 'white',  borderWidth: 1,  borderRadius: 10}}>
+            <Text style={{color: 'white'}}>Fermer</Text>
+        </TouchableOpacity>
+    </View>
+    )
   }
 
   function renderMoreInfoRoute() {
     const route = moreInfoRoute;
-
-    // const mustShowPlus = route?.pictures?.length > 0 ||
-    //                      (route?.tips != undefined && route?.tips != "" )||
-    //                      (route?.requipped != undefined && route?.requipped != "") ||
-    //                      (route?.setter != undefined && route?.setter != "")
 
     return (
     <View style={styles.moreInfoRouteContainer}>
@@ -325,9 +360,7 @@ export default function SectorScreen() {
       </View>
 
         <ShowZoomImage
-          name={zoomImage?.description}
-          isVisible={showZoom}
-          onClose={() => cleanZoomState()}>
+          isVisible={showZoom}>
           { renderZoomImage() }
         </ShowZoomImage>
 
@@ -479,8 +512,8 @@ const styles = StyleSheet.create({
     textAlign: 'center'
   },
   zoomContainer: {
-    backgroundColor: '#e1e2e3',
-    justifyContent: 'center',
+    backgroundColor: '#161716',
+    opacity: 0.95,
     alignItems: 'center',
   },
   routesContainer: {

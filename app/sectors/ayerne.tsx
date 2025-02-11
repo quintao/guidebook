@@ -39,7 +39,7 @@ export default {
             requiped: "",
             pictures: [
                 {
-                    path: "",
+                    path: require("@/assets/images/ayerne/fissure.jpg"),
                     description: "Camille dans le crux",
                 }
             ]
