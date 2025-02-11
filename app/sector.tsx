@@ -1,4 +1,4 @@
-import { Text, View, StyleSheet, TouchableOpacity, Platform , ScrollView} from 'react-native';
+import { Text, View, StyleSheet, TouchableOpacity, Platform , ScrollView, TouchableWithoutFeedback} from 'react-native';
 import { Link, useLocalSearchParams } from 'expo-router';
 import { Image } from 'expo-image';
 
@@ -9,6 +9,7 @@ import FontAwesome from "@expo/vector-icons/FontAwesome";
 
 import React, { useState } from 'react';
 import ShowZoomImage from './components/zoom';
+import ShowMoreInfoRoute from './components/moreinfo';
 import { DataTable } from 'react-native-paper';
 
 
@@ -35,8 +36,14 @@ export default function SectorScreen() {
   const [showDescription, setShowDescription] = useState(false)
   const [showAccess, setShowAccess] = useState(false)
   const [showRestaurants, setShowRestaurants] = useState(false)
+
+  // For topo images
   const [zoomImage, setZoomImage] = useState({})
   const [showZoom, setShowZoom] = useState(false)
+
+  // For more info about one route.
+  const [moreInfoRoute, setMoreInfoRoute] = useState({})
+  const [showMoreInfoRoute, setShowMoreInfoRoute] = useState(false)
 
   function renderSection(title: string, content: string, iconName: string, controlVariable: boolean, setControlVariable: any) {
     if (content == "") {
@@ -105,9 +112,7 @@ export default function SectorScreen() {
       <View style={styles.generalInfoContainer}>
           { renderSectorNameAndParking(sector) }
           { renderDescription(sector) }
-
           { renderAccess(sector)}
-  
           { renderRestaurants(sector) }
       </View>
     )
@@ -122,19 +127,21 @@ export default function SectorScreen() {
             setShowZoom(true);
           }}
         >
+        <View>
           <Image
             source={image_data.path}
             style={{width: 150, height: 150, borderRadius: 20 }}
             contentFit='scale-down'
           />
-          <Text style={styles.topoImageDescription}>{image_data.description}</Text>
           <View style={{
             position: 'absolute',
             top: 20,
-            left: 130,
+            left: 120,
           }}>
               <MaterialIcons name="zoom-in" size={32} color="grey" />
-          </View>
+          </View>          
+        </View>
+          <Text style={styles.topoImageDescription}>{image_data.description}</Text>
         </TouchableOpacity>
       </View>
     )
@@ -182,22 +189,26 @@ export default function SectorScreen() {
 
   function renderRoutePlusInformation(route: any) {
     const mustShowPlus = route?.pictures?.length > 0 ||
-                         (route?.tips != undefined && route?.tips != "" )||
-                         (route?.requipped != undefined && route?.requipped != "") ||
+                         (route?.tips != undefined && route?.tips != "" ) ||
+                         (route?.requiped != undefined && route?.requiped != "") ||
                          (route?.setter != undefined && route?.setter != "")
 
     if (mustShowPlus == false) {
       return <>-</>
     }
     return (
-      <View>
+      <TouchableOpacity
+        onPress={() => {
+          setMoreInfoRoute(route);
+          setShowMoreInfoRoute(true);
+        }}>
         <FontAwesome 
           name="plus-circle" 
           size={20} 
           color="green" 
           style={styles.star} 
         />
-      </View>
+      </TouchableOpacity>
     )
   }
 
@@ -254,6 +265,11 @@ export default function SectorScreen() {
     setZoomImage({})
   }
 
+  function cleanMoreInfoRouteState() {
+    setShowMoreInfoRoute(false)
+    setMoreInfoRoute({})
+  } 
+
   function renderZoomImage() {
     if (zoomImage?.path == null) {
       return <></>
@@ -266,6 +282,41 @@ export default function SectorScreen() {
     </View>)
   }
 
+  function renderMoreInfoRoute() {
+    const route = moreInfoRoute;
+
+    // const mustShowPlus = route?.pictures?.length > 0 ||
+    //                      (route?.tips != undefined && route?.tips != "" )||
+    //                      (route?.requipped != undefined && route?.requipped != "") ||
+    //                      (route?.setter != undefined && route?.setter != "")
+
+    return (
+    <View style={styles.moreInfoRouteContainer}>
+      {route?.tips &&
+        <View style={{flexDirection: 'row'}}>
+          <Text>Tip: </Text>
+          <Text>{route.tips}</Text>
+        </View>
+      }
+
+      {route?.requiped &&
+        <View style={{flexDirection: 'row'}}>
+          <Text>Reequipment: </Text>
+          <Text>{route.requiped}</Text>
+        </View>
+      }
+
+      {route?.setter &&
+        <View style={{flexDirection: 'row'}}>
+          <Text>Ouverte par: </Text>
+          <Text>{route.setter}</Text>
+        </View>
+      }  
+
+    </View>
+    )
+  }
+
   return (
     <View style={styles.screen}>
       { renderReturn() }
@@ -273,12 +324,19 @@ export default function SectorScreen() {
         { renderSector(sector) }
       </View>
 
-      <ShowZoomImage
+        <ShowZoomImage
           name={zoomImage?.description}
           isVisible={showZoom}
           onClose={() => cleanZoomState()}>
-        { renderZoomImage() }
+          { renderZoomImage() }
         </ShowZoomImage>
+
+        <ShowMoreInfoRoute
+         name={moreInfoRoute?.name}
+         isVisible={showMoreInfoRoute}
+         onClose={() => cleanMoreInfoRouteState()}>
+          { renderMoreInfoRoute() }
+         </ShowMoreInfoRoute>
     </View>
   );
 }
@@ -421,12 +479,16 @@ const styles = StyleSheet.create({
     textAlign: 'center'
   },
   zoomContainer: {
-    backgroundColor: 'white',
-    justifyContent: 'flex-start',
-    alignItems: 'flex-start',
+    backgroundColor: '#e1e2e3',
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   routesContainer: {
     marginTop: 20,
+  },
+  moreInfoRouteContainer: {
+    backgroundColor: "#e1e2e3",
+    padding: 20,
   },
   routesTitle: {
     fontWeight: 600,

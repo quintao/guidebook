@@ -59,7 +59,7 @@ export default function Index() {
               key={sectorData.overview.name} 
               coordinate={getCoordinatesFromSectorData(sectorData)}
               title={sectorData.overview?.name}
-              showsBuilding={false}
+              showsBuildings={false}
               onPress={e => {
                 const key = buildKey(e.nativeEvent.coordinate)
                 cleanModalState()
@@ -144,12 +144,12 @@ const styles = StyleSheet.create({
     marginTop: 20,
     padding: 20,
     borderRadius: 10,
-    opacity: 0.6,
+    opacity: 0.8,
     backgroundColor: 'green',
   },
   linkToModalText: {
     color: 'white',
-    fontWeight: 500
+    fontWeight: 600
   },
   modalShortDescription: {
     marginVertical: 10
