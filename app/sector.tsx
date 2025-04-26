@@ -42,8 +42,7 @@ export default function SectorScreen() {
   const [showZoom, setShowZoom] = useState(false)
 
   // For more info about one route.
-  const [moreInfoRoute, setMoreInfoRoute] = useState({})
-  const [showMoreInfoRoute, setShowMoreInfoRoute] = useState(false)
+  const [moreInfoIndex, setMoreInfoIndex] = useState(-1)
 
   function renderSection(title: string, content: string, iconName: string, controlVariable: boolean, setControlVariable: any) {
     if (content == "") {
@@ -191,7 +190,7 @@ export default function SectorScreen() {
     const mustShowPlus = route?.pictures?.length > 0
 
     if (mustShowPlus == false) {
-      return <Text>-</Text>
+      return <Text></Text>
     }
     return (
       <TouchableOpacity  style={{padding: 10}}
@@ -211,7 +210,7 @@ export default function SectorScreen() {
     )
   }
 
-  function renderRouteExtraInfo(route: any) {
+  function renderRouteExtraInfo(route: any, index: number) {
     const mustShowPlus = (route?.tips != undefined && route?.tips != "" ) ||
                          (route?.requiped != undefined && route?.requiped != "") ||
                          (route?.setter != undefined && route?.setter != "")
@@ -222,14 +221,17 @@ export default function SectorScreen() {
     return (
       <TouchableOpacity style={{padding: 10}}
         onPress={() => {
-          setMoreInfoRoute(route);
-          setShowMoreInfoRoute(true);
+          if (moreInfoIndex == index) {
+            setMoreInfoIndex(-1)
+          } else {
+            setMoreInfoIndex(index)
+          }
         }}>
         <Text>
           <FontAwesome 
-            name="plus-circle" 
+            name={moreInfoIndex == index ? "minus-circle" : "plus-circle" }
             size={20} 
-            color="green" 
+            color={moreInfoIndex == index ? "red": "green"} 
             style={styles.star} 
           />
         </Text>
@@ -237,25 +239,65 @@ export default function SectorScreen() {
     )
   }
 
-  function renderRoutePlusInformation(route: any) {
+  function renderRoutePlusInformation(route: any, index: number) {
     return (
     <View style={{flexDirection: 'row', alignContent: 'space-around'}}>
-      { renderRouteExtraInfo(route) }
+      { renderRouteExtraInfo(route, index) }
       { renderRouteImage(route) }
     </View>)
   }
 
-  function renderOneRoute(route: any) {
+
+  function renderMoreInfoRoute(route: any) {
     return (
-    <DataTable.Row>
+    <View style={styles.moreInfoRouteContainer}>
+      {route?.tips &&
+        <View style={{flexDirection: 'row'}}>
+          <Text>Tip: </Text>
+          <Text>{route.tips}</Text>
+        </View>
+      }
+
+      {route?.requiped &&
+        <View style={{flexDirection: 'row'}}>
+          <Text>Reequipment: </Text>
+          <Text>{route.requiped}</Text>
+        </View>
+      }
+
+      {route?.setter &&
+        <View style={{flexDirection: 'row'}}>
+          <Text>Ouverte par: </Text>
+          <Text>{route.setter}</Text>
+        </View>
+      }  
+
+    </View>
+    )
+  }
+
+  function renderOneRoute(route: any, index: number) {
+    return (
+      <View>
+      <DataTable.Row  style={{justifyContent: 'center'}}>
       <DataTable.Cell><Text>{route?.name}</Text></DataTable.Cell>
       <DataTable.Cell style={{justifyContent: 'center'}}><Text>{route?.grade}</Text></DataTable.Cell>
       <DataTable.Cell style={{justifyContent: 'center'}}><StarRating rating={route?.stars}/></DataTable.Cell>
-      <DataTable.Cell style={{justifyContent: 'center'}}>{ renderRoutePlusInformation(route)}</DataTable.Cell>
-    </DataTable.Row>
+      <DataTable.Cell style={{justifyContent: 'center'}}>{ renderRoutePlusInformation(route, index)}</DataTable.Cell>
+      </DataTable.Row>
+        { moreInfoIndex == index &&
+          <DataTable.Row  style={{justifyContent: "center"}}>
+            <DataTable.Cell>
+             { renderMoreInfoRoute(route) }
+            </DataTable.Cell>
+          </DataTable.Row>
+        }
+      </View>    
     )
   }
   
+
+
   function renderRoutes(sector: any) {
     if (sector?.routes.length == 0) {
       return (<></>)
@@ -274,7 +316,7 @@ export default function SectorScreen() {
           
           {sector.routes.map((route: any, index: number) => (
             <View key={index}>
-              {renderOneRoute(route)}
+              {renderOneRoute(route, index)}
             </View>
           ))}
 
@@ -322,36 +364,6 @@ export default function SectorScreen() {
     )
   }
 
-  function renderMoreInfoRoute() {
-    const route = moreInfoRoute;
-
-    return (
-    <View style={styles.moreInfoRouteContainer}>
-      {route?.tips &&
-        <View style={{flexDirection: 'row'}}>
-          <Text>Tip: </Text>
-          <Text>{route.tips}</Text>
-        </View>
-      }
-
-      {route?.requiped &&
-        <View style={{flexDirection: 'row'}}>
-          <Text>Reequipment: </Text>
-          <Text>{route.requiped}</Text>
-        </View>
-      }
-
-      {route?.setter &&
-        <View style={{flexDirection: 'row'}}>
-          <Text>Ouverte par: </Text>
-          <Text>{route.setter}</Text>
-        </View>
-      }  
-
-    </View>
-    )
-  }
-
   return (
     <View style={styles.screen}>
       { renderReturn() }
@@ -364,12 +376,12 @@ export default function SectorScreen() {
           { renderZoomImage() }
         </ShowZoomImage>
 
-        <ShowMoreInfoRoute
+        {/* <ShowMoreInfoRoute
          name={moreInfoRoute?.name}
          isVisible={showMoreInfoRoute}
          onClose={() => cleanMoreInfoRouteState()}>
           { renderMoreInfoRoute() }
-         </ShowMoreInfoRoute>
+         </ShowMoreInfoRoute> */}
     </View>
   );
 }
@@ -520,8 +532,10 @@ const styles = StyleSheet.create({
     marginTop: 20,
   },
   moreInfoRouteContainer: {
-    backgroundColor: "#e1e2e3",
-    padding: 20,
+    backgroundColor: '#e1e2e3',
+    padding: 15,
+    margin: 20,
+    borderRadius: 20,
   },
   routesTitle: {
     fontWeight: 600,
