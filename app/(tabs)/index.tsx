@@ -52,7 +52,7 @@ export default function Index() {
   function renderSectorLocations() {
     const mapping = buildLatLongKeysMap()
     return (
-      <MapView style={styles.map} initialRegion={initialRegion}>
+      <MapView style={styles.map} region={initialRegion}>
         {Sectors.map((sectorData) => {
           return (
             <Marker 
@@ -144,12 +144,13 @@ const styles = StyleSheet.create({
     marginTop: 20,
     padding: 20,
     borderRadius: 10,
-    opacity: 0.8,
+    opacity: 1.0,
     backgroundColor: 'green',
   },
   linkToModalText: {
+    padding: 20,
     color: 'white',
-    fontWeight: 600
+    fontWeight: 800
   },
   modalShortDescription: {
     marginVertical: 10

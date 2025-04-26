@@ -24,10 +24,6 @@ export default {
             path: require("@/assets/images/ayerne/topo.jpg"),
             description: "Apercu general du secteur"
         },
-        {
-            path: require("@/assets/images/ayerne/topo.jpg"),
-            description: "Secteur gauche"
-        },
     ],
     routes: [
         {
@@ -37,31 +33,87 @@ export default {
             tips: "Pas de bloc au depart",
             setter: "Frank Berrut",
             requiped: "",
+        },
+        {
+            name: "Tik Tok",
+            grade: "6a+",
+            stars: 1,
+            tips: "",
+            setter: "Frank Berrut",
+            requiped: "",
+        },
+        {
+            name: "J'ai la dalle",
+            grade: "5b+",
+            stars: 2,
+        },
+        {
+            name: "Le téléphérique",
+            grade: "5c",
+            stars: 2,
+        },
+        {
+            name: "Voie de la cheminee",
+            grade: "6a",
+            stars: 1,
+        },
+        {
+            name: "Haribo",
+            grade: "6c+",
+            stars: 2,
+            tips: "Magnifique dülfer",
+        },
+        {
+            name: "Classico",
+            grade: "6a",
+            stars: 3,
             pictures: [
                 {
                     path: require("@/assets/images/ayerne/fissure.jpg"),
                     description: "Camille dans le crux",
                 }
-            ]
+            ]            
         },
         {
-            name: "Petit rando",
-            grade: "5a",
+            name: "Le mur des lamentations",
+            grade: "6b+",
+            stars: 2,
+            tips: "Rejoint Haribo après le 4ème spit",
+        },
+        {
+            name: "Le mur des lamentations direct",
+            grade: "7a",
             stars: 3,
-            tips: "Facile, à faire!",
-            setter: "Frank Berrut",
-            requiped: "",
         },
         {
-            name: "Le Bresil",
-            grade: "7a",
+            name: "Bon voyage",
+            grade: "6a+",
             stars: 2,
         },
         {
-            name: "La Grand Six",
-            grade: "7a",
+            name: "Pestouille",
+            grade: "5c",
+            stars: 1,
+        },
+        {
+            name: "Stringer",
+            grade: "5a",
+            stars: 1,
+        },
+        {
+            name: "Farouche",
+            grade: "7c",
             stars: 2,
-            requiped: "2009",
+        },
+        {
+            name: "Quntus",
+            grade: "7b",
+            stars: 2,
+        },
+        {
+            name: "Le philosophe",
+            grade: "5c",
+            stars: 1,
         },
     ]
 };
