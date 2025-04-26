@@ -132,13 +132,6 @@ export default function SectorScreen() {
             style={{width: 150, height: 150, borderRadius: 20 }}
             contentFit='scale-down'
           />
-          <View style={{
-            position: 'absolute',
-            top: 20,
-            left: 120,
-          }}>
-              <MaterialIcons name="zoom-in" size={32} color="grey" />
-          </View>          
         </View>
           <Text style={styles.topoImageDescription}>{image_data.description}</Text>
         </TouchableOpacity>
@@ -190,7 +183,7 @@ export default function SectorScreen() {
     const mustShowPlus = route?.pictures?.length > 0
 
     if (mustShowPlus == false) {
-      return <Text></Text>
+      return <></>
     }
     return (
       <TouchableOpacity  style={{padding: 10}}
@@ -216,8 +209,9 @@ export default function SectorScreen() {
                          (route?.setter != undefined && route?.setter != "")
 
     if (mustShowPlus == false) {
-      return <Text>-</Text>
+      return <></>
     }
+  
     return (
       <TouchableOpacity style={{padding: 10}}
         onPress={() => {
@@ -238,10 +232,24 @@ export default function SectorScreen() {
       </TouchableOpacity>
     )
   }
+   
+  function renderNoExtraInfo(route: any) {
+    const has_extra = (route?.tips != undefined && route?.tips != "" ) ||
+                         (route?.requiped != undefined && route?.requiped != "") ||
+                         (route?.setter != undefined && route?.setter != "")
+    const has_image = route?.pictures?.length > 0
+    if (has_extra == false && has_image == false) {
+      return <Text>-</Text>
+    } else {
+      return <></>
+    }
+  }
+
 
   function renderRoutePlusInformation(route: any, index: number) {
     return (
     <View style={{flexDirection: 'row', alignContent: 'space-around'}}>
+      { renderNoExtraInfo(route) }
       { renderRouteExtraInfo(route, index) }
       { renderRouteImage(route) }
     </View>)
@@ -252,21 +260,21 @@ export default function SectorScreen() {
     return (
     <View style={styles.moreInfoRouteContainer}>
       {route?.tips &&
-        <View style={{flexDirection: 'row'}}>
+        <View style={{flexDirection: 'row', padding: 10}}>
           <Text>Tip: </Text>
           <Text>{route.tips}</Text>
         </View>
       }
 
       {route?.requiped &&
-        <View style={{flexDirection: 'row'}}>
+        <View style={{flexDirection: 'row', padding: 10}}>
           <Text>Reequipment: </Text>
           <Text>{route.requiped}</Text>
         </View>
       }
 
       {route?.setter &&
-        <View style={{flexDirection: 'row'}}>
+        <View style={{flexDirection: 'row', padding: 10}}>
           <Text>Ouverte par: </Text>
           <Text>{route.setter}</Text>
         </View>
@@ -340,12 +348,7 @@ export default function SectorScreen() {
     setZoomImage({})
   }
 
-  function cleanMoreInfoRouteState() {
-    setShowMoreInfoRoute(false)
-    setMoreInfoRoute({})
-  } 
-
-  function renderZoomImage() {
+   function renderZoomImage() {
     if (zoomImage?.path == null) {
       return <></>
     }
@@ -357,7 +360,7 @@ export default function SectorScreen() {
           contentFit='contain'/>
         <TouchableOpacity
           onPress={() => cleanZoomState()}
-          style={{padding: 8, marginBottom: 20, borderColor: 'white',  borderWidth: 1,  borderRadius: 10}}>
+          style={{padding: 8, margin: 20, borderColor: 'white',  borderWidth: 1,  borderRadius: 10}}>
             <Text style={{color: 'white'}}>Fermer</Text>
         </TouchableOpacity>
     </View>
@@ -375,13 +378,6 @@ export default function SectorScreen() {
           isVisible={showZoom}>
           { renderZoomImage() }
         </ShowZoomImage>
-
-        {/* <ShowMoreInfoRoute
-         name={moreInfoRoute?.name}
-         isVisible={showMoreInfoRoute}
-         onClose={() => cleanMoreInfoRouteState()}>
-          { renderMoreInfoRoute() }
-         </ShowMoreInfoRoute> */}
     </View>
   );
 }

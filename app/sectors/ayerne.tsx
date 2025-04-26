@@ -33,12 +33,6 @@ export default {
             tips: "Pas de bloc au depart",
             setter: "Frank Berrut",
             requiped: "",
-            pictures: [
-                {
-                    path: require("@/assets/images/ayerne/fissure.jpg"),
-                    description: "Camille dans le crux",
-                }
-            ]
         },
         {
             name: "Tik Tok",
@@ -73,6 +67,12 @@ export default {
             name: "Classico",
             grade: "6a",
             stars: 3,
+            pictures: [
+                {
+                    path: require("@/assets/images/ayerne/fissure.jpg"),
+                    description: "Camille dans le crux",
+                }
+            ]            
         },
         {
             name: "Le mur des lamentations",
