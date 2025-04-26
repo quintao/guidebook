@@ -43,25 +43,6 @@ export default {
                     description: "Camille dans le crux",
                 }
             ]
-        },
-        {
-            name: "Petit rando",
-            grade: "5a",
-            stars: 3,
-            tips: "Facile, à faire!",
-            setter: "Frank Berrut",
-            requiped: "",
-        },
-        {
-            name: "Le Bresil",
-            grade: "7a",
-            stars: 2,
-        },
-        {
-            name: "La Grand Six",
-            grade: "7a",
-            stars: 2,
-            requiped: "2009",
-        },
+        }
     ]
 };
