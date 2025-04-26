@@ -251,7 +251,7 @@ export default function SectorScreen() {
       <DataTable.Cell><Text>{route?.name}</Text></DataTable.Cell>
       <DataTable.Cell style={{justifyContent: 'center'}}><Text>{route?.grade}</Text></DataTable.Cell>
       <DataTable.Cell style={{justifyContent: 'center'}}><StarRating rating={route?.stars}/></DataTable.Cell>
-      § <DataTable.Cell style={{justifyContent: 'center'}}>{ renderRoutePlusInformation(route)}</DataTable.Cell>
+      <DataTable.Cell style={{justifyContent: 'center'}}>{ renderRoutePlusInformation(route)}</DataTable.Cell>
     </DataTable.Row>
     )
   }
