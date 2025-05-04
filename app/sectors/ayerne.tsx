@@ -53,7 +53,7 @@ export default {
             stars: 2,
         },
         {
-            name: "Voie de la cheminee",
+            name: "Agate",
             grade: "6a",
             stars: 1,
         },
@@ -104,6 +104,7 @@ export default {
             name: "Farouche",
             grade: "7c",
             stars: 2,
+            tips: "Doigts d'acier",
         },
         {
             name: "Quntus",
