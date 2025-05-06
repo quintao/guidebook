@@ -1,4 +1,4 @@
-import { Text, View, StyleSheet, TouchableOpacity, Platform , ScrollView, TouchableWithoutFeedback} from 'react-native';
+import { Text, View, StyleSheet, TouchableOpacity, Platform , ScrollView } from 'react-native';
 import { Link, useLocalSearchParams } from 'expo-router';
 import { Image } from 'expo-image';
 
@@ -12,6 +12,8 @@ import ShowZoomImage from './components/zoom';
 import { DataTable } from 'react-native-paper';
 
 import Markdown from 'react-native-markdown-display';
+import ImageView from "react-native-image-viewing";
+import ResolveImage from "./components/image_resolver";
 
 const mapsLogo = require('@/assets/images/maps.png');
 
@@ -37,9 +39,11 @@ export default function SectorScreen() {
   const [showAccess, setShowAccess] = useState(false)
   const [showRestaurants, setShowRestaurants] = useState(false)
 
-  // For topo images
-  const [zoomImage, setZoomImage] = useState({})
+  // For topo imagessetZoomImage
+  const [zoomImage, setZoomImage] = useState(-1)
   const [showZoom, setShowZoom] = useState(false)
+  const [imageList, setImageList] = useState([])
+  const [imageMetadataList, setImageMetadatList] = useState([])
 
   // For more info about one route.
   const [moreInfoIndex, setMoreInfoIndex] = useState(-1)
@@ -117,13 +121,30 @@ export default function SectorScreen() {
     )
   }
 
+
+  const CustomFooter = ({ imageIndex }) => {
+    const metadata = imageMetadataList[imageIndex]
+    return (
+      <View style={{alignItems: 'center', justifyContent: 'center', marginBottom: 50, padding: 20}}>
+        <Text style={{marginTop: 20, color:'white'}}>{metadata.description}</Text>
+      </View>
+    );
+  };
+
   function renderOneTopoImage(image_data: any, index, sector: any) {
+    let image_list = []
+    for (const image of sector.sector_pictures) {
+      const img = ResolveImage(image)
+      image_list.push(img)
+    }
     return(
       <View style={styles.topoImageContainer}>
         <TouchableOpacity style={styles.topoImagePanel}
           onPress={() => {
-            setZoomImage(image_data);
+            setZoomImage(index);
             setShowZoom(true);
+            setImageList(image_list);
+            setImageMetadatList(sector.sector_pictures)
           }}
         >
         <View>
@@ -188,8 +209,12 @@ export default function SectorScreen() {
     return (
       <TouchableOpacity  style={{padding: 10}}
         onPress={() => {
-          setZoomImage(route?.pictures[0])
+          let images = []
+          images.push(ResolveImage(route?.pictures[0]))
+          setZoomImage(0)
           setShowZoom(true);
+          setImageList(images)
+          setImageMetadatList(route.pictures)
         }}>
         <Text>
           <FontAwesome 
@@ -344,6 +369,8 @@ export default function SectorScreen() {
   function cleanZoomState() {
     setShowZoom(false)
     setZoomImage({})
+    setImageList([])
+    setImageMetadatList([])
   }
 
    function renderZoomImage() {
@@ -372,12 +399,13 @@ export default function SectorScreen() {
         { renderSector(sector) }
       </View>
 
-      <View>
-        <ShowZoomImage
-          isVisible={showZoom}>
-          { renderZoomImage() }
-        </ShowZoomImage>
-      </View>
+      <ImageView
+        images={imageList}
+        imageIndex={zoomImage}
+        visible={showZoom}
+        FooterComponent={CustomFooter}
+        onRequestClose={() => cleanZoomState()}
+      />
 
     </View>
   );
