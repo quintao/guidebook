@@ -9,7 +9,6 @@ import FontAwesome from "@expo/vector-icons/FontAwesome";
 
 import { useState } from 'react';
 import ShowZoomImage from './components/zoom';
-import ShowMoreInfoRoute from './components/moreinfo';
 import { DataTable } from 'react-native-paper';
 
 import Markdown from 'react-native-markdown-display';
@@ -523,6 +522,7 @@ const styles = StyleSheet.create({
   zoomContainer: {
     backgroundColor: '#161716',
     opacity: 0.95,
+    borderRadius: 5,
     alignItems: 'center',
   },
   routesContainer: {
