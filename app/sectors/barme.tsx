@@ -407,7 +407,7 @@ export default {
             requiped: "",
             pictures: [
                 {
-                    path: require("@/assets/images/barme/clindoeil.png"),
+                    uri: require("@/assets/images/barme/clindoeil.png"),
                     description: "Clin d'œil",
                 }
             ]            
@@ -477,7 +477,8 @@ export default {
             grade: "5b",
             stars: 1,
             setter: "",
-            requiped: "Voie non rééquipée",        },
+            requiped: "Voie non rééquipée",
+        },
         {
             name: "L'avalanche",
             grade: "4b, 6b",
