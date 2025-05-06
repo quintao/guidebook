@@ -7,11 +7,11 @@ import Ionicons from '@expo/vector-icons/Ionicons';
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 import FontAwesome from "@expo/vector-icons/FontAwesome";
 
-import React, { useState } from 'react';
+import { useState } from 'react';
 import ShowZoomImage from './components/zoom';
-import ShowMoreInfoRoute from './components/moreinfo';
 import { DataTable } from 'react-native-paper';
 
+import Markdown from 'react-native-markdown-display';
 
 const mapsLogo = require('@/assets/images/maps.png');
 
@@ -60,7 +60,7 @@ export default function SectorScreen() {
           </View>
           <Ionicons name="chevron-expand-outline" size={20} color="black" />
         </TouchableOpacity>
-        {controlVariable && <View style={{flexDirection: 'column'}}><Text style={styles.sectionExpandableText}>{content}</Text></View>}
+        {controlVariable && <View style={{flexDirection: 'column'}}><Markdown>{content}</Markdown></View>}
       </View>
     )
   }
@@ -475,15 +475,6 @@ const styles = StyleSheet.create({
     marginTop: 20,
     fontSize: 20
   },
-  sectionText: {
-    fontSize: 15
-  },
-  sectionExpandableText: {
-    fontSize: 13,
-    padding: 5,
-    maxWidth: 380,
-    fontFamily: 'roboto'
-  },
   mapPinContainer: {
     marginRight: 10,
     padding: 15,
@@ -522,6 +513,7 @@ const styles = StyleSheet.create({
   zoomContainer: {
     backgroundColor: '#161716',
     opacity: 0.95,
+    borderRadius: 5,
     alignItems: 'center',
   },
   routesContainer: {

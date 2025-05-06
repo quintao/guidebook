@@ -105,17 +105,17 @@ export default function Index() {
           </View>          
         </View>
 
-        <View style={styles.modalLink}>
-          <Link onPress={() => cleanModalState()}    
+        <Link onPress={() => cleanModalState()}    
           href={{
             pathname: "/sector",
             params: { target_sector: JSON.stringify(targetSector)}
           }}>
-            <Text style={styles.linkToModalText}>
-              Visiter le secteur
-            </Text>
-          </Link>
-        </View>
+          <View style={styles.modalLink}>
+              <Text style={styles.linkToModalText}>
+                Visiter le secteur
+              </Text>
+          </View>
+        </Link>        
       </View>
     )
   }
@@ -141,10 +141,7 @@ const styles = StyleSheet.create({
     alignItems: 'center'
   },
   modalLink: {
-    marginTop: 20,
-    padding: 20,
     borderRadius: 10,
-    opacity: 1.0,
     backgroundColor: 'green',
   },
   linkToModalText: {
