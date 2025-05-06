@@ -407,7 +407,7 @@ export default {
             requiped: "",
             pictures: [
                 {
-                    uri: require("@/assets/images/barme/clindoeil.png"),
+                    path: require("@/assets/images/barme/clindoeil.png"),
                     description: "Clin d'œil",
                 }
             ]            
