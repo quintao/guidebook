@@ -7,11 +7,12 @@ import Ionicons from '@expo/vector-icons/Ionicons';
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 import FontAwesome from "@expo/vector-icons/FontAwesome";
 
-import React, { useState } from 'react';
+import { useState } from 'react';
 import ShowZoomImage from './components/zoom';
 import ShowMoreInfoRoute from './components/moreinfo';
 import { DataTable } from 'react-native-paper';
 
+import Markdown from 'react-native-markdown-display';
 
 const mapsLogo = require('@/assets/images/maps.png');
 
@@ -60,7 +61,7 @@ export default function SectorScreen() {
           </View>
           <Ionicons name="chevron-expand-outline" size={20} color="black" />
         </TouchableOpacity>
-        {controlVariable && <View style={{flexDirection: 'column'}}><Text style={styles.sectionExpandableText}>{content}</Text></View>}
+        {controlVariable && <View style={{flexDirection: 'column'}}><Markdown>{content}</Markdown></View>}
       </View>
     )
   }
