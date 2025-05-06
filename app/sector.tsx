@@ -117,7 +117,7 @@ export default function SectorScreen() {
     )
   }
 
-  function renderOneTopoImage(image_data: any) {
+  function renderOneTopoImage(image_data: any, index, sector: any) {
     return(
       <View style={styles.topoImageContainer}>
         <TouchableOpacity style={styles.topoImagePanel}
@@ -149,7 +149,7 @@ export default function SectorScreen() {
         <View style={styles.topoImagesPanel}>
           {sector.sector_pictures.map((picture: any, index: number) => (
             <View key={index}>
-              {renderOneTopoImage(picture)}
+              {renderOneTopoImage(picture, index, sector)}
             </View>
            ))}
         </View>
@@ -304,8 +304,6 @@ export default function SectorScreen() {
     )
   }
   
-
-
   function renderRoutes(sector: any) {
     if (sector?.routes.length == 0) {
       return (<></>)
@@ -374,10 +372,13 @@ export default function SectorScreen() {
         { renderSector(sector) }
       </View>
 
+      <View>
         <ShowZoomImage
           isVisible={showZoom}>
           { renderZoomImage() }
         </ShowZoomImage>
+      </View>
+
     </View>
   );
 }

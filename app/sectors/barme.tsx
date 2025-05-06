@@ -477,7 +477,8 @@ export default {
             grade: "5b",
             stars: 1,
             setter: "",
-            requiped: "Voie non rééquipée",        },
+            requiped: "Voie non rééquipée",
+        },
         {
             name: "L'avalanche",
             grade: "4b, 6b",
