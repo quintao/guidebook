@@ -475,15 +475,6 @@ const styles = StyleSheet.create({
     marginTop: 20,
     fontSize: 20
   },
-  sectionText: {
-    fontSize: 15
-  },
-  sectionExpandableText: {
-    fontSize: 13,
-    padding: 5,
-    maxWidth: 380,
-    fontFamily: 'roboto'
-  },
   mapPinContainer: {
     marginRight: 10,
     padding: 15,
