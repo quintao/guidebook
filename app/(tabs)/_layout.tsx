@@ -1,21 +1,23 @@
 import { Tabs } from 'expo-router';
-import FontAwesome from '@expo/vector-icons/FontAwesome';
+import FontAwesome6 from '@expo/vector-icons/FontAwesome6';
+import Colors from '../constants/colors';
+
 
 export default function TabLayout() {
   return (
-    <Tabs screenOptions={{ tabBarActiveTintColor: '#994960' }}>
+    <Tabs screenOptions={{ tabBarActiveTintColor: Colors.mainColorGreen }}>
       <Tabs.Screen name="index"
         options={{
           headerShown: false,
-          title: 'Home',
-          tabBarIcon: ({ color }) => <FontAwesome size={28} name="home" color={color} />,
+          title: 'Secteurs',
+          tabBarIcon: ({ color }) => <FontAwesome6 size={20} name="mountain-sun" color={color} />,
         }}
         />
       <Tabs.Screen name="about"
         options={{
           headerShown: false,
           title: 'About',
-          tabBarIcon: ({ color }) => <FontAwesome size={28} name="info" color={color} />,
+          tabBarIcon: ({ color }) => <FontAwesome6 size={20} name="info" color={color} />,
         }}      />
     </Tabs>
   );

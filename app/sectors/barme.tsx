@@ -409,7 +409,7 @@ export default {
                 {
                     path: require("@/assets/images/barme/clindoeil.png"),
                     description: "Clin d'œil",
-                }
+                },
             ]            
         },
         {

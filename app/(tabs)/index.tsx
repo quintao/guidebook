@@ -60,11 +60,12 @@ export default function Index() {
               coordinate={getCoordinatesFromSectorData(sectorData)}
               title={sectorData.overview?.name}
               showsBuildings={false}
+              pinColor={Colors.mainColorGreenWithOpacity}
               onPress={e => {
                 const key = buildKey(e.nativeEvent.coordinate)
-                cleanModalState()
+                cleanModalState();
+                setTargetSector(mapping[key]);
                 setShowModal(true);
-                setTargetSector(mapping[key]);                
               }}
               id={sectorData.overview.name}
             />
@@ -105,7 +106,8 @@ export default function Index() {
           </View>          
         </View>
 
-        <Link onPress={() => cleanModalState()}    
+        <Link onPress={() => cleanModalState()}
+          style={styles.modalLinkButton}   
           href={{
             pathname: "/sector",
             params: { target_sector: JSON.stringify(targetSector)}
@@ -137,16 +139,20 @@ export default function Index() {
 const styles = StyleSheet.create({
   modalContent: {
     padding: 10,
-    justifyContent: 'center',
+    justifyContent: 'space-around',
     alignItems: 'center'
+  },
+  modalLinkButton: {
+    borderRadius: 10,
+    marginTop: 30
   },
   modalLink: {
     borderRadius: 10,
-    backgroundColor: 'green',
+    backgroundColor: Colors.mainColorGreen,
   },
   linkToModalText: {
     padding: 20,
-    color: 'white',
+    color: Colors.textInsideButton,
     fontWeight: 800
   },
   modalShortDescription: {

@@ -8,7 +8,6 @@ import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 import FontAwesome from "@expo/vector-icons/FontAwesome";
 
 import { useState } from 'react';
-import ShowZoomImage from './components/zoom';
 import { DataTable } from 'react-native-paper';
 
 import Markdown from 'react-native-markdown-display';
@@ -58,9 +57,9 @@ export default function SectorScreen() {
         <TouchableOpacity style={styles.sectionTitle} onPress={()=> {setControlVariable(!controlVariable)}}>
           <View style={styles.sectionIconAndText}>
             <View style={styles.iconSectionContainer}>
-              <Ionicons name={iconName} size={20} color="black" />
+              <Ionicons name={iconName} size={25} color="black" />
             </View>
-            <Text>{title}</Text>
+            <Text style={styles.textSectionTitle}>{title}</Text>
           </View>
           <Ionicons name="chevron-expand-outline" size={20} color="black" />
         </TouchableOpacity>
@@ -97,8 +96,11 @@ export default function SectorScreen() {
   function renderSectorNameAndParking(sector: any) {
     return(
       <View style={styles.titleContainer}>
-        <Text style={styles.titleText}>{sector?.overview?.name}</Text>
-        {renderParkingIcon(sector)}
+        <View style={styles.nameAndParkingContainer}>
+          <Text style={styles.titleText}>{sector?.overview?.name}</Text>
+          {renderParkingIcon(sector)}
+        </View>
+          <Text style={styles.subTitleText}>{sector?.overview?.short_description}</Text>
       </View>
     )
   }
@@ -124,10 +126,13 @@ export default function SectorScreen() {
 
   const CustomFooter = ({ imageIndex }) => {
     const metadata = imageMetadataList[imageIndex]
+    const numImages = imageMetadataList.length
+    const imagesLabel = (imageIndex + 1) + " / " + numImages
     return (
-      <View style={{alignItems: 'center', justifyContent: 'center', marginBottom: 50, padding: 20}}>
-        <Text style={{marginTop: 20, color:'white'}}>{metadata.description}</Text>
-      </View>
+        <View style={{alignItems: 'center', justifyContent: 'center', marginBottom: 30}}>
+          <Text style={{marginTop: 20, color:'white'}}>{metadata.description}</Text>
+          {numImages > 1 && <Text style={{marginBottom: 30, color:'white'}}>{imagesLabel}</Text> }
+        </View>
     );
   };
 
@@ -150,7 +155,7 @@ export default function SectorScreen() {
         <View>
           <Image
             source={image_data.path}
-            style={{width: 150, height: 150, borderRadius: 20 }}
+            style={{width: 150, height: 150, borderRadius: 30 }}
             contentFit='scale-down'
           />
         </View>
@@ -187,7 +192,7 @@ export default function SectorScreen() {
           key={i} 
           name={i < rating ? 'star' : 'star-outline'} 
           size={20} 
-          color="gold" 
+          color="#bd971c" 
           style={styles.star} 
         />
       );
@@ -210,7 +215,9 @@ export default function SectorScreen() {
       <TouchableOpacity  style={{padding: 10}}
         onPress={() => {
           let images = []
-          images.push(ResolveImage(route?.pictures[0]))
+          for (const image of route?.pictures) {
+            images.push(ResolveImage(image))
+          }
           setZoomImage(0)
           setShowZoom(true);
           setImageList(images)
@@ -219,8 +226,8 @@ export default function SectorScreen() {
         <Text>
           <FontAwesome 
             name="photo" 
-            size={20} 
-            color="#523b50" 
+            size={25} 
+            color="#a46aad" 
             style={styles.star} 
           />
         </Text>
@@ -249,8 +256,8 @@ export default function SectorScreen() {
         <Text>
           <FontAwesome 
             name={moreInfoIndex == index ? "minus-circle" : "plus-circle" }
-            size={20} 
-            color={moreInfoIndex == index ? "red": "green"} 
+            size={25} 
+            color={moreInfoIndex == index ? "#f26f6f": Colors.mainColorGreen} 
             style={styles.star} 
           />
         </Text>
@@ -313,7 +320,7 @@ export default function SectorScreen() {
     return (
       <View>
       <DataTable.Row  style={{justifyContent: 'center'}}>
-      <DataTable.Cell><Text>{route?.name}</Text></DataTable.Cell>
+      <DataTable.Cell><Text style={{fontSize: 15}}>{route?.name}</Text></DataTable.Cell>
       <DataTable.Cell style={{justifyContent: 'center'}}><Text>{route?.grade}</Text></DataTable.Cell>
       <DataTable.Cell style={{justifyContent: 'center'}}><StarRating rating={route?.stars}/></DataTable.Cell>
       <DataTable.Cell style={{justifyContent: 'center'}}>{ renderRoutePlusInformation(route, index)}</DataTable.Cell>
@@ -339,10 +346,10 @@ export default function SectorScreen() {
         <Text style={styles.routesTitle}>Les voies</Text>
         <DataTable style={styles.tableContainer}>
           <DataTable.Header style={styles.tableHeader}>
-            <DataTable.Title style={{justifyContent: 'center'}}><Text>Nom</Text></DataTable.Title>
-            <DataTable.Title style={{justifyContent: 'center'}}><Text>Cotation</Text></DataTable.Title>
-            <DataTable.Title style={{justifyContent: 'center'}}><Text>Interet</Text></DataTable.Title>
-            <DataTable.Title style={{justifyContent: 'center'}}><Text>Plus d'info</Text></DataTable.Title>
+            <DataTable.Title style={{justifyContent: 'center'}}><Text style={{fontSize: 15}}>Nom</Text></DataTable.Title>
+            <DataTable.Title style={{justifyContent: 'center'}}><Text style={{fontSize: 15}}>Cotation</Text></DataTable.Title>
+            <DataTable.Title style={{justifyContent: 'center'}}><Text style={{fontSize: 15}}>Interet</Text></DataTable.Title>
+            <DataTable.Title style={{justifyContent: 'center'}}><Text style={{fontSize: 15}}>Plus d'info</Text></DataTable.Title>
           </DataTable.Header>
           
           {sector.routes.map((route: any, index: number) => (
@@ -362,34 +369,16 @@ export default function SectorScreen() {
         {renderGeneralInfo(sector)}
         {renderTopo(sector)}
         {renderRoutes(sector)}
+        <View style={{marginBottom: 100}}><Text></Text></View>
       </ScrollView>
     )
   }
 
   function cleanZoomState() {
     setShowZoom(false)
-    setZoomImage({})
+    setZoomImage(-1)
     setImageList([])
     setImageMetadatList([])
-  }
-
-   function renderZoomImage() {
-    if (zoomImage?.path == null) {
-      return <></>
-    }
-    return (
-    <View style={styles.zoomContainer}>
-      <Text style={{marginTop: 20, color:'white'}}>{zoomImage?.description}</Text>
-       <Image
-          source={zoomImage.path} style={{width: "90%", height: "80%", borderRadius: 10 }}
-          contentFit='contain'/>
-        <TouchableOpacity
-          onPress={() => cleanZoomState()}
-          style={{padding: 8, margin: 20, borderColor: 'white',  borderWidth: 1,  borderRadius: 10}}>
-            <Text style={{color: 'white'}}>Fermer</Text>
-        </TouchableOpacity>
-    </View>
-    )
   }
 
   return (
@@ -473,20 +462,30 @@ const styles = StyleSheet.create({
   },
   titleContainer: {
     marginTop: 20,
+    backgroundColor: 'white',
+    borderColor: Colors.mainColorGreen,
+    borderWidth: 1,
+    borderRadius: 10,
+    padding: 5    
+  },
+  nameAndParkingContainer: {
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
-    backgroundColor: 'white',
     borderRadius: 10,    
   },
   titleText: {
-    padding: 10,
+    paddingHorizontal: 10,
     fontWeight: 600,
     fontSize: 20
   },
+  subTitleText: {
+    paddingHorizontal: 10,
+    marginVertical: 10
+  },
   sectionTitle: {
     flexDirection: 'row',
-    backgroundColor: "#e1e2e3",
+    backgroundColor: Colors.mainColorGreenWithOpacity,
     padding: 10,
     borderRadius: 10,
     alignContent: 'center',
@@ -494,12 +493,19 @@ const styles = StyleSheet.create({
   },
   sectionIconAndText: {
     flexDirection: 'row',
-    alignContent: 'center',
-    justifyContent: 'center'
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   iconSectionContainer: {
-    marginHorizontal: 3
+    marginHorizontal: 3,
+    alignItems: 'center',
+    justifyContent: 'center',
   },
+  textSectionTitle: {
+    fontSize: 16,
+    fontWeight: 500,
+    color: "black",
+  }, 
   sectionContent: {
     marginTop: 20,
     fontSize: 20
@@ -533,7 +539,7 @@ const styles = StyleSheet.create({
   topoTitle: {
     fontWeight: 600,
     fontSize: 20,
-    marginBottom: 10,
+    paddingHorizontal: 10,
   },
   topoImageDescription: {
     fontSize: 12,
@@ -557,7 +563,8 @@ const styles = StyleSheet.create({
   routesTitle: {
     fontWeight: 600,
     fontSize: 20,
-    marginBottom: 10,    
+    marginBottom: 10,
+    paddingHorizontal: 10    
   },
   routesPanelContainer: {
     flexDirection: 'column'
