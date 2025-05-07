@@ -155,7 +155,7 @@ export default function SectorScreen() {
         <View>
           <Image
             source={image_data.path}
-            style={{width: 150, height: 150, borderRadius: 20 }}
+            style={{width: 150, height: 150, borderRadius: 30 }}
             contentFit='scale-down'
           />
         </View>
