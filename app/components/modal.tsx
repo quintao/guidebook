@@ -39,18 +39,17 @@ const styles = StyleSheet.create({
   },
   titleContainer: {
     height: '15%',
-    opacity: 0.8,
     borderTopRightRadius: 10,
     borderTopLeftRadius: 10,
     paddingHorizontal: 20,
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
-    backgroundColor: 'green'
+    backgroundColor: Colors.mainColorGreen,
   },
   title: {
     color: '#fff',
-    fontSize: 16,
+    fontSize: 20,
     fontWeight: 500,
   },
 });
