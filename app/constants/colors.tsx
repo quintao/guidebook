@@ -5,12 +5,12 @@ const tintColorDark = '#fff';
 const mainColorViolette = '#523b50';
 const mainColorGreen ='#1e8385';
 const secondaryColorViolette = '#76646c';
-const secondaryColorGreen ='#5c6c6c';
+const secondaryColorGreen ='#bbdfdfff';
 const tertiaryColorNeutral = '#e6d6cf';
 
 const themes = {
     blueish: {
-        text: 'black',
+        text: '#3d3c3cff',
         appBackground: 'white',
         link: '#636262',
         tint: tintColorLight,
@@ -20,29 +20,13 @@ const themes = {
         pageTitle: 'black',
         textInsideButton: "white",
         mainColorGreen: mainColorGreen,
-        mainColorGreenWithOpacity: "rgba(30, 131, 133, 0.5)",
+        mainColorGreenWithOpacity: "rgba(29, 123, 124, 0.5)",
         mainColorViolette: mainColorViolette,
         secondaryColorViolette: secondaryColorViolette,
         secondaryColorGreen: secondaryColorGreen,
-        tertiaryColorNeutral: tertiaryColorNeutral
-    },
-    modern: {
-        text: 'black',
-        appBackground: tertiaryColorNeutral,
-        link: '#636262',
-        tint: tintColorLight,
-        icon: '#687076',
-        tabIconDefault: '#687076',
-        tabIconSelected: mainColorViolette,
-        pageTitle: 'black',
-        textInsideButton: "white",
-        mainColorGreen: mainColorGreen,
-        mainColorGreenWithOpacity: "rgba(30, 131, 133, 0.4)",
-        mainColorViolette: mainColorViolette,
-        secondaryColorViolette: secondaryColorViolette,
-        secondaryColorGreen: secondaryColorGreen,
-        tertiaryColorNeutral: tertiaryColorNeutral        
-    },
+        tertiaryColorNeutral: tertiaryColorNeutral,
+        clickableIcons: "rgba(2, 40, 41, 0.5)"
+    }
 }
 
 const default_theme = themes.blueish

@@ -11,7 +11,7 @@ import { useState } from 'react';
 import { DataTable } from 'react-native-paper';
 
 import Markdown from 'react-native-markdown-display';
-// import ImageView from "react-native-image-viewing";
+import ImageView from "react-native-image-viewing";
 import ResolveImage from "./components/image_resolver";
 
 const mapsLogo = require('@/assets/images/maps.png');
@@ -57,25 +57,25 @@ export default function SectorScreen() {
         <TouchableOpacity style={styles.sectionTitle} onPress={()=> {setControlVariable(!controlVariable)}}>
           <View style={styles.sectionIconAndText}>
             <View style={styles.iconSectionContainer}>
-              <Ionicons name={iconName} size={25} color="black" />
+              <Ionicons name={iconName} size={25} color={Colors.clickableIcons} />
             </View>
             <Text style={styles.textSectionTitle}>{title}</Text>
           </View>
           <Ionicons name="chevron-expand-outline" size={20} color="black" />
         </TouchableOpacity>
-        {controlVariable && <View style={{flexDirection: 'column'}}><Markdown>{content}</Markdown></View>}
+        {controlVariable && <View style={{flexDirection: 'column'}}><Markdown style={{body: {color: Colors.text}}}>{content}</Markdown></View>}
       </View>
     )
   }
   
 
   function renderRestaurants(sector: any) {
-    return renderSection("Restaurants", sector?.detailed_info?.restaurants, "fast-food-sharp", showRestaurants, setShowRestaurants)
+    return renderSection("Restaurants", sector?.detailed_info?.restaurants, "pizza", showRestaurants, setShowRestaurants)
   }
 
 
   function renderAccess(sector: any) {
-    return renderSection("Access", sector?.detailed_info?.access, "globe-sharp", showAccess, setShowAccess)
+    return renderSection("Access", sector?.detailed_info?.access, "locate", showAccess, setShowAccess)
   }
   
   
@@ -152,13 +152,14 @@ export default function SectorScreen() {
             setImageMetadatList(sector.sector_pictures)
           }}
         >
-        <View>
-          <Image
-            source={image_data.path}
-            style={{width: 150, height: 150, borderRadius: 30 }}
-            contentFit='scale-down'
-          />
-        </View>
+          <View style={styles.imageOffsetBackground}/>
+          <View style={styles.imageWrapper}>
+            <Image
+              source={image_data.path}
+              style={styles.oneImageTopo}
+              contentFit='cover'
+            />
+          </View>
           <Text style={styles.topoImageDescription}>{image_data.description}</Text>
         </TouchableOpacity>
       </View>
@@ -191,7 +192,7 @@ export default function SectorScreen() {
         <MaterialIcons 
           key={i} 
           name={i < rating ? 'star' : 'star-outline'} 
-          size={20} 
+          size={15} 
           color="#bd971c" 
           style={styles.star} 
         />
@@ -226,7 +227,7 @@ export default function SectorScreen() {
         <Text>
           <FontAwesome 
             name="photo" 
-            size={25} 
+            size={20} 
             color="#a46aad" 
             style={styles.star} 
           />
@@ -256,7 +257,7 @@ export default function SectorScreen() {
         <Text>
           <FontAwesome 
             name={moreInfoIndex == index ? "minus-circle" : "plus-circle" }
-            size={25} 
+            size={20} 
             color={moreInfoIndex == index ? "#f26f6f": Colors.mainColorGreen} 
             style={styles.star} 
           />
@@ -320,10 +321,11 @@ export default function SectorScreen() {
     return (
       <View>
       <DataTable.Row  style={{justifyContent: 'center'}}>
-      <DataTable.Cell><Text style={{fontSize: 15}}>{route?.name}</Text></DataTable.Cell>
-      <DataTable.Cell style={{justifyContent: 'center'}}><Text>{route?.grade}</Text></DataTable.Cell>
-      <DataTable.Cell style={{justifyContent: 'center'}}><StarRating rating={route?.stars}/></DataTable.Cell>
-      <DataTable.Cell style={{justifyContent: 'center'}}>{ renderRoutePlusInformation(route, index)}</DataTable.Cell>
+        <DataTable.Cell style={{flex: 0.4, justifyContent: 'flex-start'}}><Text style={{fontSize: 12}}>{index + 1}</Text></DataTable.Cell>
+        <DataTable.Cell><Text style={{fontSize: 12}}>{route?.name}</Text></DataTable.Cell>
+        <DataTable.Cell style={{justifyContent: 'center'}}><Text style={{fontSize: 12}}>{route?.grade}</Text></DataTable.Cell>
+        <DataTable.Cell style={{justifyContent: 'center'}}><StarRating rating={route?.stars}/></DataTable.Cell>
+        <DataTable.Cell style={{justifyContent: 'center'}}>{ renderRoutePlusInformation(route, index)}</DataTable.Cell>
       </DataTable.Row>
         { moreInfoIndex == index &&
           <DataTable.Row  style={{justifyContent: "center"}}>
@@ -346,10 +348,11 @@ export default function SectorScreen() {
         <Text style={styles.routesTitle}>Les voies</Text>
         <DataTable style={styles.tableContainer}>
           <DataTable.Header style={styles.tableHeader}>
-            <DataTable.Title style={{justifyContent: 'center'}}><Text style={{fontSize: 15}}>Nom</Text></DataTable.Title>
-            <DataTable.Title style={{justifyContent: 'center'}}><Text style={{fontSize: 15}}>Cotation</Text></DataTable.Title>
-            <DataTable.Title style={{justifyContent: 'center'}}><Text style={{fontSize: 15}}>Interet</Text></DataTable.Title>
-            <DataTable.Title style={{justifyContent: 'center'}}><Text style={{fontSize: 15}}>Plus d'info</Text></DataTable.Title>
+            <DataTable.Title style={{flex: 0.4, justifyContent: 'flex-start'}}><Text style={styles.tableTitleText}>#</Text></DataTable.Title>
+            <DataTable.Title style={{justifyContent: 'center'}}><Text style={styles.tableTitleText}>Nom</Text></DataTable.Title>
+            <DataTable.Title style={{justifyContent: 'center'}}><Text style={styles.tableTitleText}>Cotation</Text></DataTable.Title>
+            <DataTable.Title style={{justifyContent: 'center'}}><Text style={styles.tableTitleText}>Interet</Text></DataTable.Title>
+            <DataTable.Title style={{justifyContent: 'center'}}><Text style={styles.tableTitleText}>Plus d'info</Text></DataTable.Title>
           </DataTable.Header>
           
           {sector.routes.map((route: any, index: number) => (
@@ -388,13 +391,13 @@ export default function SectorScreen() {
         { renderSector(sector) }
       </View>
 
-      {/* <ImageView
+      <ImageView
         images={imageList}
         imageIndex={zoomImage}
         visible={showZoom}
         FooterComponent={CustomFooter}
         onRequestClose={() => cleanZoomState()}
-      /> */}
+      />
 
     </View>
   );
@@ -462,26 +465,28 @@ const styles = StyleSheet.create({
   },
   titleContainer: {
     marginTop: 20,
-    backgroundColor: 'white',
+    backgroundColor: Colors.tertiaryColorNeutral,
     borderColor: Colors.mainColorGreen,
-    borderWidth: 1,
-    borderRadius: 10,
-    padding: 5    
+    borderRadius: 20,
+    padding: 5,
   },
   nameAndParkingContainer: {
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
-    borderRadius: 10,    
+    borderRadius: 40
   },
   titleText: {
     paddingHorizontal: 10,
     fontWeight: 600,
-    fontSize: 20
+    fontSize: 20,
+    color: "#464342ff"
   },
   subTitleText: {
     paddingHorizontal: 10,
-    marginVertical: 10
+    marginVertical: 10,
+    fontStyle: 'italic',
+    color: "#52504f"
   },
   sectionTitle: {
     flexDirection: 'row',
@@ -504,14 +509,15 @@ const styles = StyleSheet.create({
   textSectionTitle: {
     fontSize: 16,
     fontWeight: 500,
-    color: "black",
+    color: "white",
+    marginLeft: 10
   }, 
   sectionContent: {
     marginTop: 20,
     fontSize: 20
   },
   mapPinContainer: {
-    marginRight: 10,
+    margin: 10,
     padding: 15,
     borderRadius: 20,
     backgroundColor: 'white'
@@ -524,12 +530,31 @@ const styles = StyleSheet.create({
     alignItems: 'center'
   },
   topoImagePanel: {
-    padding: 20,
+    padding: 5,
+    margin: 5,
     borderRadius: 20,
     alignSelf: 'center',
     justifyContent: 'center',
-    opacity: 0.8
+    opacity: 0.8,
+    backgroundColor: '#ffffff',
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.08,
+    shadowRadius: 8,
+    elevation: 5,
+    alignItems: 'center',
   },
+  imageWrapper: {
+    width: 150,
+    height: 150,
+    borderRadius: 20,
+    overflow: 'hidden',
+  },  
+  oneImageTopo: {
+    width: "100%",
+    height: "100%",
+    resizeMode: "cover"
+  },  
   topoImagesPanel: {
     flexDirection: 'row',
     flexWrap: 'wrap',
@@ -542,8 +567,9 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
   },
   topoImageDescription: {
-    fontSize: 12,
-    textAlign: 'center'
+    fontSize: 9,
+    textAlign: 'center',
+    fontStyle: "italic"
   },
   zoomContainer: {
     backgroundColor: '#161716',
@@ -590,6 +616,12 @@ const styles = StyleSheet.create({
     padding: 15,
   },
   tableHeader: {
-    backgroundColor: '#DCDCDC',
+    backgroundColor: Colors.tertiaryColorNeutral,
+    borderRadius: 10
   },
+  tableTitleText: {
+    color: Colors.text,
+    fontWeight: 800,
+    fontSize: 13
+  },  
 });
