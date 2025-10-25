@@ -11,7 +11,7 @@ import { useState } from 'react';
 import { DataTable } from 'react-native-paper';
 
 import Markdown from 'react-native-markdown-display';
-import ImageView from "react-native-image-viewing";
+// import ImageView from "react-native-image-viewing";
 import ResolveImage from "./components/image_resolver";
 
 const mapsLogo = require('@/assets/images/maps.png');
@@ -388,13 +388,13 @@ export default function SectorScreen() {
         { renderSector(sector) }
       </View>
 
-      <ImageView
+      {/* <ImageView
         images={imageList}
         imageIndex={zoomImage}
         visible={showZoom}
         FooterComponent={CustomFooter}
         onRequestClose={() => cleanZoomState()}
-      />
+      /> */}
 
     </View>
   );
