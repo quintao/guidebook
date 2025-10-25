@@ -1,4 +1,4 @@
-import { Text, View, StyleSheet, TouchableOpacity, Dimensions } from 'react-native';
+import { Text, View, StyleSheet, TouchableOpacity, Dimensions, Platform } from 'react-native';
 import { Link} from 'expo-router';
 import Colors from '../constants/colors';
 import { useState } from 'react';
@@ -85,24 +85,24 @@ export default function Index() {
     return(
       <View style={styles.modalContent}>
         <View style={styles.modalShortDescription}>
-          <Text>{targetSector?.overview?.short_description}</Text>
+          <Text style={{textAlign: 'center', color: Colors.text}}>{targetSector?.overview?.short_description}</Text>
         </View>
         <View style={styles.modalIconInfoContainer}>
           <View style={styles.modalIconInfo}>
-            <Foundation name="mountains" size={24} color="black" style={{textAlign: 'center'}}/>
-            <Text style={{textAlign: 'center'}}>{targetSector?.overview?.altitude}</Text>
+            <Foundation name="mountains" size={40} color={Colors.text} style={{textAlign: 'center'}}/>
+            <Text style={{textAlign: 'center', color: Colors.text}}>{targetSector?.overview?.altitude}</Text>
           </View>
           <View style={styles.modalIconInfo}>
-            <Ionicons name="compass-outline" size={24} color="black" />
-            <Text style={{textAlign: 'center'}}>{targetSector?.overview?.orientation}</Text>
+            <Ionicons name="compass-outline" size={40} color={Colors.text} />
+            <Text style={{textAlign: 'center', color: Colors.text}}>{targetSector?.overview?.orientation}</Text>
           </View>
           <View style={styles.modalIconInfo}>
-            <FontAwesome name="hand-rock-o" size={24} color="black" />
-            <Text style={{textAlign: 'center'}}>{targetSector?.overview?.rock}</Text>
+            <FontAwesome name="hand-rock-o" size={40} color={Colors.text} />
+            <Text style={{textAlign: 'center', color: Colors.text}}>{targetSector?.overview?.rock}</Text>
           </View>
           <View style={styles.modalIconInfo}>
-            <Ionicons name="scale-outline" size={24} color="black" />
-            <Text style={{textAlign: 'center'}}>{targetSector?.overview?.grades}</Text>
+            <Ionicons name="scale-outline" size={40} color={Colors.text} />
+            <Text style={{textAlign: 'center', color: Colors.text}}>{targetSector?.overview?.grades}</Text>
           </View>          
         </View>
 
@@ -142,18 +142,35 @@ const styles = StyleSheet.create({
     justifyContent: 'space-around',
     alignItems: 'center'
   },
-  modalLinkButton: {
-    borderRadius: 10,
-    marginTop: 30
+   modalLinkButton: {
+    borderRadius: 12, // Slightly increased border radius for a softer look
+    marginTop: 25,
+    // Shadow properties for iOS
+    ...Platform.select({
+      ios: {
+        shadowColor: '#000',
+        shadowOffset: { width: 0, height: 4 },
+        shadowOpacity: 0.3,
+        shadowRadius: 6,
+      },
+      // Shadow properties for Android
+      android: {
+        elevation: 8, // Adjust elevation for a stronger/weaker shadow
+      },
+    }),
   },
   modalLink: {
-    borderRadius: 10,
+    borderRadius: 12, // Match the button's border radius
     backgroundColor: Colors.mainColorGreen,
+    overflow: 'hidden', // Essential to clip the shadow within the button on iOS
   },
   linkToModalText: {
-    padding: 20,
+    paddingVertical: 18, // Slightly reduced padding for a more compact button
+    paddingHorizontal: 25, // Added horizontal padding
     color: Colors.textInsideButton,
-    fontWeight: 800
+    fontWeight: 'bold', // Use string for fontWeight
+    fontSize: 16, // Slightly increased font size for better readability
+    textAlign: 'center', // Center the text within the button
   },
   modalShortDescription: {
     marginVertical: 10
@@ -167,7 +184,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     borderColor: 'black',
     textAlign: 'center',
-    borderWidth: 2,
     margin: 10
   },
   modalIconInfoContainer: {
