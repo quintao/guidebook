@@ -60,7 +60,7 @@ export default function Index() {
               coordinate={getCoordinatesFromSectorData(sectorData)}
               title={sectorData.overview?.name}
               showsBuildings={false}
-              pinColor={Colors.mainColorGreenWithOpacity}
+              pinColor={Colors.secondaryColorViolette}
               onPress={e => {
                 const key = buildKey(e.nativeEvent.coordinate)
                 cleanModalState();
