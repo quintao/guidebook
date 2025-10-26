@@ -1,4 +1,4 @@
-import { Text, View, StyleSheet, TouchableOpacity, Platform , ScrollView } from 'react-native';
+import { Text, View, StyleSheet, TouchableOpacity, Platform, ScrollView } from 'react-native';
 import { Link, useLocalSearchParams } from 'expo-router';
 import { Image } from 'expo-image';
 
@@ -17,11 +17,11 @@ import ResolveImage from "./components/image_resolver";
 const mapsLogo = require('@/assets/images/maps.png');
 
 function renderReturn() {
-  return(
+  return (
     <View style={styles.returnContainer}>
       <Link href="/" style={styles.button}>
         <View style={styles.returnLine}>
-        <Ionicons name="arrow-back" size={32} color="grey" />
+          <Ionicons name="arrow-back" size={28} color={Colors.text} />
           <Text style={styles.returnLabel}>Retour</Text>
         </View>
       </Link>
@@ -31,14 +31,14 @@ function renderReturn() {
 
 export default function SectorScreen() {
   const params = useLocalSearchParams();
-  const {target_sector} = params;
+  const { target_sector } = params;
   const sector = JSON.parse(target_sector.toString());
 
   const [showDescription, setShowDescription] = useState(false)
   const [showAccess, setShowAccess] = useState(false)
   const [showRestaurants, setShowRestaurants] = useState(false)
 
-  // For topo imagessetZoomImage
+  // For topo images
   const [zoomImage, setZoomImage] = useState(-1)
   const [showZoom, setShowZoom] = useState(false)
   const [imageList, setImageList] = useState([])
@@ -52,22 +52,22 @@ export default function SectorScreen() {
       return (<></>)
     }
 
-    return(
+    return (
       <View style={styles.sectionContent}>
-        <TouchableOpacity style={styles.sectionTitle} onPress={()=> {setControlVariable(!controlVariable)}}>
+        <TouchableOpacity style={styles.sectionTitle} onPress={() => { setControlVariable(!controlVariable) }}>
           <View style={styles.sectionIconAndText}>
             <View style={styles.iconSectionContainer}>
-              <Ionicons name={iconName} size={25} color={Colors.clickableIcons} />
+              <Ionicons name={iconName} size={22} color={Colors.clickableIcons} />
             </View>
             <Text style={styles.textSectionTitle}>{title}</Text>
           </View>
-          <Ionicons name="chevron-expand-outline" size={20} color="black" />
+          <Ionicons name={controlVariable ? "chevron-up" : "chevron-down"} size={20} color={Colors.clickableIcons} />
         </TouchableOpacity>
-        {controlVariable && <View style={{flexDirection: 'column'}}><Markdown style={{body: {color: Colors.text}}}>{content}</Markdown></View>}
+        {controlVariable && <View style={styles.sectionMarkdown}><Markdown style={{ body: { color: Colors.text, lineHeight: 20 } }}>{content}</Markdown></View>}
       </View>
     )
   }
-  
+
 
   function renderRestaurants(sector: any) {
     return renderSection("Restaurants", sector?.detailed_info?.restaurants, "pizza", showRestaurants, setShowRestaurants)
@@ -75,10 +75,10 @@ export default function SectorScreen() {
 
 
   function renderAccess(sector: any) {
-    return renderSection("Access", sector?.detailed_info?.access, "locate", showAccess, setShowAccess)
+    return renderSection("Access", sector?.detailed_info?.access, "location", showAccess, setShowAccess)
   }
-  
-  
+
+
   function renderParkingIcon(sector: any) {
     var url = sector?.detailed_info?.parking[Platform.OS]
     if (url == "") { return <></>}
@@ -91,34 +91,34 @@ export default function SectorScreen() {
       </View>
     );
   }
-  
+
 
   function renderSectorNameAndParking(sector: any) {
-    return(
+    return (
       <View style={styles.titleContainer}>
         <View style={styles.nameAndParkingContainer}>
           <Text style={styles.titleText}>{sector?.overview?.name}</Text>
           {renderParkingIcon(sector)}
         </View>
-          <Text style={styles.subTitleText}>{sector?.overview?.short_description}</Text>
+        <Text style={styles.subTitleText}>{sector?.overview?.short_description}</Text>
       </View>
     )
   }
- 
+
 
   function renderDescription(sector: any) {
     return renderSection(
-      "Description", sector?.detailed_info?.long_description, "menu", showDescription, setShowDescription
+      "Description", sector?.detailed_info?.long_description, "document-text", showDescription, setShowDescription
     )
   }
 
   function renderGeneralInfo(sector: any) {
-    return(
+    return (
       <View style={styles.generalInfoContainer}>
-          { renderSectorNameAndParking(sector) }
-          { renderDescription(sector) }
-          { renderAccess(sector)}
-          { renderRestaurants(sector) }
+        {renderSectorNameAndParking(sector)}
+        {renderDescription(sector)}
+        {renderAccess(sector)}
+        {renderRestaurants(sector)}
       </View>
     )
   }
@@ -129,10 +129,10 @@ export default function SectorScreen() {
     const numImages = imageMetadataList.length
     const imagesLabel = (imageIndex + 1) + " / " + numImages
     return (
-        <View style={{alignItems: 'center', justifyContent: 'center', marginBottom: 30}}>
-          <Text style={{marginTop: 20, color:'white'}}>{metadata.description}</Text>
-          {numImages > 1 && <Text style={{marginBottom: 30, color:'white'}}>{imagesLabel}</Text> }
-        </View>
+      <View style={styles.imageViewerFooter}>
+        <Text style={styles.imageViewerDescription}>{metadata.description}</Text>
+        {numImages > 1 && <Text style={styles.imageViewerCount}>{imagesLabel}</Text>}
+      </View>
     );
   };
 
@@ -142,7 +142,7 @@ export default function SectorScreen() {
       const img = ResolveImage(image)
       image_list.push(img)
     }
-    return(
+    return (
       <View style={styles.topoImageContainer}>
         <TouchableOpacity style={styles.topoImagePanel}
           onPress={() => {
@@ -152,7 +152,6 @@ export default function SectorScreen() {
             setImageMetadatList(sector.sector_pictures)
           }}
         >
-          <View style={styles.imageOffsetBackground}/>
           <View style={styles.imageWrapper}>
             <Image
               source={image_data.path}
@@ -165,7 +164,7 @@ export default function SectorScreen() {
       </View>
     )
   }
-  
+
   function renderTopo(sector: any) {
     if (sector?.sector_pictures.length == 0) {
       return (<></>)
@@ -173,35 +172,34 @@ export default function SectorScreen() {
     return (
       <View style={styles.topoContainer}>
         <Text style={styles.topoTitle}>Le topo</Text>
-        <View style={styles.topoImagesPanel}>
+        <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={styles.topoImagesPanel}>
           {sector.sector_pictures.map((picture: any, index: number) => (
             <View key={index}>
               {renderOneTopoImage(picture, index, sector)}
             </View>
-           ))}
-        </View>
+          ))}
+        </ScrollView>
       </View>
     )
-
   }
 
   const StarRating = ({ rating }) => {
     const stars = [];
     for (let i = 0; i < 3; i++) {
       stars.push(
-        <MaterialIcons 
-          key={i} 
-          name={i < rating ? 'star' : 'star-outline'} 
-          size={15} 
-          color="#bd971c" 
-          style={styles.star} 
+        <MaterialIcons
+          key={i}
+          name={i < rating ? 'star' : 'star-outline'}
+          size={16}
+          color={Colors.starYellow}
+          style={styles.star}
         />
       );
     }
-  
+
     return (
       <View style={styles.starContainer}>
-        <Text>{stars}</Text>
+        {stars}
       </View>
     );
   };
@@ -213,7 +211,7 @@ export default function SectorScreen() {
       return <></>
     }
     return (
-      <TouchableOpacity  style={{padding: 10}}
+      <TouchableOpacity style={styles.routeActionButton}
         onPress={() => {
           let images = []
           for (const image of route?.pictures) {
@@ -224,29 +222,26 @@ export default function SectorScreen() {
           setImageList(images)
           setImageMetadatList(route.pictures)
         }}>
-        <Text>
-          <FontAwesome 
-            name="photo" 
-            size={20} 
-            color="#a46aad" 
-            style={styles.star} 
-          />
-        </Text>
+        <FontAwesome
+          name="photo"
+          size={18}
+          color={Colors.routeIcon}
+        />
       </TouchableOpacity>
     )
   }
 
   function renderRouteExtraInfo(route: any, index: number) {
-    const mustShowPlus = (route?.tips != undefined && route?.tips != "" ) ||
-                         (route?.requiped != undefined && route?.requiped != "") ||
-                         (route?.setter != undefined && route?.setter != "")
+    const mustShowPlus = (route?.tips != undefined && route?.tips != "") ||
+      (route?.requiped != undefined && route?.requiped != "") ||
+      (route?.setter != undefined && route?.setter != "")
 
     if (mustShowPlus == false) {
       return <></>
     }
-  
+
     return (
-      <TouchableOpacity style={{padding: 10}}
+      <TouchableOpacity style={styles.routeActionButton}
         onPress={() => {
           if (moreInfoIndex == index) {
             setMoreInfoIndex(-1)
@@ -254,25 +249,22 @@ export default function SectorScreen() {
             setMoreInfoIndex(index)
           }
         }}>
-        <Text>
-          <FontAwesome 
-            name={moreInfoIndex == index ? "minus-circle" : "plus-circle" }
-            size={20} 
-            color={moreInfoIndex == index ? "#f26f6f": Colors.mainColorGreen} 
-            style={styles.star} 
-          />
-        </Text>
+        <FontAwesome
+          name={moreInfoIndex == index ? "minus-circle" : "plus-circle"}
+          size={18}
+          color={moreInfoIndex == index ? Colors.danger : Colors.primary}
+        />
       </TouchableOpacity>
     )
   }
-   
+
   function renderNoExtraInfo(route: any) {
-    const has_extra = (route?.tips != undefined && route?.tips != "" ) ||
-                         (route?.requiped != undefined && route?.requiped != "") ||
-                         (route?.setter != undefined && route?.setter != "")
+    const has_extra = (route?.tips != undefined && route?.tips != "") ||
+      (route?.requiped != undefined && route?.requiped != "") ||
+      (route?.setter != undefined && route?.setter != "")
     const has_image = route?.pictures?.length > 0
     if (has_extra == false && has_image == false) {
-      return <Text>-</Text>
+      return <Text style={{ color: Colors.textMuted }}>-</Text>
     } else {
       return <></>
     }
@@ -281,63 +273,63 @@ export default function SectorScreen() {
 
   function renderRoutePlusInformation(route: any, index: number) {
     return (
-    <View style={{flexDirection: 'row', alignContent: 'space-around'}}>
-      { renderNoExtraInfo(route) }
-      { renderRouteExtraInfo(route, index) }
-      { renderRouteImage(route) }
-    </View>)
+      <View style={styles.routeActionsContainer}>
+        {renderNoExtraInfo(route)}
+        {renderRouteExtraInfo(route, index)}
+        {renderRouteImage(route)}
+      </View>)
   }
 
 
   function renderMoreInfoRoute(route: any) {
     return (
-    <View style={styles.moreInfoRouteContainer}>
-      {route?.tips &&
-        <View style={{flexDirection: 'row', padding: 10}}>
-          <Text>Tip: </Text>
-          <Text>{route.tips}</Text>
-        </View>
-      }
+      <View style={styles.moreInfoRouteContainer}>
+        {route?.tips &&
+          <View style={styles.moreInfoRow}>
+            <Text style={styles.moreInfoLabel}>Tip: </Text>
+            <Text style={styles.moreInfoText}>{route.tips}</Text>
+          </View>
+        }
 
-      {route?.requiped &&
-        <View style={{flexDirection: 'row', padding: 10}}>
-          <Text>Reequipment: </Text>
-          <Text>{route.requiped}</Text>
-        </View>
-      }
+        {route?.requiped &&
+          <View style={styles.moreInfoRow}>
+            <Text style={styles.moreInfoLabel}>Reequipment: </Text>
+            <Text style={styles.moreInfoText}>{route.requiped}</Text>
+          </View>
+        }
 
-      {route?.setter &&
-        <View style={{flexDirection: 'row', padding: 10}}>
-          <Text>Ouverte par: </Text>
-          <Text>{route.setter}</Text>
-        </View>
-      }  
+        {route?.setter &&
+          <View style={styles.moreInfoRow}>
+            <Text style={styles.moreInfoLabel}>Ouverte par: </Text>
+            <Text style={styles.moreInfoText}>{route.setter}</Text>
+          </View>
+        }
 
-    </View>
+      </View>
     )
   }
 
   function renderOneRoute(route: any, index: number) {
     return (
-      <View>
-      <DataTable.Row  style={{justifyContent: 'center'}}>
-        <DataTable.Cell style={{flex: 0.4, justifyContent: 'flex-start'}}><Text style={{fontSize: 12}}>{index + 1}</Text></DataTable.Cell>
-        <DataTable.Cell><Text style={{fontSize: 12}}>{route?.name}</Text></DataTable.Cell>
-        <DataTable.Cell style={{justifyContent: 'center'}}><Text style={{fontSize: 12}}>{route?.grade}</Text></DataTable.Cell>
-        <DataTable.Cell style={{justifyContent: 'center'}}><StarRating rating={route?.stars}/></DataTable.Cell>
-        <DataTable.Cell style={{justifyContent: 'center'}}>{ renderRoutePlusInformation(route, index)}</DataTable.Cell>
-      </DataTable.Row>
-        { moreInfoIndex == index &&
-          <DataTable.Row  style={{justifyContent: "center"}}>
-            <DataTable.Cell>
-             { renderMoreInfoRoute(route) }
+      <View key={index}>
+        <DataTable.Row style={styles.dataTableRow}>
+          <DataTable.Cell style={styles.routeCellNumber}><Text style={styles.routeCellText}>{index + 1}</Text></DataTable.Cell>
+          <DataTable.Cell style={styles.routeCellName}><Text style={styles.routeCellText}>{route?.name}</Text></DataTable.Cell>
+          <DataTable.Cell style={styles.routeCellGrade}><Text style={styles.routeCellText}>{route?.grade}</Text></DataTable.Cell>
+          <DataTable.Cell style={styles.routeCellStars}><StarRating rating={route?.stars} /></DataTable.Cell>
+          <DataTable.Cell style={styles.routeCellActions}>{renderRoutePlusInformation(route, index)}</DataTable.Cell>
+        </DataTable.Row>
+        {moreInfoIndex == index &&
+          <DataTable.Row style={styles.moreInfoRowContainer}>
+            <DataTable.Cell style={styles.moreInfoCell}>
+              {renderMoreInfoRoute(route)}
             </DataTable.Cell>
           </DataTable.Row>
         }
-      </View>    
+      </View>
     )
   }
-  
+
   function renderRoutes(sector: any) {
     if (sector?.routes.length == 0) {
       return (<></>)
@@ -348,31 +340,29 @@ export default function SectorScreen() {
         <Text style={styles.routesTitle}>Les voies</Text>
         <DataTable style={styles.tableContainer}>
           <DataTable.Header style={styles.tableHeader}>
-            <DataTable.Title style={{flex: 0.4, justifyContent: 'flex-start'}}><Text style={styles.tableTitleText}>#</Text></DataTable.Title>
-            <DataTable.Title style={{justifyContent: 'center'}}><Text style={styles.tableTitleText}>Nom</Text></DataTable.Title>
-            <DataTable.Title style={{justifyContent: 'center'}}><Text style={styles.tableTitleText}>Cotation</Text></DataTable.Title>
-            <DataTable.Title style={{justifyContent: 'center'}}><Text style={styles.tableTitleText}>Interet</Text></DataTable.Title>
-            <DataTable.Title style={{justifyContent: 'center'}}><Text style={styles.tableTitleText}>Plus d'info</Text></DataTable.Title>
+            <DataTable.Title textStyle={styles.tableTitleText} style={styles.tableColNumber}>#</DataTable.Title>
+            <DataTable.Title textStyle={styles.tableTitleText} style={styles.tableColName}>Nom</DataTable.Title>
+            <DataTable.Title textStyle={styles.tableTitleText} style={styles.tableColGrade}>Cotation</DataTable.Title>
+            <DataTable.Title textStyle={styles.tableTitleText} style={styles.tableColInterest}>Interet</DataTable.Title>
+            <DataTable.Title textStyle={styles.tableTitleText} style={styles.tableColInfo}>Info</DataTable.Title>
           </DataTable.Header>
-          
+
           {sector.routes.map((route: any, index: number) => (
-            <View key={index}>
-              {renderOneRoute(route, index)}
-            </View>
+            renderOneRoute(route, index)
           ))}
 
-          </DataTable>
+        </DataTable>
       </View>
     )
   }
 
   function renderSector(sector: any) {
-    return(
+    return (
       <ScrollView style={styles.sectorContainer}>
         {renderGeneralInfo(sector)}
         {renderTopo(sector)}
         {renderRoutes(sector)}
-        <View style={{marginBottom: 100}}><Text></Text></View>
+        <View style={{ marginBottom: 100 }}><Text></Text></View>
       </ScrollView>
     )
   }
@@ -386,9 +376,9 @@ export default function SectorScreen() {
 
   return (
     <View style={styles.screen}>
-      { renderReturn() }
+      {renderReturn()}
       <View style={styles.container}>
-        { renderSector(sector) }
+        {renderSector(sector)}
       </View>
 
       <ImageView
@@ -406,115 +396,64 @@ export default function SectorScreen() {
 const styles = StyleSheet.create({
   screen: {
     flex: 1,
-    alignItems: 'flex-start',
-    justifyContent: 'flex-start',
     backgroundColor: Colors.appBackground,
   },
   container: {
     flex: 1,
     width: "100%",
     backgroundColor: Colors.appBackground,
-    alignItems: 'flex-start',
-    justifyContent: 'flex-start',
-  },
-  text: {
-    color: Colors.text,
-  },
-  button: {
-    fontSize: 20,
-    textDecorationLine: 'underline',
-    color: Colors.link,
   },
   returnContainer: {
-    marginTop: Platform.OS == "android" ? 50 : 50,
-    marginLeft: 10,
-    alignSelf: 'flex-start'
+    paddingTop: Platform.OS === "android" ? 50 : 50,
+    paddingLeft: 15,
+    backgroundColor: Colors.appBackground,
+    borderBottomWidth: 1,
+    borderBottomColor: Colors.borderColor,
+    paddingBottom: 10,
   },
   returnLine: {
     flexDirection: 'row',
     alignItems: 'center',
-    justifyContent: 'flex-end',
   },
   returnLabel: {
     paddingLeft: 10,
+    fontSize: 16,
+    color: Colors.text,
   },
   sectorContainer: {
-    width: "100%",
-    padding: 10
+    flex: 1,
+    paddingHorizontal: 15,
   },
   generalInfoContainer: {
-    flexDirection: 'column',
-  },
-  mapsLogoContainer: {
-      width: 20,
-      height: 25,
-      borderRadius: 10,
-  },
-  box: {
-    width: '28%', // Adjust width as needed
-    aspectRatio: 1, // Keep boxes square
-    alignItems: 'center',
-    justifyContent: 'center',
-    flexDirection: 'column',
-    margin: 5,
-    borderRadius: 20,
-    padding: 10,
-  },
-  detailBoxValue: {
-    fontWeight: 800,
+    marginBottom: 20,
   },
   titleContainer: {
     marginTop: 20,
     backgroundColor: Colors.tertiaryColorNeutral,
-    borderColor: Colors.mainColorGreen,
     borderRadius: 20,
-    padding: 5,
+    padding: 20,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 1 },
+    shadowOpacity: 0.1,
+    shadowRadius: 5,
+    elevation: 3,
   },
   nameAndParkingContainer: {
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
-    borderRadius: 40
+    marginBottom: 10,
   },
   titleText: {
-    paddingHorizontal: 10,
-    fontWeight: 600,
-    fontSize: 20,
-    color: "#464342ff"
+    fontSize: 24,
+    fontWeight: '700',
+    color: Colors.headingText,
   },
   subTitleText: {
-    paddingHorizontal: 10,
-    marginVertical: 10,
+    fontSize: 15,
     fontStyle: 'italic',
-    color: "#52504f"
-  },
-  sectionTitle: {
-    flexDirection: 'row',
-    backgroundColor: Colors.mainColorGreenWithOpacity,
-    padding: 10,
-    borderRadius: 10,
-    alignContent: 'center',
-    justifyContent: 'space-between'
-  },
-  sectionIconAndText: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  iconSectionContainer: {
-    marginHorizontal: 3,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  textSectionTitle: {
-    fontSize: 16,
-    fontWeight: 500,
-    color: "white",
-    marginLeft: 10
-  }, 
-  sectionContent: {
-    marginTop: 20,
-    fontSize: 20
+    color: Colors.textMuted,
+    lineHeight: 22,
   },
   mapPinContainer: {
     margin: 10,
@@ -522,106 +461,213 @@ const styles = StyleSheet.create({
     borderRadius: 20,
     backgroundColor: 'white'
   },
-  topoContainer: {
-    marginTop: 20,
+  mapsLogoContainer: {
+    width: 20,
+    height: 25,
+    borderRadius: 10
   },
-  topoImageContainer: {
-    flexDirection: 'column',
-    alignItems: 'center'
-  },
-  topoImagePanel: {
-    padding: 5,
-    margin: 5,
-    borderRadius: 20,
-    alignSelf: 'center',
-    justifyContent: 'center',
-    opacity: 0.8,
-    backgroundColor: '#ffffff',
+  sectionContent: {
+    marginTop: 15,
+    backgroundColor: Colors.cardBackground,
+    borderRadius: 15,
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.08,
-    shadowRadius: 8,
-    elevation: 5,
+    shadowOpacity: 0.1,
+    shadowRadius: 5,
+    elevation: 3,
+    overflow: 'hidden'
+  },
+  sectionTitle: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    paddingVertical: 15,
+    paddingHorizontal: 20,
+    backgroundColor: Colors.mainColorGreenWithOpacity,
+  },
+  sectionIconAndText: {
+    flexDirection: 'row',
     alignItems: 'center',
   },
-  imageWrapper: {
-    width: 150,
-    height: 150,
-    borderRadius: 20,
-    overflow: 'hidden',
-  },  
-  oneImageTopo: {
-    width: "100%",
-    height: "100%",
-    resizeMode: "cover"
-  },  
-  topoImagesPanel: {
-    flexDirection: 'row',
-    flexWrap: 'wrap',
-    alignItems: 'flex-start',
-    justifyContent: 'center'
+  iconSectionContainer: {
+    marginRight: 10,
+  },
+  textSectionTitle: {
+    fontSize: 18,
+    fontWeight: '600',
+    color: "white",
+  },
+  sectionMarkdown: {
+    paddingHorizontal: 20,
+    paddingVertical: 15,
+  },
+  topoContainer: {
+    marginTop: 25,
   },
   topoTitle: {
-    fontWeight: 600,
-    fontSize: 20,
-    paddingHorizontal: 10,
+    fontSize: 22,
+    fontWeight: '700',
+    color: Colors.headingText,
+    marginBottom: 15,
+    paddingLeft: 5,
+  },
+  topoImagesPanel: {
+    paddingVertical: 5,
+  },
+  topoImageContainer: {
+    marginRight: 15,
+    marginBottom: 10,
+  },
+  topoImagePanel: {
+    borderRadius: 15,
+    backgroundColor: Colors.cardBackground,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 5,
+    elevation: 3,
+    alignItems: 'center',
+    padding: 10,
+  },
+  imageWrapper: {
+    width: 140,
+    height: 140,
+    borderRadius: 10,
+    overflow: 'hidden',
+    marginBottom: 8,
+  },
+  oneImageTopo: {
+    width: '100%',
+    height: '100%',
   },
   topoImageDescription: {
-    fontSize: 9,
+    fontSize: 12,
     textAlign: 'center',
-    fontStyle: "italic"
+    fontStyle: 'italic',
+    color: Colors.textMuted,
+    maxWidth: 140,
   },
-  zoomContainer: {
-    backgroundColor: '#161716',
-    opacity: 0.95,
-    borderRadius: 5,
+  imageViewerFooter: {
     alignItems: 'center',
+    justifyContent: 'center',
+    marginBottom: 30,
+    paddingHorizontal: 20,
+  },
+  imageViewerDescription: {
+    marginTop: 20,
+    color: 'white',
+    fontSize: 16,
+    textAlign: 'center',
+  },
+  imageViewerCount: {
+    marginBottom: 10,
+    color: 'white',
+    fontSize: 14,
   },
   routesContainer: {
-    marginTop: 20,
-  },
-  moreInfoRouteContainer: {
-    backgroundColor: '#e1e2e3',
-    padding: 15,
-    margin: 20,
-    borderRadius: 20,
+    marginTop: 25,
   },
   routesTitle: {
-    fontWeight: 600,
-    fontSize: 20,
-    marginBottom: 10,
-    paddingHorizontal: 10    
-  },
-  routesPanelContainer: {
-    flexDirection: 'column'
-  },
-  oneRouteContainer: {
-    flexDirection: 'row',
-    padding: 5,
-    justifyContent: 'space-between',
-    flexWrap: 'nowrap',
-  },
-  oneRouteName: {
-    alignSelf: 'flex-start',
-    alignContent: 'flex-start',
-    justifyContent: 'flex-start',
-  },
-  starContainer: {
-    flexDirection: 'row',
-  },
-  star: {
-    marginRight: 2,
+    fontSize: 22,
+    fontWeight: '700',
+    color: Colors.headingText,
+    marginBottom: 15,
+    paddingLeft: 5,
   },
   tableContainer: {
-    padding: 15,
+    backgroundColor: Colors.cardBackground,
+    borderRadius: 15,
+    overflow: 'hidden',
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 5,
+    elevation: 3,
+    paddingBottom: 10, // Add padding to bottom for better spacing of last row
   },
   tableHeader: {
     backgroundColor: Colors.tertiaryColorNeutral,
-    borderRadius: 10
+    borderBottomWidth: 1,
+    borderBottomColor: Colors.borderColor,
+    paddingVertical: 5,
   },
   tableTitleText: {
+    color: Colors.tableHeaderText,
+    fontWeight: '700',
+    fontSize: 13,
+  },
+  tableColNumber: { flex: 0.4, justifyContent: 'flex-start', paddingLeft: 15 },
+  tableColName: { flex: 1.5, justifyContent: 'flex-start' },
+  tableColGrade: { flex: 0.8, justifyContent: 'center' },
+  tableColInterest: { flex: 1, justifyContent: 'center' },
+  tableColInfo: { flex: 1.2, justifyContent: 'center' },
+
+  dataTableRow: {
+    borderBottomWidth: 1,
+    borderBottomColor: Colors.borderColor,
+    minHeight: 50,
+  },
+  routeCellText: {
+    fontSize: 12,
     color: Colors.text,
-    fontWeight: 800,
-    fontSize: 13
-  },  
+  },
+  routeCellNumber: { flex: 0.4, justifyContent: 'flex-start', paddingLeft: 15 },
+  routeCellName: { flex: 1.5, justifyContent: 'flex-start' },
+  routeCellGrade: { flex: 0.8, justifyContent: 'center' },
+  routeCellStars: { flex: 1, justifyContent: 'center' },
+  routeCellActions: { flex: 1.2, justifyContent: 'center' },
+
+  starContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  star: {
+    marginHorizontal: 1,
+  },
+  routeActionsContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-around',
+    paddingVertical: 5,
+  },
+  routeActionButton: {
+    padding: 5,
+  },
+  moreInfoRowContainer: {
+    backgroundColor: Colors.subtleBackground,
+    borderBottomWidth: 1,
+    borderBottomColor: Colors.borderColor,
+    alignContent: "center",
+    justifyContent: "center",
+    alignItems: "center"
+  },
+  moreInfoCell: {
+    flex: 1,
+    paddingLeft: 0, // Adjust if needed
+  },
+  moreInfoRouteContainer: {
+    flexDirection: 'column',
+    paddingHorizontal: 15,
+    paddingVertical: 10,
+    backgroundColor: Colors.infoCardBackground,
+    borderRadius: 10,
+    margin: 10,
+    width: 'auto', // Adjust to fill cell
+  },
+  moreInfoRow: {
+    flexDirection: 'row',
+    marginBottom: 5,
+  },
+  moreInfoLabel: {
+    fontWeight: '600',
+    color: Colors.headingText,
+    marginRight: 5,
+    fontSize: 13,
+  },
+  moreInfoText: {
+    color: Colors.text,
+    fontSize: 13,
+    flexShrink: 1, // Allow text to wrap
+  },
 });
