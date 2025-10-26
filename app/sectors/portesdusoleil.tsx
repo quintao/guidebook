@@ -149,7 +149,7 @@ export default {
         },                                                                
         {
             name: "Regarde le ciel",
-            grade: "+c",
+            grade: "6c",
             stars: 2,
             tips: "Un peu de fissure",
         },
