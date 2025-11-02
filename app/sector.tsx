@@ -250,7 +250,7 @@ export default function SectorScreen() {
           }
         }}>
         <FontAwesome
-          name={moreInfoIndex == index ? "minus-circle" : "plus-circle"}
+          name={moreInfoIndex == index ? "chevron-up" : "chevron-down"}
           size={18}
           color={moreInfoIndex == index ? Colors.danger : Colors.primary}
         />
