@@ -31,133 +31,154 @@ export default {
         },        
     ],
     routes: [
-        {
-            name: "Le délire de Sophie",
-            grade: "5c",
-            stars: 2,
-        },
-        {
-            name: "C'est pas sorcier",
-            grade: "5b",
-            stars: 2,
-        },
-        {
-            name: "La dalle à Gilbert",
-            grade: "6a+",
-            stars: 3,
-            tips: "Trop beau, trop court !",
-        },
-        {
-            name: "Joceline",
-            grade: "5b",
-            stars: 2,
-        },
-        {
-            name: "L'écaille",
-            grade: "6a+",
-            stars: 1,
-        },
-        {
-            name: "Bienvenue",
-            grade: "4b",
-            stars: 1,
-        },
-        {
-            name: "Les pitons nostalgiques",
-            grade: "5c, 6b",
-            stars: 2,
-            tips: "Crux juste après le relais intermédiaire",
-        },
-        {
-            name: "Les 3 surplombs",
-            grade: "5c+, 5c+",
-            stars: 2,
-        },
-        {
-            name: "La voie des Belges",
-            grade: "5a, 5c",
-            stars: 2,
-        },
-        {
-            name: "Voyage au bout de la nuit",
-            grade: "6a",
-            stars: 2,
-            tips: "Un long voyage justement",
-        },
-        {
-            name: "La voie des dames",
-            grade: "5a, 5b",
-            stars: 2,
-            tips: "La plus ancienne",
-        },
-        {
-            name: "Douce violence",
-            grade: "6a+",
-            stars: 2,
-            tips: "Un pas un peu dur après 7-8 mètres",
-        },
-        {
-            name: "Trait de lune",
-            grade: "7a+",
-            stars: 2,
-        },
-        {
-            name: "Scex dru",
-            grade: "7a",
-            stars: 3,
-            tips: "Joli mur soutenu",
-        },
-        {
-            name: "Génération nouvelle",
-            grade: "7a+",
-            stars: 2,
-        },
-        {
-            name: "Le pied à l'étrier",
-            grade: "8a+",
-            stars: 2,
-            tips: "Court mais gros dévers",
-        },
-        {
-            name: "Lueur d'automne",
-            grade: "6b+",
-            stars: 2,
-        },
-        {
-            name: "Popeye",
-            grade: "6b+",
-            stars: 3,
-            tips: "La plus sympa dans les petits dévers",
-            pictures: [
-                {
-                    path: require("@/assets/images/portesdusoleil/popeye.jpg"),
-                    description: "Fred dans le crux",
-                }
-            ]            
-        },
-        {
-            name: "Les marmottes sifflent",
-            grade: "6c+",
-            stars: 3,
-            tips: "Bien physique !",
-            pictures: [
-                {
-                    path: require("@/assets/images/portesdusoleil/marmottes.jpg"),
-                    description: "Fred dans le depart",
-                }
-            ]                
-        },                                                                
-        {
-            name: "Regarde le ciel",
-            grade: "6c",
-            stars: 2,
-            tips: "Un peu de fissure",
-        },
-        {
-            name: "Lifting",
-            grade: "6c",
-            stars: 1,
-            tips: "La toute dernière !",
-        },
-    ]
+    {
+        id: "pds_1",
+        name: "Le délire de Sophie",
+        grade: "5c",
+        stars: 2,
+    },
+    {
+        id: "pds_2",
+        name: "C'est pas sorcier",
+        grade: "5b",
+        stars: 2,
+    },
+    {
+        id: "pds_3",
+        name: "La dalle à Gilbert",
+        grade: "6a+",
+        stars: 3,
+        tips: "Trop beau, trop court !",
+    },
+    {
+        id: "pds_4",
+        name: "Joceline",
+        grade: "5b",
+        stars: 2,
+    },
+    {
+        id: "pds_5",
+        name: "L'écaille",
+        grade: "6a+",
+        stars: 1,
+    },
+    {
+        id: "pds_6",
+        name: "Bienvenue",
+        grade: "4b",
+        stars: 1,
+    },
+    {
+        id: "pds_7",
+        name: "Les pitons nostalgiques",
+        grade: "5c, 6b",
+        stars: 2,
+        tips: "Crux juste après le relais intermédiaire",
+    },
+    {
+        id: "pds_8",
+        name: "Les 3 surplombs",
+        grade: "5c+, 5c+",
+        stars: 2,
+    },
+    {
+        id: "pds_9",
+        name: "La voie des Belges",
+        grade: "5a, 5c",
+        stars: 2,
+    },
+    {
+        id: "pds_10",
+        name: "Voyage au bout de la nuit",
+        grade: "6a",
+        stars: 2,
+        tips: "Un long voyage justement",
+    },
+    {
+        id: "pds_11",
+        name: "La voie des dames",
+        grade: "5a, 5b",
+        stars: 2,
+        tips: "La plus ancienne",
+    },
+    {
+        id: "pds_12",
+        name: "Douce violence",
+        grade: "6a+",
+        stars: 2,
+        tips: "Un pas un peu dur après 7-8 mètres",
+    },
+    {
+        id: "pds_13",
+        name: "Trait de lune",
+        grade: "7a+",
+        stars: 2,
+    },
+    {
+        id: "pds_14",
+        name: "Scex dru",
+        grade: "7a",
+        stars: 3,
+        tips: "Joli mur soutenu",
+    },
+    {
+        id: "pds_15",
+        name: "Génération nouvelle",
+        grade: "7a+",
+        stars: 2,
+    },
+    {
+        id: "pds_16",
+        name: "Le pied à l'étrier",
+        grade: "8a+",
+        stars: 2,
+        tips: "Court mais gros dévers",
+    },
+    {
+        id: "pds_17",
+        name: "Lueur d'automne",
+        grade: "6b+",
+        stars: 2,
+    },
+    {
+        id: "pds_18",
+        name: "Popeye",
+        grade: "6b+",
+        stars: 3,
+        tips: "La plus sympa dans les petits dévers",
+        pictures: [
+            {
+                path: require("@/assets/images/portesdusoleil/popeye.jpg"),
+                description: "Fred dans le crux",
+            }
+        ]
+    },
+    {
+        id: "pds_19",
+        name: "Les marmottes sifflent",
+        grade: "6c+",
+        stars: 3,
+        tips: "Bien physique !",
+        pictures: [
+            {
+                path: require("@/assets/images/portesdusoleil/marmottes.jpg"),
+                description: "Fred dans le depart",
+            }
+        ]
+    },
+    {
+        id: "pds_20",
+        name: "Regarde le ciel",
+        grade: "6c",
+        stars: 2,
+        tips: "Un peu de fissure",
+    },
+    {
+        id: "pds_21",
+        name: "Lifting",
+        grade: "6c",
+        stars: 1,
+        tips: "La toute dernière !",
+    },
+  ]
 };

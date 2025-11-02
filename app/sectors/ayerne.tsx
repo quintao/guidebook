@@ -27,6 +27,7 @@ export default {
     ],
     routes: [
         {
+            id: "ayerne_1",
             name: "Pif Paf",
             grade: "6c",
             stars: 1,
@@ -34,6 +35,7 @@ export default {
             requiped: "",
         },
         {
+            id: "ayerne_2",
             name: "Tik Tok",
             grade: "6a+",
             stars: 1,
@@ -41,27 +43,32 @@ export default {
             requiped: "",
         },
         {
+            id: "ayerne_3",
             name: "J'ai la dalle",
             grade: "5b+",
             stars: 2,
         },
         {
+            id: "ayerne_4",
             name: "Le téléphérique",
             grade: "5c",
             stars: 2,
         },
         {
+            id: "ayerne_5",
             name: "Agate",
             grade: "6a",
             stars: 1,
         },
         {
+            id: "ayerne_6",
             name: "Haribo",
             grade: "6c+",
             stars: 2,
             tips: "Magnifique dülfer",
         },
         {
+            id: "ayerne_7",
             name: "Classico",
             grade: "6a",
             stars: 3,
@@ -73,43 +80,51 @@ export default {
             ]            
         },
         {
+            id: "ayerne_8",
             name: "Le mur des lamentations",
             grade: "6b+",
             stars: 2,
             tips: "Rejoint Haribo après le 4ème spit",
         },
         {
+            id: "ayerne_9",
             name: "Le mur des lamentations direct",
             grade: "7a",
             stars: 3,
         },
         {
+            id: "ayerne_10",
             name: "Bon voyage",
             grade: "6a+",
             stars: 2,
         },
         {
+            id: "ayerne_11",
             name: "Pestouille",
             grade: "5c",
             stars: 1,
         },
         {
+            id: "ayerne_12",
             name: "Stringer",
             grade: "5a",
             stars: 1,
         },
         {
+            id: "ayerne_13",
             name: "Farouche",
             grade: "7c",
             stars: 2,
             tips: "Doigts d'acier",
         },
         {
+            id: "ayerne_14",
             name: "Quntus",
             grade: "7b",
             stars: 2,
         },
         {
+            id: "ayerne_15",
             name: "Le philosophe",
             grade: "5c",
             stars: 1,
