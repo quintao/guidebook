@@ -7,6 +7,8 @@ const mainColorGreen ='#1e8385';
 const secondaryColorViolette = '#76646c';
 const secondaryColorGreen ='#bbdfdfff';
 const tertiaryColorNeutral = '#e6d6cf';
+const tertiaryColorLight = '#f0eae8ff';
+
 
 const themes = {
     text: '#3d3c3cff',
@@ -40,7 +42,7 @@ const themes = {
     starYellow: "#bd971c",
     tableHeaderBackground: '#CFD8DC', // Light blue-grey for table headers
     tableHeaderText: '#455A64', // Darker text for table headers
-    subtleBackground: tertiaryColorNeutral,
+    subtleBackground: tertiaryColorLight,
     infoCardBackground: '#edf3edff', // Light green for info cards
     routeIcon: '#673AB7',       
 }

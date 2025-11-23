@@ -23,7 +23,11 @@ export default {
     sector_pictures: [
         {
             path: require("@/assets/images/portesdusoleil/topo.png"),
-            description: "Apercu general"
+            description: "Secteur gauche"
+        },
+                {
+            path: require("@/assets/images/portesdusoleil/topo2.png"),
+            description: "Secteur droite"
         },
         {
             path: require("@/assets/images/portesdusoleil/vue.jpg"),
