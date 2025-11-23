@@ -17,7 +17,7 @@ export default {
         },
         access: "Monthey - Val-d'Illiez - Les Crosets - Vaillime - col des Portes du Soleil. Continuer jusqu'à l'alpage de la Dronnaire (parking un peu plus loin). 10 minutes à pied. Accès possible également depuis Morgins par le vallon de They et la buvette de la Tovassière. Parking à la buvette. 15 minutes de marche. Falaise au bord de la route carrossable. ",
         restaurants: "Buvette de la Tovassière et Buvette et Cantine de They.",
-        long_description: "Bien entendu, à la lecture du topo, le potentiel de ce petit site est bien maigre. Mais vous aurez le rare bonheur de grimper sur un rocher particulier que l’on ne rencontre pas dans les nombreux sites du Chablais: de la cornieule avec des trous plus ou moins gros et des plats. Et tout ça dans du dévers. A combiner avec le site du col des Portes du Soleil si vous avez la journée. \n\n**Equipement**: Gilbert Perrin et Frank Berrut",
+        long_description: "Bien entendu, à la lecture du topo, le potentiel de ce petit site est bien maigre. Mais vous aurez le rare bonheur de grimper sur un rocher particulier que l'on ne rencontre pas dans les nombreux sites du Chablais: de la cornieule avec des trous plus ou moins gros et des plats. Et tout ça dans du dévers. A combiner avec le site du col des Portes du Soleil si vous avez la journée. \n\n**Equipement**: Gilbert Perrin et Frank Berrut",
     },
     sector_pictures: [
         {

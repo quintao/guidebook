@@ -286,8 +286,7 @@ export default function SectorScreen() {
       <View style={styles.moreInfoRouteContainer}>
         {route?.tips &&
           <View style={styles.moreInfoRow}>
-            <Text style={styles.moreInfoLabel}>Tip: </Text>
-            <Text style={styles.moreInfoText}>{route.tips}</Text>
+            <Markdown style={{ body: { color: Colors.text, lineHeight: 20 } }}>{route.tips}</Markdown>
           </View>
         }
 
@@ -640,11 +639,15 @@ const styles = StyleSheet.create({
     borderBottomColor: Colors.borderColor,
     alignContent: "center",
     justifyContent: "center",
-    alignItems: "center"
+    alignItems: "center",
   },
   moreInfoCell: {
     flex: 1,
     paddingLeft: 0, // Adjust if needed
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 5,
   },
   moreInfoRouteContainer: {
     flexDirection: 'column',
@@ -653,10 +656,14 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.infoCardBackground,
     borderRadius: 10,
     margin: 10,
-    width: 'auto', // Adjust to fill cell
+    width: "95%",
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 5,    
   },
   moreInfoRow: {
-    flexDirection: 'row',
+    flexDirection: 'column',
     marginBottom: 5,
   },
   moreInfoLabel: {
