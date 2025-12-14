@@ -21,7 +21,7 @@ export default {
     },
     sector_pictures: [
         {
-            path: require("@/assets/images/colducou/higer.jpg"),
+            path: require("@/assets/images/colducou/hiver.jpg"),
             description: "Col du Cou en hiver"
         },
         {
