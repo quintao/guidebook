@@ -1,7 +1,7 @@
 {
   "expo": {
     "name": "Guidebook",
-    "slug": "Guidebook",
+    "slug": "guidebook",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/projectologo.png",
@@ -15,7 +15,8 @@
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/adaptive-icon.png",
         "backgroundColor": "#ffffff"
-      }
+      },
+      "package": "com.quintao.guidebook"
     },
     "web": {
       "bundler": "metro",
@@ -36,6 +37,13 @@
     ],
     "experiments": {
       "typedRoutes": true
-    }
+    },
+    "extra": {
+      "router": {},
+      "eas": {
+        "projectId": "8fb41c07-0105-46d0-aff2-8b297affa229"
+      }
+    },
+    "owner": "quintao"
   }
 }

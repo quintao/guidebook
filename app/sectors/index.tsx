@@ -18,7 +18,7 @@ const Sectors = [
   Cornieule,
   Defago,
   Dronnaire,
-  DryTooling,
+  //DryTooling,
   PortesDuSoleil,
   Play
 ]
