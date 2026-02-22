@@ -13,9 +13,14 @@
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/images/adaptive-icon.png",
+        "foregroundImage": "./assets/images/projectologo.png",
         "backgroundColor": "#ffffff"
       },
+      "splash": {
+        "image": "./assets/images/aititude.png",
+        "resizeMode": "contain",
+        "backgroundColor": "#ffffff"
+      },      
       "package": "com.quintao.guidebook"
     },
     "web": {
@@ -28,7 +33,7 @@
       [
         "expo-splash-screen",
         {
-          "image": "./assets/images/splash-icon.png",
+          "image": "./assets/images/aititude.png",
           "imageWidth": 200,
           "resizeMode": "contain",
           "backgroundColor": "#ffffff"
