@@ -8,7 +8,7 @@ import React from 'react';
 import Foundation from '@expo/vector-icons/Foundation';
 import Ionicons from '@expo/vector-icons/Ionicons';
 import FontAwesome from '@expo/vector-icons/FontAwesome';
-import MapView, { Marker} from 'react-native-maps';
+import MapView, { Marker, PROVIDER_GOOGLE} from 'react-native-maps';
 
 const initialRegion = {
   latitude: 46.180007, // Initial latitude
@@ -52,7 +52,7 @@ export default function Index() {
   function renderSectorLocations() {
     const mapping = buildLatLongKeysMap()
     return (
-      <MapView style={styles.map} region={initialRegion}>
+      <MapView style={styles.map} region={initialRegion} provider={PROVIDER_GOOGLE}>
         {Sectors.map((sectorData) => {
           return (
             <Marker 
