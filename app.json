@@ -20,7 +20,7 @@
         "image": "./assets/images/aititude.png",
         "resizeMode": "contain",
         "backgroundColor": "#ffffff"
-      },      
+      },
       "package": "com.quintao.guidebook"
     },
     "web": {
@@ -38,7 +38,9 @@
           "resizeMode": "contain",
           "backgroundColor": "#ffffff"
         }
-      ]
+      ],
+      "expo-font",
+      "expo-web-browser"
     ],
     "experiments": {
       "typedRoutes": true
