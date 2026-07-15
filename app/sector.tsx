@@ -9,6 +9,7 @@ import FontAwesome from "@expo/vector-icons/FontAwesome";
 
 import { useState } from 'react';
 import { DataTable } from 'react-native-paper';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import Markdown from 'react-native-markdown-display';
 import ImageView from "react-native-image-viewing";
@@ -33,6 +34,7 @@ export default function SectorScreen() {
   const params = useLocalSearchParams();
   const { target_sector } = params;
   const sector = JSON.parse(target_sector.toString());
+  const insets = useSafeAreaInsets();
 
   const [showDescription, setShowDescription] = useState(false)
   const [showAccess, setShowAccess] = useState(false)
@@ -124,13 +126,25 @@ export default function SectorScreen() {
   }
 
 
+  const CustomHeader = () => {
+    return (
+      <View style={[styles.imageViewerHeader, { paddingTop: insets.top + 10 }]}>
+        <TouchableOpacity style={styles.imageViewerCloseButton} onPress={() => cleanZoomState()}>
+          <Ionicons name="close" size={24} color="white" />
+        </TouchableOpacity>
+      </View>
+    );
+  };
+
   const CustomFooter = ({ imageIndex }) => {
     const metadata = imageMetadataList[imageIndex]
     const numImages = imageMetadataList.length
     const imagesLabel = (imageIndex + 1) + " / " + numImages
     return (
-      <View style={styles.imageViewerFooter}>
-        <Text style={styles.imageViewerDescription}>{metadata.description}</Text>
+      <View style={[styles.imageViewerFooter, { paddingBottom: insets.bottom + 15 }]}>
+        <ScrollView style={styles.imageViewerDescriptionScroll} contentContainerStyle={styles.imageViewerDescriptionScrollContent}>
+          <Text style={styles.imageViewerDescription}>{metadata.description}</Text>
+        </ScrollView>
         {numImages > 1 && <Text style={styles.imageViewerCount}>{imagesLabel}</Text>}
       </View>
     );
@@ -384,6 +398,7 @@ export default function SectorScreen() {
         images={imageList}
         imageIndex={zoomImage}
         visible={showZoom}
+        HeaderComponent={CustomHeader}
         FooterComponent={CustomFooter}
         onRequestClose={() => cleanZoomState()}
       />
@@ -546,20 +561,39 @@ const styles = StyleSheet.create({
     color: Colors.textMuted,
     maxWidth: 140,
   },
+  imageViewerHeader: {
+    alignItems: 'flex-end',
+    paddingRight: 15,
+  },
+  imageViewerCloseButton: {
+    width: 40,
+    height: 40,
+    borderRadius: 20,
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: '#00000077',
+  },
   imageViewerFooter: {
     alignItems: 'center',
     justifyContent: 'center',
-    marginBottom: 30,
+    maxHeight: 160,
     paddingHorizontal: 20,
+    paddingTop: 15,
+  },
+  imageViewerDescriptionScroll: {
+    maxHeight: 90,
+  },
+  imageViewerDescriptionScrollContent: {
+    flexGrow: 1,
+    justifyContent: 'center',
   },
   imageViewerDescription: {
-    marginTop: 20,
     color: 'white',
     fontSize: 16,
     textAlign: 'center',
   },
   imageViewerCount: {
-    marginBottom: 10,
+    marginTop: 10,
     color: 'white',
     fontSize: 14,
   },
