@@ -47,8 +47,6 @@ export default function Index() {
   const [showModal, setShowModal] = useState(false)
   const [targetSector, setTargetSector] = useState(Object)
 
-  // TOOD(quintao): follow the Google API key setup as described here:
-  // https://docs.expo.dev/versions/latest/sdk/map-view/
   function renderSectorLocations() {
     const mapping = buildLatLongKeysMap()
     return (
