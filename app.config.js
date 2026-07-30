@@ -6,23 +6,25 @@ export default {
     slug: "guidebook",
     version: "1.0.0",
     orientation: "portrait",
-    icon: "./assets/images/projectologo.png",
+    icon: "./assets/images/icon.png",
     scheme: "myapp",
     userInterfaceStyle: "automatic",
     newArchEnabled: true,
     ios: {
       supportsTablet: true,
+      bundleIdentifier: "com.quintao.guidebook",
       config: {
         googleMapsApiKey,
       },
     },
     android: {
       adaptiveIcon: {
-        foregroundImage: "./assets/images/projectologo.png",
+        foregroundImage: "./assets/images/adaptive-icon.png",
+        monochromeImage: "./assets/images/adaptive-icon-monochrome.png",
         backgroundColor: "#ffffff",
       },
       splash: {
-        image: "./assets/images/aititude.png",
+        image: "./assets/images/splash-icon.png",
         resizeMode: "contain",
         backgroundColor: "#ffffff",
       },
@@ -43,7 +45,7 @@ export default {
       [
         "expo-splash-screen",
         {
-          image: "./assets/images/aititude.png",
+          image: "./assets/images/splash-icon.png",
           imageWidth: 200,
           resizeMode: "contain",
           backgroundColor: "#ffffff",
