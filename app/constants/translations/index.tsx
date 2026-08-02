@@ -9,6 +9,7 @@ import frTranslations from './fr.json';
 let getLocalesCache: (() => any[]) | null = null;
 async function getLocalesAsync(): Promise<any[]> {
   if (getLocalesCache) {
+    console.log("cache worked.")
     return getLocalesCache();
   }
   try {
@@ -22,6 +23,7 @@ async function getLocalesAsync(): Promise<any[]> {
 }
 
 export type Language = 'en' | 'fr';
+const supportedLanguages = ["en", "fr"]
 
 // Type for translation keys
 // This is a type-safe way to access nested translation strings
@@ -42,6 +44,10 @@ interface LanguageContextType {
 // Create the context
 const LanguageContext = createContext<LanguageContextType | undefined>(undefined);
 
+function isSupportedLanguageCode(languageCode: string) : boolean {
+  return supportedLanguages.includes(languageCode)
+}
+
 // Get the best language based on device locale (async to support dynamic imports)
 async function detectLanguage(): Promise<Language> {
   try {
@@ -50,8 +56,8 @@ async function detectLanguage(): Promise<Language> {
     
     if (firstLocale) {
       const languageCode = firstLocale.languageCode?.toLowerCase();
-      if (languageCode === 'fr') {
-        return 'fr';
+      if (isSupportedLanguageCode(languageCode)) {
+        return languageCode
       }
     }
     
