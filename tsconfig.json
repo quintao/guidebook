@@ -3,6 +3,8 @@
   "compilerOptions": {
     "jsx": "react",
     "strict": true,
+    "resolveJsonModule": true,
+    "esModuleInterop": true,
     "paths": {
       "@/*": [
         "./*"
@@ -12,6 +14,7 @@
   "include": [
     "**/*.ts",
     "**/*.tsx",
+    "**/*.json",
     ".expo/types/**/*.ts",
     "expo-env.d.ts"
   ]

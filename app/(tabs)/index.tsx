@@ -1,4 +1,4 @@
-import { Text, View, StyleSheet, Platform } from 'react-native';
+import { Text, View, StyleSheet, Platform, TouchableOpacity } from 'react-native';
 import { Link} from 'expo-router';
 import Colors from '../constants/colors';
 import { useState } from 'react';
@@ -9,6 +9,7 @@ import Foundation from '@expo/vector-icons/Foundation';
 import Ionicons from '@expo/vector-icons/Ionicons';
 import FontAwesome from '@expo/vector-icons/FontAwesome';
 import MapView, { Marker, PROVIDER_GOOGLE} from 'react-native-maps';
+import { useLanguage } from '../constants/translations';
 
 const initialRegion = {
   latitude: 46.180007, // Initial latitude
@@ -45,7 +46,26 @@ function buildLatLongKeysMap() {
 
 export default function Index() {
   const [showModal, setShowModal] = useState(false)
-  const [targetSector, setTargetSector] = useState(Object)
+  const [targetSector, setTargetSector] = useState<any>(null)
+  const { t, language, setLanguage } = useLanguage();
+
+  function renderLanguageSwitcher() {
+    const toggleLanguage = async () => {
+      const newLanguage = language === 'en' ? 'fr' : 'en';
+      await setLanguage(newLanguage);
+    };
+
+    return (
+      <View style={styles.languageSwitcher}>
+        <TouchableOpacity 
+          style={styles.languageButton}
+          onPress={toggleLanguage}
+        >
+          <Text style={styles.languageText}>{language === 'en' ? 'FR' : 'EN'}</Text>
+        </TouchableOpacity>
+      </View>
+    );
+  }
 
   function renderSectorLocations() {
     const mapping = buildLatLongKeysMap()
@@ -75,7 +95,7 @@ export default function Index() {
 
   function cleanModalState() {
     setShowModal(false)
-    setTargetSector({})
+    setTargetSector(null)
   }
   
   function renderSectorShortInfo(targetSector: any) {
@@ -111,7 +131,7 @@ export default function Index() {
           }}>
           <View style={styles.modalLink}>
               <Text style={styles.linkToModalText}>
-                Visiter le secteur
+                {t('navigation.visitSector')}
               </Text>
           </View>
         </Link>        
@@ -122,6 +142,7 @@ export default function Index() {
   return (
     <View style={styles.container}>
       { renderSectorLocations() }
+      { renderLanguageSwitcher() }
 
       <ShowSectorInfo
           name={targetSector?.overview?.name}
@@ -203,5 +224,27 @@ const styles = StyleSheet.create({
   map: {
     width: '100%',
     height: '100%',
+  },
+  languageSwitcher: {
+    position: 'absolute',
+    top: Platform.OS === 'ios' ? 50 : 10,
+    right: 15,
+    zIndex: 1000,
+  },
+  languageButton: {
+    backgroundColor: Colors.mainColorGreen,
+    borderRadius: 20,
+    paddingHorizontal: 12,
+    paddingVertical: 8,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.3,
+    shadowRadius: 4,
+    elevation: 3,
+  },
+  languageText: {
+    color: Colors.textInsideButton,
+    fontWeight: 'bold',
+    fontSize: 14,
   },
 });

@@ -2,6 +2,7 @@ import { Text, View, StyleSheet, TouchableOpacity, Platform, ScrollView } from '
 import { Link, useLocalSearchParams } from 'expo-router';
 import { Image } from 'expo-image';
 
+import React from 'react';
 import Colors from './constants/colors';
 import Ionicons from '@expo/vector-icons/Ionicons';
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
@@ -14,31 +15,33 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import Markdown from 'react-native-markdown-display';
 import ImageView from "react-native-image-viewing";
 import ResolveImage from "./components/image_resolver";
+import { useLanguage } from './constants/translations';
 
 const mapsLogo = require('@/assets/images/maps.png');
-
-function renderReturn() {
-  return (
-    <View style={styles.returnContainer}>
-      <Link href="/" style={styles.button}>
-        <View style={styles.returnLine}>
-          <Ionicons name="arrow-back" size={28} color={Colors.text} />
-          <Text style={styles.returnLabel}>Retour</Text>
-        </View>
-      </Link>
-    </View>
-  )
-}
 
 export default function SectorScreen() {
   const params = useLocalSearchParams();
   const { target_sector } = params;
   const sector = JSON.parse(target_sector.toString());
   const insets = useSafeAreaInsets();
+  const { t } = useLanguage();
 
   const [showDescription, setShowDescription] = useState(false)
   const [showAccess, setShowAccess] = useState(false)
   const [showRestaurants, setShowRestaurants] = useState(false)
+
+  function renderReturn() {
+    return (
+      <View style={styles.returnContainer}>
+        <Link href="/" style={styles.button}>
+          <View style={styles.returnLine}>
+            <Ionicons name="arrow-back" size={28} color={Colors.text} />
+            <Text style={styles.returnLabel}>{t('common.back')}</Text>
+          </View>
+        </Link>
+      </View>
+    )
+  }
 
   // For topo images
   const [zoomImage, setZoomImage] = useState(-1)
@@ -72,12 +75,12 @@ export default function SectorScreen() {
 
 
   function renderRestaurants(sector: any) {
-    return renderSection("Restaurants", sector?.detailed_info?.restaurants, "pizza", showRestaurants, setShowRestaurants)
+    return renderSection(t('sector.restaurants'), sector?.detailed_info?.restaurants, "pizza", showRestaurants, setShowRestaurants)
   }
 
 
   function renderAccess(sector: any) {
-    return renderSection("Access", sector?.detailed_info?.access, "location", showAccess, setShowAccess)
+    return renderSection(t('sector.access'), sector?.detailed_info?.access, "location", showAccess, setShowAccess)
   }
 
 
@@ -110,7 +113,7 @@ export default function SectorScreen() {
 
   function renderDescription(sector: any) {
     return renderSection(
-      "Description", sector?.detailed_info?.long_description, "document-text", showDescription, setShowDescription
+      t('sector.description'), sector?.detailed_info?.long_description, "document-text", showDescription, setShowDescription
     )
   }
 
@@ -185,7 +188,7 @@ export default function SectorScreen() {
     }
     return (
       <View style={styles.topoContainer}>
-        <Text style={styles.topoTitle}>Le topo</Text>
+        <Text style={styles.topoTitle}>{t('sector.topo')}</Text>
         <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={styles.topoImagesPanel}>
           {sector.sector_pictures.map((picture: any, index: number) => (
             <View key={index}>
@@ -278,7 +281,7 @@ export default function SectorScreen() {
       (route?.setter != undefined && route?.setter != "")
     const has_image = route?.pictures?.length > 0
     if (has_extra == false && has_image == false) {
-      return <Text style={{ color: Colors.textMuted }}>-</Text>
+      return <Text style={{ color: Colors.textMuted }}>{t('common.noInfo')}</Text>
     } else {
       return <></>
     }
@@ -306,14 +309,14 @@ export default function SectorScreen() {
 
         {route?.requiped &&
           <View style={styles.moreInfoRow}>
-            <Text style={styles.moreInfoLabel}>Reequipment: </Text>
+            <Text style={styles.moreInfoLabel}>{t('sector.reequipped')} </Text>
             <Text style={styles.moreInfoText}>{route.requiped}</Text>
           </View>
         }
 
         {route?.setter &&
           <View style={styles.moreInfoRow}>
-            <Text style={styles.moreInfoLabel}>Ouverte par: </Text>
+            <Text style={styles.moreInfoLabel}>{t('sector.openedBy')} </Text>
             <Text style={styles.moreInfoText}>{route.setter}</Text>
           </View>
         }
@@ -350,14 +353,14 @@ export default function SectorScreen() {
 
     return (
       <View style={styles.routesContainer}>
-        <Text style={styles.routesTitle}>Les voies</Text>
+        <Text style={styles.routesTitle}>{t('sector.routes')}</Text>
         <DataTable style={styles.tableContainer}>
           <DataTable.Header style={styles.tableHeader}>
-            <DataTable.Title textStyle={styles.tableTitleText} style={styles.tableColNumber}>#</DataTable.Title>
-            <DataTable.Title textStyle={styles.tableTitleText} style={styles.tableColName}>Nom</DataTable.Title>
-            <DataTable.Title textStyle={styles.tableTitleText} style={styles.tableColGrade}>Cotation</DataTable.Title>
-            <DataTable.Title textStyle={styles.tableTitleText} style={styles.tableColInterest}>Interet</DataTable.Title>
-            <DataTable.Title textStyle={styles.tableTitleText} style={styles.tableColInfo}>Info</DataTable.Title>
+            <DataTable.Title textStyle={styles.tableTitleText} style={styles.tableColNumber}>{t('sector.number')}</DataTable.Title>
+            <DataTable.Title textStyle={styles.tableTitleText} style={styles.tableColName}>{t('sector.name')}</DataTable.Title>
+            <DataTable.Title textStyle={styles.tableTitleText} style={styles.tableColGrade}>{t('sector.grade')}</DataTable.Title>
+            <DataTable.Title textStyle={styles.tableTitleText} style={styles.tableColInterest}>{t('sector.interest')}</DataTable.Title>
+            <DataTable.Title textStyle={styles.tableTitleText} style={styles.tableColInfo}>{t('sector.info')}</DataTable.Title>
           </DataTable.Header>
 
           {sector.routes.map((route: any, index: number) => (

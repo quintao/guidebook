@@ -1,0 +1,23 @@
+{
+  "common": {
+    "back": "Retour",
+    "noInfo": "-"
+  },
+  "sector": {
+    "access": "Access",
+    "description": "Description",
+    "restaurants": "Restaurants",
+    "topo": "Le topo",
+    "routes": "Les voies",
+    "number": "#",
+    "name": "Nom",
+    "grade": "Cotation",
+    "interest": "Interet",
+    "info": "Info",
+    "reequipped": "Reequipment:",
+    "openedBy": "Ouverte par:"
+  },
+  "navigation": {
+    "visitSector": "Visiter le secteur"
+  }
+}
