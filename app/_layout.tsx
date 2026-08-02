@@ -7,6 +7,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { v4 as uuidv4 } from 'uuid';
 import {useState, useEffect} from 'react';
 import {Text} from 'react-native';
+import { LanguageProvider } from './constants/translations';
 
 
 SplashScreen.preventAutoHideAsync();
@@ -54,13 +55,15 @@ export default function RootLayout() {
     }
 
   return (
-    <>
-      <Stack>
-        <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-        <Stack.Screen name="sector" options={{ headerShown: false }} />
-        {/* <Stack.Screen name="+not-found" /> */}
-      </Stack>
-      <StatusBar backgroundColor='#5c6c6c'/>
-    </>
+    <LanguageProvider>
+      <>
+        <Stack>
+          <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+          <Stack.Screen name="sector" options={{ headerShown: false }} />
+          {/* <Stack.Screen name="+not-found" /> */}
+        </Stack>
+        <StatusBar backgroundColor='#5c6c6c'/>
+      </>
+    </LanguageProvider>
   );
 }

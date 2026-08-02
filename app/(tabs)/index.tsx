@@ -9,6 +9,7 @@ import Foundation from '@expo/vector-icons/Foundation';
 import Ionicons from '@expo/vector-icons/Ionicons';
 import FontAwesome from '@expo/vector-icons/FontAwesome';
 import MapView, { Marker, PROVIDER_GOOGLE} from 'react-native-maps';
+import { useLanguage } from '../constants/translations';
 
 const initialRegion = {
   latitude: 46.180007, // Initial latitude
@@ -45,7 +46,8 @@ function buildLatLongKeysMap() {
 
 export default function Index() {
   const [showModal, setShowModal] = useState(false)
-  const [targetSector, setTargetSector] = useState(Object)
+  const [targetSector, setTargetSector] = useState<any>(null)
+  const { t } = useLanguage();
 
   function renderSectorLocations() {
     const mapping = buildLatLongKeysMap()
@@ -75,7 +77,7 @@ export default function Index() {
 
   function cleanModalState() {
     setShowModal(false)
-    setTargetSector({})
+    setTargetSector(null)
   }
   
   function renderSectorShortInfo(targetSector: any) {
@@ -111,7 +113,7 @@ export default function Index() {
           }}>
           <View style={styles.modalLink}>
               <Text style={styles.linkToModalText}>
-                Visiter le secteur
+                {t('navigation.visitSector')}
               </Text>
           </View>
         </Link>        
