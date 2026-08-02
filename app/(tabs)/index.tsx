@@ -1,4 +1,4 @@
-import { Text, View, StyleSheet, TouchableOpacity, Dimensions, Platform } from 'react-native';
+import { Text, View, StyleSheet, Platform } from 'react-native';
 import { Link} from 'expo-router';
 import Colors from '../constants/colors';
 import { useState } from 'react';
@@ -57,7 +57,6 @@ export default function Index() {
               key={sectorData.overview.name} 
               coordinate={getCoordinatesFromSectorData(sectorData)}
               title={sectorData.overview?.name}
-              showsBuildings={false}
               pinColor={Colors.secondaryColorViolette}
               onPress={e => {
                 const key = buildKey(e.nativeEvent.coordinate)
