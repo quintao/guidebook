@@ -13,7 +13,7 @@ import Play from "./play"
 const Sectors = [
   Ayerne,
   Barme,
-  ChampDeBarme,
+  // ChampDeBarme,
   ColDuCou,
   Cornieule,
   Defago,
