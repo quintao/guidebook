@@ -1,6 +1,5 @@
 import { createContext, useContext, useEffect, useState, ReactNode } from 'react';
 import React from 'react';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 
 // Import translations
 import enTranslations from './en.json';
@@ -37,28 +36,20 @@ export type TranslationKey = {
 // Define the context type
 interface LanguageContextType {
   language: Language;
-  setLanguage: (lang: Language) => Promise<void>;
   t: (key: string, fallback?: string) => string;
 }
 
 // Create the context
 const LanguageContext = createContext<LanguageContextType | undefined>(undefined);
 
-// Storage key for language preference
-const STORAGE_KEY = '@language';
-
 // Get the best language based on device locale (async to support dynamic imports)
-export async function getDeviceLanguage(): Promise<Language> {
+async function detectLanguage(): Promise<Language> {
   try {
     const locales = await getLocalesAsync();
-    // Get the first locale (most preferred)
     const firstLocale = locales[0];
     
     if (firstLocale) {
-      // Use languageCode which is the ISO 639-1 code (e.g., 'fr', 'en')
       const languageCode = firstLocale.languageCode?.toLowerCase();
-      
-      // Check if the language is French
       if (languageCode === 'fr') {
         return 'fr';
       }
@@ -79,24 +70,13 @@ export async function getDeviceLanguage(): Promise<Language> {
 }
 
 // Synchronous fallback for immediate use (before async detection completes)
-export function getDeviceLanguageSync(): Language {
-  // Try navigator.language (works on web)
+function getLanguageSync(): Language {
   if (typeof navigator !== 'undefined' && navigator.language) {
     if (navigator.language.startsWith('fr')) {
       return 'fr';
     }
   }
-  // Default to French
   return 'fr';
-}
-
-// Get display name for a language (for UI)
-export function getLanguageDisplayName(lang: Language): string {
-  const names: Record<Language, string> = {
-    en: 'English',
-    fr: 'Français',
-  };
-  return names[lang] || lang;
 }
 
 // Translation hook
@@ -130,46 +110,26 @@ export function getTranslation(lang: Language, key: string, fallback?: string): 
 // Provider component
 interface LanguageProviderProps {
   children: ReactNode;
-  defaultLanguage?: Language;
 }
 
-export function LanguageProvider({ 
-  children, 
-  defaultLanguage 
-}: LanguageProviderProps) {
-  const [language, setLanguageState] = useState<Language>(defaultLanguage || getDeviceLanguageSync());
+export function LanguageProvider({ children }: LanguageProviderProps) {
+  const [language, setLanguage] = useState<Language>(getLanguageSync());
   const [isLoaded, setIsLoaded] = useState(false);
 
-  // Load saved language on mount
+  // Detect device language on mount
   useEffect(() => {
-    const loadLanguage = async () => {
+    const detectDeviceLanguage = async () => {
       try {
-        const savedLanguage = await AsyncStorage.getItem(STORAGE_KEY);
-        if (savedLanguage && (savedLanguage === 'en' || savedLanguage === 'fr')) {
-          setLanguageState(savedLanguage as Language);
-        } else if (!defaultLanguage) {
-          // No saved preference and no default provided, use device language
-          const deviceLanguage = await getDeviceLanguage();
-          setLanguageState(deviceLanguage);
-        }
+        const detectedLanguage = await detectLanguage();
+        setLanguage(detectedLanguage);
       } catch (error) {
-        console.error('Failed to load language preference', error);
+        console.debug('Using sync fallback for language detection');
       } finally {
         setIsLoaded(true);
       }
     };
-    loadLanguage();
-  }, [defaultLanguage]);
-
-  // Save language preference
-  const setLanguage = async (lang: Language) => {
-    try {
-      await AsyncStorage.setItem(STORAGE_KEY, lang);
-      setLanguageState(lang);
-    } catch (error) {
-      console.error('Failed to save language preference', error);
-    }
-  };
+    detectDeviceLanguage();
+  }, []);
 
   // Translation function
   const t = (key: string, fallback?: string): string => {
@@ -182,7 +142,7 @@ export function LanguageProvider({
   }
 
   return (
-    <LanguageContext.Provider value={{ language, setLanguage, t }}>
+    <LanguageContext.Provider value={{ language, t }}>
       {children}
     </LanguageContext.Provider>
   );
