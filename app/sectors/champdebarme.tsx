@@ -1,12 +1,21 @@
 export default {
     overview: {
-        name: "Champ de Barme",
-        short_description: "Secteur imposante",
+        name: { fr: "Champ de Barme", en: "Champ de Barme" },
+        short_description: {
+            fr: "Secteur imposant",
+            en: "Imposing sector"
+        },
         parking: "",
-        main_activities: "Dry tooling",
-        rock: "Calcaire",
+        main_activities: {
+            fr: "Dry tooling",
+            en: "Dry tooling"
+        },
+        rock: {
+            fr: "Calcaire",
+            en: "Limestone"
+        },
         orientation: "N",
-        altitude: "1300mm",
+        altitude: "1300m",
         latitude: 46.152650,
         longitude: 6.844010,
     },

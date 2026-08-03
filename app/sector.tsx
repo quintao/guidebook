@@ -15,16 +15,17 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import Markdown from 'react-native-markdown-display';
 import ImageView from "react-native-image-viewing";
 import ResolveImage from "./components/image_resolver";
-import { useLanguage } from './constants/translations';
+import { useLanguage, localizeSector } from './constants/translations';
 
 const mapsLogo = require('@/assets/images/maps.png');
 
 export default function SectorScreen() {
   const params = useLocalSearchParams();
   const { target_sector } = params;
-  const sector = JSON.parse(target_sector.toString());
+  const sectorData = JSON.parse(target_sector.toString());
   const insets = useSafeAreaInsets();
-  const { t } = useLanguage();
+  const { language, t } = useLanguage();
+  const sector = localizeSector(sectorData, language);
 
   const [showDescription, setShowDescription] = useState(false)
   const [showAccess, setShowAccess] = useState(false)

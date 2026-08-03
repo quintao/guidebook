@@ -1,10 +1,19 @@
 export default {
     overview: {
-        name: "Dry tooling",
-        short_description: "Secteur de dry tooling dans la vallee",
+        name: { fr: "Dry tooling", en: "Dry tooling" },
+        short_description: {
+            fr: "Secteur de dry tooling dans la vallée",
+            en: "Dry tooling sector in the valley"
+        },
         parking: "",
-        main_activities: "Dry tooling",
-        rock: "Calcaire",
+        main_activities: {
+            fr: "Dry tooling",
+            en: "Dry tooling"
+        },
+        rock: {
+            fr: "Calcaire",
+            en: "Limestone"
+        },
         orientation: "N",
         altitude: "880m",
         latitude: 46.192874,

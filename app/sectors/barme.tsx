@@ -1,9 +1,18 @@
 export default {
     overview: {
-        name: "Barme",
-        short_description: "Secteur classique de la région",
-        main_activities: "Escalade Sportive",
-        rock: "Calcaire",
+        name: { fr: "Barme", en: "Barme" },
+        short_description: {
+            fr: "Secteur classique de la région",
+            en: "Classic sector in the region"
+        },
+        main_activities: {
+            fr: "Escalade Sportive",
+            en: "Sport climbing"
+        },
+        rock: {
+            fr: "Calcaire",
+            en: "Limestone"
+        },
         orientation: "E",
         altitude: "1500m",
         grades: "3b-7b",
@@ -15,34 +24,43 @@ export default {
             android: "https://maps.app.goo.gl/j9wNp7DUkzaUq6j49",
             ios: "-"
         },
-        access: "Champéry – Grand-Paradis – Barme. La falaise, évidente, se trouve derrière les chalets et buvettes. Parking le long de la route. Falaise à 2 minutes à pied de la voiture.",
-        restaurants: "Les plats des deux excellentes buvettes de Barme. Incontournable !",
-        long_description: "Sur le magnifique plateau de Barme se trouve le site d’importance de la vallée d’Illiez. Lieu convivial par excellence, d’accès immédiat et offrant un large éventail de voies faciles, il accueille familles et grimpeurs de toute la Suisse romande. \nLe site se prête très bien à l’initiation et permet aussi, grâce à des voies plus techniques, de plaire aux grimpeurs expérimentés. \n\nMis en valeur par la Compagnie des Duides de Champéry et Laurent Monnet, ce site, très fréquenté, est idéal lors des fortes chaleurs d’été. \n\nIl a été progressivement rééquipé avec du matériel en inox de qualité par la Compagnie des Guides de Champéry et Hubert Caloz, puis par Frank Berrut en 2022 et 2023, suite au décès en février 2021 d’Hubert, guide charismatique et apprécié de toute la région.\n\n**Remarques**: quelques rares voies souvent humides et le secteur « Le Chat » quelque peu délaissé n’ont pas été rééquipés. La partie centrale de la falaise reste interdite à l’escalade (baume des hirondelles).",
+        access: {
+            fr: "Champéry - Grand-Paradis - Barme. La falaise, évidente, se trouve derrière les chalets et buvettes. Parking le long de la route. Falaise à 2 minutes à pied de la voiture.",
+            en: "Champéry - Grand-Paradis - Barme. The cliff, which is obvious, is located behind the chalets and snack bars. Parking along the road. The cliff is a 2-minute walk from the car."
+        },
+        restaurants: {
+            fr: "Les plats des deux excellentes buvettes de Barme. Incontournable !",
+            en: "Dishes from the two excellent local mountain restaurants in Barme. A must-visit!"
+        },
+        long_description: {
+            fr: "Sur le magnifique plateau de Barme se trouve le site d'importance de la vallée d'Illiez. Lieu convivial par excellence, d'accès immédiat et offrant un large éventail de voies faciles, il accueille familles et grimpeurs de toute la Suisse romande. \nLe site se prête très bien à l’initiation et permet aussi, grâce à des voies plus techniques, de plaire aux grimpeurs expérimentés. \n\nMis en valeur par la Compagnie des Duides de Champéry et Laurent Monnet, ce site, très fréquenté, est idéal lors des fortes chaleurs d’été. \n\nIl a été progressivement rééquipé avec du matériel en inox de qualité par la Compagnie des Guides de Champéry et Hubert Caloz, puis par Frank Berrut en 2022 et 2023, suite au décès en février 2021 d’Hubert, guide charismatique et apprécié de toute la région.\n\n**Remarques**: quelques rares voies souvent humides et le secteur « Le Chat » quelque peu délaissé n'ont pas été rééquipés. La partie centrale de la falaise reste interdite à l'escalade (baume des hirondelles).",
+            en: "On the magnificent Barme plateau lies the key climbing area of the Vallée d'Illiez. A friendly spot par excellence, with immediate access and a wide range of easy routes, it welcomes families and climbers from all over French-speaking Switzerland.\nThe site is very well suited for beginners and, thanks to more technical routes, also appeals to experienced climbers.\n\nDeveloped by the Compagnie des Guides de Champéry and Laurent Monnet, this popular site is ideal during the hot summer months.\n\nIt was gradually re-equipped with quality stainless steel gear by the Compagnie des Guides de Champéry and Hubert Caloz, then by Frank Berrut in 2022 and 2023, following the passing in February 2021 of Hubert, a charismatic guide beloved throughout the region.\n\n**Notes**: a few rare routes that are often damp and the somewhat neglected 'Le Chat' sector have not been re-equipped. The central part of the cliff remains closed to climbing (swallow cave/baume)."
+        },
     },    
     sector_pictures: [
         {
             path: require("@/assets/images/barme/barme_geral.png"),
-            description: "Apercu general"
+            description: { fr: "Apercu general", en: "General overview" }
         },
         {
             path: require("@/assets/images/barme/barme_dents_blanches.png"),
-            description: "Dents Blanches"
+            description: { fr: "Dents Blanches", en: "Dents Blanches" }
         },
         {
             path: require("@/assets/images/barme/barme_les_dalles.png"),
-            description: "Belle Montagne et Les Dalles"
+            description: { fr: "Belle Montagne et Les Dalles", en: "Belle Montagne and Les Dalles" }
         },
         {
             path: require("@/assets/images/barme/barme_devers.png"),
-            description: "Les Devers"
+            description: { fr: "Les Devers", en: "Les Devers" }
         },
         {
             path: require("@/assets/images/barme/barme_le_chat.png"),
-            description: "Le chat"
+            description: { fr: "Le chat", en: "Le Chat" }
         },
         {
             path: require("@/assets/images/barme/reequipment.png"),
-            description: "Reequipment en 2023"
+            description: { fr: "Reequipment en 2023", en: "Re-bolting in 2023" }
         },                                          
     ],
     routes: [
@@ -51,7 +69,7 @@ export default {
         name: "Marguerite",
         grade: "3b",
         stars: 1,
-        tips: "",
+        tips: {},
         setter: "",
         requiped: "",
     },
@@ -60,7 +78,7 @@ export default {
         name: "Perce-neige",
         grade: "3c",
         stars: 1,
-        tips: "",
+        tips: {},
         setter: "",
         requiped: "",
     },
@@ -69,7 +87,7 @@ export default {
         name: "Crocus",
         grade: "3b",
         stars: 1,
-        tips: "",
+        tips: {},
         setter: "",
         requiped: "",
     },
@@ -78,7 +96,7 @@ export default {
         name: "La dame du Lac",
         grade: "3b",
         stars: 1,
-        tips: "",
+        tips: {},
         setter: "",
         requiped: "",
     },
@@ -87,7 +105,7 @@ export default {
         name: "Soldanelle",
         grade: "5a",
         stars: 1,
-        tips: "",
+        tips: {},
         setter: "",
         requiped: "",
     },
@@ -96,7 +114,7 @@ export default {
         name: "Primevère",
         grade: "5b",
         stars: 1,
-        tips: "",
+        tips: {},
         setter: "",
         requiped: "",
     },
@@ -105,7 +123,7 @@ export default {
         name: "Gentiane",
         grade: "5b",
         stars: 1,
-        tips: "",
+        tips: {},
         setter: "",
         requiped: "",
     },
@@ -114,7 +132,7 @@ export default {
         name: "Ancolie",
         grade: "4b",
         stars: 1,
-        tips: "",
+        tips: {},
         setter: "",
         requiped: "",
     },
@@ -123,7 +141,7 @@ export default {
         name: "Welcome",
         grade: "3c",
         stars: 1,
-        tips: "",
+        tips: {},
         setter: "",
         requiped: "",
     },
@@ -132,7 +150,7 @@ export default {
         name: "Sanju",
         grade: "3b",
         stars: 1,
-        tips: "",
+        tips: {},
         setter: "",
         requiped: "",
     },
@@ -141,7 +159,7 @@ export default {
         name: "Xildo",
         grade: "4a",
         stars: 1,
-        tips: "",
+        tips: {},
         setter: "",
         requiped: "",
     },
@@ -150,7 +168,7 @@ export default {
         name: "Sapristi",
         grade: "4a",
         stars: 1,
-        tips: "",
+        tips: {},
         setter: "",
         requiped: "",
     },
@@ -159,7 +177,7 @@ export default {
         name: "Crawford",
         grade: "4c",
         stars: 1,
-        tips: "",
+        tips: {},
         setter: "",
         requiped: "",
     },
@@ -168,7 +186,7 @@ export default {
         name: "Légerté",
         grade: "4c",
         stars: 1,
-        tips: "",
+        tips: {},
         setter: "",
         requiped: "",
     },
@@ -177,7 +195,7 @@ export default {
         name: "A l'aide",
         grade: "4b",
         stars: 1,
-        tips: "",
+        tips: {},
         setter: "",
         requiped: "",
     },
@@ -186,7 +204,7 @@ export default {
         name: "Le clan des filles",
         grade: "4b",
         stars: 1,
-        tips: "",
+        tips: {},
         setter: "",
         requiped: "",
     },
@@ -195,7 +213,7 @@ export default {
         name: "Manu Reva",
         grade: "4b",
         stars: 1,
-        tips: "",
+        tips: {},
         setter: "",
         requiped: "",
     },
@@ -204,7 +222,7 @@ export default {
         name: "Olive",
         grade: "4b",
         stars: 1,
-        tips: "",
+        tips: {},
         setter: "",
         requiped: "",
     },
@@ -213,7 +231,7 @@ export default {
         name: "Y pas de blème",
         grade: "4b",
         stars: 1,
-        tips: "",
+        tips: {},
         setter: "",
         requiped: "",
     },
@@ -222,7 +240,7 @@ export default {
         name: "Maya",
         grade: "5a, 5b",
         stars: 2,
-        tips: "",
+        tips: {},
         setter: "",
         requiped: "",
     },
@@ -231,7 +249,7 @@ export default {
         name: "Les jonquilles",
         grade: "4b, 5a",
         stars: 1,
-        tips: "",
+        tips: {},
         setter: "",
         requiped: "",
     },
@@ -240,7 +258,7 @@ export default {
         name: "Anne-Marie",
         grade: "4b, 5b",
         stars: 2,
-        tips: "",
+        tips: {},
         setter: "",
         requiped: "",
     },
@@ -249,7 +267,7 @@ export default {
         name: "Bernard",
         grade: "5b",
         stars: 2,
-        tips: "",
+        tips: {},
         setter: "",
         requiped: "",
     },
@@ -258,7 +276,10 @@ export default {
         name: "Marah",
         grade: "5a, 5c+",
         stars: 2,
-        tips: "",
+        tips: {
+            fr: "Le 5c+ est beau avec quelques pas delicats",
+            en: "The 5c+ is beautiful with some delicate moves"
+        },
         setter: "",
         requiped: "",
     },
@@ -267,7 +288,7 @@ export default {
         name: "Gypaète",
         grade: "4c",
         stars: 1,
-        tips: "",
+        tips: {},
         setter: "",
         requiped: "",
     },
@@ -276,7 +297,7 @@ export default {
         name: "Firmin le faux",
         grade: "6b",
         stars: 2,
-        tips: "",
+        tips: {},
         setter: "",
         requiped: "",
     },
@@ -284,8 +305,11 @@ export default {
         id: "barme_27",
         name: "Ne meurs pas ...",
         grade: "6a",
-        stars: 2,
-        tips: "",
+        stars: 3,
+        tips: {
+            fr: "Départ sur la dalle, ensuite deux mouvements soutenus",
+            en: "Start on the slab, then two sustained movements, very pretty"
+        },
         setter: "",
         requiped: "",
     },
@@ -294,7 +318,7 @@ export default {
         name: "Dernier délai",
         grade: "5a",
         stars: 2,
-        tips: "",
+        tips: {},
         setter: "",
         requiped: "",
     },
@@ -302,8 +326,11 @@ export default {
         id: "barme_29",
         name: "Mine d'or",
         grade: "5c",
-        stars: 2,
-        tips: "",
+        stars: 3,
+        tips: {
+            fr: "Pas de bloc au départ",
+            en: "Boulder move at the start"
+        },
         setter: "",
         requiped: "",
     },
@@ -312,7 +339,7 @@ export default {
         name: "Pupuce Léa",
         grade: "6a",
         stars: 2,
-        tips: "",
+        tips: {},
         setter: "",
         requiped: "",
     },
@@ -321,7 +348,7 @@ export default {
         name: "Vert Onyx",
         grade: "5c",
         stars: 2,
-        tips: "",
+        tips: {},
         setter: "",
         requiped: "",
     },
@@ -330,7 +357,7 @@ export default {
         name: "Cabriole ",
         grade: "6a",
         stars: 2,
-        tips: "",
+        tips: {},
         setter: "",
         requiped: "",
     },
@@ -339,7 +366,7 @@ export default {
         name: "Pimpronelle",
         grade: "5b",
         stars: 1,
-        tips: "",
+        tips: {},
         setter: "",
         requiped: "",
     },
@@ -348,7 +375,7 @@ export default {
         name: "Sunee door",
         grade: "5b",
         stars: 1,
-        tips: "",
+        tips: {},
         setter: "",
         requiped: "",
     },
@@ -357,7 +384,7 @@ export default {
         name: "Aiac",
         grade: "5a",
         stars: 1,
-        tips: "",
+        tips: {},
         setter: "",
         requiped: "",
     },
@@ -366,7 +393,7 @@ export default {
         name: "Corsica",
         grade: "5b",
         stars: 1,
-        tips: "",
+        tips: {},
         setter: "",
         requiped: "",
     },
@@ -375,7 +402,7 @@ export default {
         name: "Champthierry",
         grade: "6a",
         stars: 2,
-        tips: "",
+        tips: {},
         setter: "",
         requiped: "",
     },
@@ -384,7 +411,7 @@ export default {
         name: "La calamite",
         grade: "7a",
         stars: 3,
-        tips: "",
+        tips: {},
         setter: "",
         requiped: "",
     },
@@ -393,7 +420,7 @@ export default {
         name: "Zoé",
         grade: "6b",
         stars: 2,
-        tips: "",
+        tips: {},
         setter: "",
         requiped: "",
     },
@@ -402,7 +429,7 @@ export default {
         name: "Le zèbre",
         grade: "6b",
         stars: 2,
-        tips: "",
+        tips: {},
         setter: "",
         requiped: "",
     },
@@ -411,7 +438,10 @@ export default {
         name: "Nébuleuse",
         grade: "6c",
         stars: 1,
-        tips: "Non rééquipée",
+        tips: {
+            fr: "Non rééquipée",
+            en: "Not re-equipped"
+        },
         setter: "",
         requiped: "",
     },
@@ -420,7 +450,10 @@ export default {
         name: "Radio pantoufle",
         grade: "6c+",
         stars: 2,
-        tips: "De grosses prises, gros dévers",
+        tips: {
+            fr: "De grosses prises, gros dévers",
+            en: "Big holds, heavy overhang"
+        },
         setter: "",
         requiped: "",
     },
@@ -429,7 +462,10 @@ export default {
         name: "Un autre dindon",
         grade: "7b",
         stars: 2,
-        tips: "La plus dure de la falaise",
+        tips: {
+            fr: "La plus dure de la falaise",
+            en: "Hardest route on the cliff"
+        },
         setter: "",
         requiped: "",
     },
@@ -438,22 +474,25 @@ export default {
         name: "Antigone",
         grade: "6a+",
         stars: 2,
-        tips: "",
+        tips: {},
         setter: "",
         requiped: "",
     },
     {
         id: "barme_45",
-        name: "Clin d'œil", // get back here for photos!
+        name: "Clin d'œil",
         grade: "6a+",
         stars: 3,
-        tips: "",
+        tips: {},
         setter: "",
         requiped: "",
         pictures: [
             {
                 path: require("@/assets/images/barme/clindoeil.png"),
-                description: "Clin d'œil",
+                description: {
+                    fr: "Clin d'œil",
+                    en: "Clin d'œil"
+                },
             },
         ]
     },
@@ -462,7 +501,10 @@ export default {
         name: "Philippe là-haut",
         grade: "6c, 6c",
         stars: 3,
-        tips: "2ème longueur non rééquipée",
+        tips: {
+            fr: "2ème longueur non rééquipée",
+            en: "2nd pitch not re-equipped"
+        },
         setter: "",
         requiped: "",
     },
@@ -471,7 +513,10 @@ export default {
         name: "La savoyarde",
         grade: "6c",
         stars: 3,
-        tips: "6c bien tassé (6c+?), la classique",
+        tips: {
+            fr: "6c bien tassé (6c+?), la classique",
+            en: "Stiff 6c (6c+?), the classic"
+        },
         setter: "",
         requiped: "",
     },
@@ -480,7 +525,7 @@ export default {
         name: "Bicofilou",
         grade: "6a+",
         stars: 2,
-        tips: "",
+        tips: {},
         setter: "",
         requiped: "",
     },
@@ -489,7 +534,10 @@ export default {
         name: "Traversée des dieux",
         grade: "5b+",
         stars: 2,
-        tips: "Départ souvent humide, utile pour mettre la corde",
+        tips: {
+            fr: "Départ souvent humide, utile pour mettre la corde",
+            en: "Often damp start, useful for setting up the rope"
+        },
         setter: "",
         requiped: "",
     },
@@ -499,7 +547,10 @@ export default {
         grade: "6b",
         stars: 2,
         setter: "",
-        requiped: "Voie non rééquipée",
+        requiped: {
+            fr: "Voie non rééquipée",
+            en: "Route not re-equipped"
+        },
     },
     {
         id: "barme_51",
@@ -507,7 +558,10 @@ export default {
         grade: "6b",
         stars: 1,
         setter: "",
-        requiped: "Voie non rééquipée",
+        requiped: {
+            fr: "Voie non rééquipée",
+            en: "Route not re-equipped"
+        },
     },
     {
         id: "barme_52",
@@ -515,7 +569,10 @@ export default {
         grade: "5b",
         stars: 1,
         setter: "",
-        requiped: "Voie non rééquipée",
+        requiped: {
+            fr: "Voie non rééquipée",
+            en: "Route not re-equipped"
+        },
     },
     {
         id: "barme_53",
@@ -523,7 +580,10 @@ export default {
         grade: "6a",
         stars: 1,
         setter: "",
-        requiped: "Voie non rééquipée",
+        requiped: {
+            fr: "Voie non rééquipée",
+            en: "Route not re-equipped"
+        },
     },
     {
         id: "barme_54",
@@ -531,34 +591,46 @@ export default {
         grade: "5b",
         stars: 1,
         setter: "",
-        requiped: "Voie non rééquipée",
+        requiped: {
+            fr: "Voie non rééquipée",
+            en: "Route not re-equipped"
+        },
     },
     {
         id: "barme_55",
         name: "L'avalanche",
         grade: "4b, 6b",
         stars: 1,
-        tips: "",
+        tips: {},
         setter: "",
-        requiped: "Voie non rééquipée",
+        requiped: {
+            fr: "Voie non rééquipée",
+            en: "Route not re-equipped"
+        },
     },
     {
         id: "barme_56",
         name: "Singes roux",
         grade: "4b",
         stars: 1,
-        tips: "",
+        tips: {},
         setter: "",
-        requiped: "Voie non rééquipée",
+        requiped: {
+            fr: "Voie non rééquipée",
+            en: "Route not re-equipped"
+        },
     },
     {
         id: "barme_57",
         name: "Sicilienne",
         grade: "6b",
         stars: 1,
-        tips: "",
+        tips: {},
         setter: "",
-        requiped: "Voie non rééquipée",
+        requiped: {
+            fr: "Voie non rééquipée",
+            en: "Route not re-equipped"
+        },
     },
   ]
 };
