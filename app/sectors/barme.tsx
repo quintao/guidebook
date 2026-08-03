@@ -39,6 +39,10 @@ export default {
     },    
     sector_pictures: [
         {
+            path: require("@/assets/images/barme/barme_landscape.jpg"),
+            description: { fr: "Barme et sa falaise", en: "Barme and the cliff" }
+        },        
+        {
             path: require("@/assets/images/barme/barme_geral.png"),
             description: { fr: "Aperçu général", en: "General overview" }
         },
