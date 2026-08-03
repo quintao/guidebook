@@ -39,19 +39,19 @@ export default {
     },
     sector_pictures: [
         {
-            path: require("@/assets/images/cornieule/cornieule.jpg"),
-            description: {
-                fr: "Localisation du secteur",
-                en: "Sector location"
-            }
-        },
-        {
             path: require("@/assets/images/cornieule/topo.png"),
             description: {
                 fr: "Les voies du secteur",
                 en: "Routes overview"
             }
         },        
+        {
+            path: require("@/assets/images/cornieule/view.jpg"),
+            description: {
+                fr: "Vue depuis le pied de la falaise",
+                en: "The view from the base of the crag"
+            }
+        },          
     ],
     routes: [
     {
@@ -65,6 +65,15 @@ export default {
         name: "La licorne",
         grade: "3a",
         stars: 2,
+        pictures: [
+            {
+                path: require("@/assets/images/cornieule/lalicorne.jpg"),
+                description: {
+                    fr: "La voie",
+                    en: "The route"
+                },
+            },
+        ]         
     },
     {
         id: "cornieule_3",
@@ -83,6 +92,15 @@ export default {
         name: "Caillou",
         grade: "5a",
         stars: 3,
+        pictures: [
+            {
+                path: require("@/assets/images/cornieule/caillou.jpg"),
+                description: {
+                    fr: "La voie",
+                    en: "The route"
+                },
+            },
+        ]            
     },
   ]
 };
