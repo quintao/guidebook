@@ -59,7 +59,21 @@ export default {
                 fr: "Vue des Dents du Midi",
                 en: "View of Dents du Midi"
             }
-        },        
+        }, 
+        {
+            path: require("@/assets/images/portesdusoleil/barres_and_view.jpg"),
+            description: {
+                fr: "Barres métalliques pour l'assurage en haut",
+                en: "Metals bars for belaying at the top"
+            }
+        },          
+        {
+            path: require("@/assets/images/portesdusoleil/barres.jpg"),
+            description: {
+                fr: "Barres métalliques pour l'assurage en haut",
+                en: "Metals bars for belaying at the top"
+            }
+        }        
     ],
     routes: [
     {

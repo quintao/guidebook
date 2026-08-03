@@ -40,6 +40,18 @@ export default {
             path: require("@/assets/images/ayerne/topo.jpg"),
             description: { fr: "Apercu general", en: "General overview" }
         },
+        {
+            path: require("@/assets/images/ayerne/view.jpg"),
+            description: { fr: "Vue sur l'approche", en: "View from the approach" }
+        },
+        {
+            path: require("@/assets/images/ayerne/forest.jpg"),
+            description: { fr: "Entrée de la forêt", en: "Entering in the forest" }
+        },
+        {
+            path: require("@/assets/images/ayerne/chemin.jpg"),
+            description: { fr: "L'endroit où nous devons commencer à suivre les cairns.", en: "At this sign, we have to start following the cairns" }
+        },                       
     ],
     routes: [
         {
@@ -66,6 +78,19 @@ export default {
             name: "J'ai la dalle",
             grade: "5b+",
             stars: 2,
+            tips: {
+                fr: "Un peu délicat au départ, mais bien protégé",
+                en: "Delicate footwork to get off the ground, but well protected"
+            },
+            pictures: [
+                {
+                    path: require("@/assets/images/ayerne/ayerne_3.jpg"),
+                    description: {
+                        fr: "Depart de J'ai la dalle",
+                        en: "Start of the route"
+                    },
+                },
+            ]            
         },
         {
             id: "ayerne_4",
@@ -88,6 +113,15 @@ export default {
                 fr: "Magnifique dülfer",
                 en: "Layback climbing"
             },
+            pictures: [
+                {
+                    path: require("@/assets/images/ayerne/ayerne_6.jpg"),
+                    description: {
+                        fr: "Le dülfer",
+                        en: "The crack"
+                    },
+                },
+            ]                
         },
         {
             id: "ayerne_7",
@@ -137,7 +171,17 @@ export default {
             name: "Stringer",
             grade: "5a",
             stars: 1,
+            pictures: [
+                {
+                    path: require("@/assets/images/ayerne/ayerne_12.jpg"),
+                    description: {
+                        fr: "La voie",
+                        en: "The route"
+                    }
+                }
+            ]               
         },
+        
         {
             id: "ayerne_13",
             name: "Farouche",

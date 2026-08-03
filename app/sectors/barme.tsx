@@ -40,7 +40,7 @@ export default {
     sector_pictures: [
         {
             path: require("@/assets/images/barme/barme_geral.png"),
-            description: { fr: "Apercu general", en: "General overview" }
+            description: { fr: "Aperçu général", en: "General overview" }
         },
         {
             path: require("@/assets/images/barme/barme_dents_blanches.png"),
@@ -61,7 +61,11 @@ export default {
         {
             path: require("@/assets/images/barme/reequipment.png"),
             description: { fr: "Reequipment en 2023", en: "Re-bolting in 2023" }
-        },                                          
+        },
+        {
+            path: require("@/assets/images/barme/sunset.jpg"),
+            description: { fr: "Coucher de soleil depuis la falaise", en: "Sunset from the crag" }
+        },                                                
     ],
     routes: [
     {
@@ -312,6 +316,15 @@ export default {
         },
         setter: "",
         requiped: "",
+        pictures: [
+            {
+                path: require("@/assets/images/barme/nemeurspas.jpg"),
+                description: {
+                    fr: "Lydia après le crux",
+                    en: "Lydia after the crux"
+                },
+            },
+        ]             
     },
     {
         id: "barme_28",

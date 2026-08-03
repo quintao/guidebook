@@ -39,10 +39,10 @@ export default {
     },
     sector_pictures: [
         {
-            path: require("@/assets/images/dronnaire/dronnaire.jpg"),
+            path: require("@/assets/images/dronnaire/overview.jpg"),
             description: {
-                fr: "Ça grimpe !",
-                en: "Climbing action!"
+                fr: "Aperçu général",
+                en: "General overview"
             }
         },
     ],
