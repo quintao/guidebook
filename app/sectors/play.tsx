@@ -1,11 +1,20 @@
 export default {
     overview: {
-        name: "Play",
-        short_description: "Secteur de bloc.",
-        main_activities: "Bloc",
-        rock: "Calcaire",
+        name: { fr: "Play", en: "Play" },
+        short_description: {
+            fr: "Secteur de bloc.",
+            en: "Bouldering sector."
+        },
+        main_activities: {
+            fr: "Bloc",
+            en: "Bouldering"
+        },
+        rock: {
+            fr: "Calcaire",
+            en: "Limestone"
+        },
         orientation: "N",
-        altitude: "8600m",
+        altitude: "860m",
         grades: "3A-6C",
         latitude: 46.195407,
         longitude: 6.891769,
@@ -15,18 +24,33 @@ export default {
             android: "https://maps.app.goo.gl/uQJWrCy9BDi9x9Jf6",
             ios: ""
         },
-        access: "De Val-d'Illiez, 300 mètres après l'église, quitter la route cantonale et aller en direction du stand de tir où l'on parque. La forêt se trouve devant vous et le premier bloc se trouve 20 mètres à droite du stand.",
-        restaurants: "Restaurant du tennis, et quelques restaurants aussi au centre ville.",
-        long_description: "Ces dernières années, quelques «blocs» ont été brossés et fléchés. Les possibilités restent limitées, l'intérêt moyen, mais ils permettent une séance rapide à 2 pas de la voiture. Ils proposent peu de passages réellement raides. Bref, une visite si vous avez peu de temps ! À éviter lors des tirs. Terrains privés! soyez discrets.",
+        access: {
+            fr: "De Val-d'Illiez, 300 mètres après l'église, quitter la route cantonale et aller en direction du stand de tir où l'on parque. La forêt se trouve devant vous et le premier bloc se trouve 20 mètres à droite du stand.",
+            en: "From Val-d'Illiez, 300 meters past the church, leave the main road and head towards the shooting range where you can park. The forest is directly ahead, and the first boulder is located 20 meters to the right of the shooting range."
+        },
+        restaurants: {
+            fr: "Restaurant du tennis, et quelques restaurants aussi au centre ville.",
+            en: "Tennis club restaurant, as well as a few restaurants in the town center."
+        },
+        long_description: {
+            fr: "Ces dernières années, quelques « blocs » ont été brossés et fléchés. Les possibilités restent limitées, l'intérêt moyen, mais ils permettent une séance rapide à 2 pas de la voiture. Ils proposent peu de passages réellement raides. Bref, une visite si vous avez peu de temps ! À éviter lors des tirs. Terrains privés ! Soyez discrets.",
+            en: "In recent years, a few boulders have been brushed and marked. Potential remains limited and interest moderate, but they offer a quick session just steps from the car. Few problems are truly steep. In short, worth a visit if you are short on time! Avoid during shooting sessions. Private property—please be discrete."
+        },
     },
     sector_pictures: [
         {
             path: require("@/assets/images/play/titan.jpg"),
-            description: "Bloc titan"
+            description: {
+                fr: "Bloc titan",
+                en: "Titan boulder"
+            }
         },
         {
             path: require("@/assets/images/play/others.jpg"),
-            description: "Les autres blocs du secteur"
+            description: {
+                fr: "Les autres blocs du secteur",
+                en: "Other boulders in the sector"
+            }
         },
     ],
     routes: [
@@ -35,7 +59,10 @@ export default {
             name: "Arête de gauche",
             grade: "5A",
             stars: 1,
-            tips: "Départ assis",
+            tips: {
+                fr: "Départ assis",
+                en: "Sit start"
+            },
             requiped: "",
         },
         {
@@ -43,7 +70,10 @@ export default {
             name: "Le jeté",
             grade: "6B",
             stars: 1,
-            tips: "départ idem 3",
+            tips: {
+                fr: "Départ idem 3",
+                en: "Same start as route 3"
+            },
             requiped: "",
         },
         {
@@ -51,7 +81,10 @@ export default {
             name: "Traversée gauche-droite",
             grade: "6B+",
             stars: 3,
-            tips: "Très joli",
+            tips: {
+                fr: "Très joli",
+                en: "Very nice"
+            },
             requiped: "",
         },
         {
@@ -72,7 +105,7 @@ export default {
         },
         {
             id: "play_6",
-            name: "Premiére fissure",
+            name: "Première fissure",
             grade: "5C",
             stars: 3,
             tips: "",
@@ -80,10 +113,13 @@ export default {
         },
         {
             id: "play_7",
-            name: "Deuxiéme fissure",
+            name: "Deuxième fissure",
             grade: "5B",
             stars: 2,
-            tips: "départ idem 6",
+            tips: {
+                fr: "Départ idem 6",
+                en: "Same start as route 6"
+            },
             requiped: "",
         },
         {
@@ -91,7 +127,10 @@ export default {
             name: "Plein centre",
             grade: "?",
             stars: 1,
-            tips: "Projet",
+            tips: {
+                fr: "Projet",
+                en: "Project"
+            },
             requiped: "",
         },
         {
@@ -107,7 +146,10 @@ export default {
             name: "Arête du milieu",
             grade: "4B",
             stars: 1,
-            tips: "5B ârete seule, attention **expo**.",
+            tips: {
+                fr: "5B arête seule, attention **expo**.",
+                en: "5B using arête only, watch out **high exposure**."
+            },
             requiped: "",
         },
         {
@@ -157,14 +199,16 @@ export default {
             stars: 1,
             tips: "",
             requiped: "",
-        },        {
+        },
+        {
             id: "play_17",
             name: "6A+ bloc",
             grade: "6A+",
             stars: 1,
             tips: "",
             requiped: "",
-        },        {
+        },
+        {
             id: "play_18",
             name: "6B+ bloc",
             grade: "6B+",

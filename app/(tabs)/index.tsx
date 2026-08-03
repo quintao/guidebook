@@ -9,7 +9,7 @@ import Foundation from '@expo/vector-icons/Foundation';
 import Ionicons from '@expo/vector-icons/Ionicons';
 import FontAwesome from '@expo/vector-icons/FontAwesome';
 import MapView, { Marker, PROVIDER_GOOGLE} from 'react-native-maps';
-import { useLanguage } from '../constants/translations';
+import { useLanguage, localizeSector } from '../constants/translations';
 
 const initialRegion = {
   latitude: 46.180007, // Initial latitude
@@ -47,7 +47,7 @@ function buildLatLongKeysMap() {
 export default function Index() {
   const [showModal, setShowModal] = useState(false)
   const [targetSector, setTargetSector] = useState<any>(null)
-  const { t } = useLanguage();
+  const { language, t } = useLanguage();
 
   function renderSectorLocations() {
     const mapping = buildLatLongKeysMap()
@@ -56,9 +56,9 @@ export default function Index() {
         {Sectors.map((sectorData) => {
           return (
             <Marker 
-              key={sectorData.overview.name} 
+              key={sectorData.overview.name?.fr || sectorData.overview.name} 
               coordinate={getCoordinatesFromSectorData(sectorData)}
-              title={sectorData.overview?.name}
+              title={localizeSector(sectorData, language).overview?.name}
               pinColor={Colors.secondaryColorViolette}
               onPress={e => {
                 const key = buildKey(e.nativeEvent.coordinate)
@@ -66,7 +66,7 @@ export default function Index() {
                 setTargetSector(mapping[key]);
                 setShowModal(true);
               }}
-              id={sectorData.overview.name}
+              id={sectorData.overview.name?.fr || sectorData.overview.name}
             />
           );
         })}
@@ -81,27 +81,28 @@ export default function Index() {
   }
   
   function renderSectorShortInfo(targetSector: any) {
+    const localizedSector = localizeSector(targetSector, language);
     return(
       <View style={styles.modalContent}>
         <View style={styles.modalShortDescription}>
-          <Text style={{textAlign: 'center', color: Colors.text}}>{targetSector?.overview?.short_description}</Text>
+          <Text style={{textAlign: 'center', color: Colors.text}}>{localizedSector?.overview?.short_description}</Text>
         </View>
         <View style={styles.modalIconInfoContainer}>
           <View style={styles.modalIconInfo}>
             <Foundation name="mountains" size={40} color={Colors.text} style={{textAlign: 'center'}}/>
-            <Text style={{textAlign: 'center', color: Colors.text}}>{targetSector?.overview?.altitude}</Text>
+            <Text style={{textAlign: 'center', color: Colors.text}}>{localizedSector?.overview?.altitude}</Text>
           </View>
           <View style={styles.modalIconInfo}>
             <Ionicons name="compass-outline" size={40} color={Colors.text} />
-            <Text style={{textAlign: 'center', color: Colors.text}}>{targetSector?.overview?.orientation}</Text>
+            <Text style={{textAlign: 'center', color: Colors.text}}>{localizedSector?.overview?.orientation}</Text>
           </View>
           <View style={styles.modalIconInfo}>
             <FontAwesome name="hand-rock-o" size={40} color={Colors.text} />
-            <Text style={{textAlign: 'center', color: Colors.text}}>{targetSector?.overview?.rock}</Text>
+            <Text style={{textAlign: 'center', color: Colors.text}}>{localizedSector?.overview?.rock}</Text>
           </View>
           <View style={styles.modalIconInfo}>
             <Ionicons name="scale-outline" size={40} color={Colors.text} />
-            <Text style={{textAlign: 'center', color: Colors.text}}>{targetSector?.overview?.grades}</Text>
+            <Text style={{textAlign: 'center', color: Colors.text}}>{localizedSector?.overview?.grades}</Text>
           </View>          
         </View>
 
@@ -126,7 +127,7 @@ export default function Index() {
       { renderSectorLocations() }
 
       <ShowSectorInfo
-          name={targetSector?.overview?.name}
+          name={localizeSector(targetSector, language)?.overview?.name}
           isVisible={showModal}
           onClose={() => cleanModalState()}>
         { renderSectorShortInfo({...targetSector}) }

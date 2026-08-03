@@ -154,7 +154,84 @@ export function LanguageProvider({ children }: LanguageProviderProps) {
   );
 }
 
+// Helper to extract localized text from a field
+// Field can be: string, {fr: string, en: string}, or undefined
+export function getLocalizedText(field: any, language: Language): string {
+  if (!field) {
+    return "";
+  }
+  
+  if (typeof field === 'string') {
+    return field;
+  }
+  
+  if (typeof field === 'object' && field[language]) {
+    return field[language];
+  }
+  
+  // Fallback to French if English is missing
+  if (typeof field === 'object' && field.fr) {
+    return field.fr;
+  }
+  
+  return "";
+}
+
+// Helper to deeply localize a sector object
+export function localizeSector(sector: any, language: Language): any {
+  if (!sector) return sector;
+  
+  // Create a deep copy to avoid mutating the original
+  const localized = JSON.parse(JSON.stringify(sector));
+  
+  // Localize overview fields
+  if (localized.overview) {
+    localized.overview.name = getLocalizedText(localized.overview.name, language);
+    localized.overview.short_description = getLocalizedText(localized.overview.short_description, language);
+    localized.overview.main_activities = getLocalizedText(localized.overview.main_activities, language)
+    localized.overview.rock = getLocalizedText(localized.overview.rock, language)
+  }
+  
+  // Localize detailed_info fields
+  if (localized.detailed_info) {
+    localized.detailed_info.access = getLocalizedText(localized.detailed_info.access, language);
+    localized.detailed_info.restaurants = getLocalizedText(localized.detailed_info.restaurants, language);
+    localized.detailed_info.long_description = getLocalizedText(localized.detailed_info.long_description, language);
+  }
+  
+  // Localize sector pictures descriptions
+  if (localized.sector_pictures) {
+    localized.sector_pictures = localized.sector_pictures.map((pic: any) => ({
+      ...pic,
+      description: getLocalizedText(pic.description, language)
+    }));
+  }
+  
+  // Localize routes
+  if (localized.routes) {
+    localized.routes = localized.routes.map((route: any) => {
+      const localizedRoute = { ...route };
+      localizedRoute.name = getLocalizedText(route.name, language);
+      localizedRoute.tips = getLocalizedText(route.tips, language);
+      localizedRoute.requiped = getLocalizedText(route.requiped, language);
+      localizedRoute.setter = getLocalizedText(route.setter, language);
+      
+      // Localize route pictures
+      if (route.pictures) {
+        localizedRoute.pictures = route.pictures.map((pic: any) => ({
+          ...pic,
+          description: getLocalizedText(pic.description, language)
+        }));
+      }
+      
+      return localizedRoute;
+    });
+  }
+  
+  return localized;
+}
+
 // Export the context for direct use if needed
 export { LanguageContext };
 
-export default { LanguageProvider, useLanguage };
+export default { LanguageProvider, useLanguage, getLocalizedText, localizeSector };
