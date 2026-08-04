@@ -40,10 +40,7 @@ export default {
     sector_pictures: [
         {
             path: require("@/assets/images/defago/topo.png"),
-            description: {
-                fr: "Les voies du secteur",
-                en: "Routes overview"
-            }
+            description: { fr: "Aperçu général", en: "General overview" }
         },
         {
             path: require("@/assets/images/defago/rappel.jpg"),

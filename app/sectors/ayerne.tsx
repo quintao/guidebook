@@ -37,9 +37,13 @@ export default {
     },
     sector_pictures: [
         {
-            path: require("@/assets/images/ayerne/topo.jpg"),
-            description: { fr: "Apercu general", en: "General overview" }
+            path: require("@/assets/images/ayerne/topo_main.png"),
+            description: { fr: "Secteur principal", en: "Main sector" }
         },
+        {
+            path: require("@/assets/images/ayerne/topo_secondary.png"),
+            description: { fr: "Secteur secondary", en: "Small sector" }
+        },        
         {
             path: require("@/assets/images/ayerne/view.jpg"),
             description: { fr: "Vue sur l'approche", en: "View from the approach" }
@@ -100,12 +104,6 @@ export default {
         },
         {
             id: "ayerne_5",
-            name: "Agate",
-            grade: "6a",
-            stars: 1,
-        },
-        {
-            id: "ayerne_6",
             name: "Haribo",
             grade: "6c+",
             stars: 2,
@@ -124,7 +122,7 @@ export default {
             ]                
         },
         {
-            id: "ayerne_7",
+            id: "ayerne_6",
             name: "Classico",
             grade: "6a",
             stars: 3,
@@ -139,35 +137,29 @@ export default {
             ]            
         },
         {
+            id: "ayerne_7",
+            name: "Bon voyage",
+            grade: "6a+",
+            stars: 2,
+        },        
+        {
             id: "ayerne_8",
             name: "Le mur des lamentations",
             grade: "6b+",
-            stars: 2,
+            stars: 3,
             tips: {
-                fr: "Rejoint Haribo après le 4ème spit",
-                en: "Links with Haribo at the 4th clip"
+                fr: "Rejoint Haribo après le 4ème spit.\n7a sans la fissure",
+                en: "Links with Haribo at the 4th clip.\n7a FR without the crack"
             }
         },
         {
             id: "ayerne_9",
-            name: "Le mur des lamentations direct",
-            grade: "7a",
-            stars: 3,
-        },
-        {
-            id: "ayerne_10",
-            name: "Bon voyage",
-            grade: "6a+",
-            stars: 2,
-        },
-        {
-            id: "ayerne_11",
             name: "Pestouille",
             grade: "5c",
             stars: 1,
         },
         {
-            id: "ayerne_12",
+            id: "ayerne_10",
             name: "Stringer",
             grade: "5a",
             stars: 1,
@@ -183,7 +175,7 @@ export default {
         },
         
         {
-            id: "ayerne_13",
+            id: "ayerne_11",
             name: "Farouche",
             grade: "7c",
             stars: 2,
@@ -193,13 +185,13 @@ export default {
             }
         },
         {
-            id: "ayerne_14",
+            id: "ayerne_12",
             name: "Quntus",
             grade: "7b",
             stars: 2,
         },
         {
-            id: "ayerne_15",
+            id: "ayerne_13",
             name: "Le philosophe",
             grade: "5c",
             stars: 1,
